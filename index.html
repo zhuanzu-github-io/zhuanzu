@@ -98,7 +98,7 @@
             <input type="file" id="qrcode-file" accept="image/*" onchange="processQRCode(event)">
         </div>
 
-        <div id="qrcode-content" class="qrcode-content"  style="display: none;"></div>
+        <div id="qrcode-content" class="qrcode-content" style="display: none;"></div>
 
         <button id="copy-button" class="copy-button" onclick="copyContent()" disabled>复制内容</button>
     </div>
@@ -158,41 +158,67 @@
             reader.readAsDataURL(file);
         }
 
-        function copyContent() {
-            var contentElement = document.getElementById('qrcode-content');
-            var content = contentElement.textContent;
+        function iosAgent() {
+            return navigator.userAgent.match(/(iPhone|iPod|iPad);?/i);
+        }
 
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(content).then(function () {
-                    alert('内容已复制到剪贴板');
-                }).catch(function (error) {
-                    console.error('复制内容失败:', error);
-                });
+        // 复制文本函数，微信端，需要在用户触发 Click 事件里面才能执行成功
+        function copy() {
+            var contentElement = document.getElementById('qrcode-content');
+            var message = contentElement.textContent;
+            if (iosAgent()) {
+                console.log("input 复制方式 " + message);
+                let inputObj = document.createElement("input");
+                inputObj.value = message;
+                document.body.appendChild(inputObj);
+                inputObj.select();
+                inputObj.setSelectionRange(0, inputObj.value.length);
+                _execCommand('Copy');
+                document.body.removeChild(inputObj);
             } else {
-                console.warn('该浏览器不支持复制到剪贴板');
+                console.log("document 复制方式 " + message);
+                let domObj = document.createElement("span");
+                domObj.innerHTML = message;
+                document.body.appendChild(domObj);
+                let selection = window.getSelection();
+                let range = document.createRange();
+                range.selectNodeContents(domObj);
+                selection.removeAllRanges();
+                selection.addRange(range);
+                _execCommand('Copy');
+                document.body.removeChild(domObj);
             }
         }
 
-
-        // 示例：获取参数并进行处理
-        window.onload = function () {
-            var queryParams = getQueryParams();
-            // 在控制台输出参数
-            // 示例：获取名为 "name" 的参数并显示在页面上
-            var roomUrl = queryParams['room'];
-            var readQrcode = document.getElementById('readQrcode');
-            var showQrcode = document.getElementById('showQrcode');
-            if (roomUrl) {
-                // 删除元素
-                readQrcode.parentNode.removeChild(readQrcode);
-                showQrcode.classList.remove('hidden');
-                qrcode.makeCode(roomUrl);
+        // 执行浏览器命令 Copy 顺便输出一下日志，如果在移动端 推荐写个方法展示日志 或者用 alert(msg) 也行。
+        function _execCommand(action) {
+            let is = document.execCommand(action);
+            if (is) {
+                alert("复制成功")
             } else {
-                // 删除元素
-                showQrcode.parentNode.removeChild(showQrcode);
-                readQrcode.classList.remove('hidden');
+                alert("复制失败")
             }
-        };
+
+
+            // 示例：获取参数并进行处理
+            window.onload = function () {
+                var queryParams = getQueryParams();
+                // 在控制台输出参数
+                // 示例：获取名为 "name" 的参数并显示在页面上
+                var roomUrl = queryParams['room'];
+                var readQrcode = document.getElementById('readQrcode');
+                var showQrcode = document.getElementById('showQrcode');
+                if (roomUrl) {
+                    // 删除元素
+                    readQrcode.parentNode.removeChild(readQrcode);
+                    showQrcode.classList.remove('hidden');
+                    qrcode.makeCode(roomUrl);
+                } else {
+                    // 删除元素
+                    showQrcode.parentNode.removeChild(showQrcode);
+                    readQrcode.classList.remove('hidden');
+                }
+            };
     </script>
 </body>
 
