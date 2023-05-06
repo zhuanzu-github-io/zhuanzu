@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>二维码生成器</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,6 +10,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            text-align: center;
         }
 
         .container {
@@ -18,57 +20,180 @@
             text-align: center;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
-
         .qrcode {
             text-align: center;
             margin-top: 20px;
         }
+
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .container2 {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .qrcode-image {
+            max-width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .copy-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .qrcode-content {
+            max-width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            text-align: center;
+            word-wrap: break-word;
+            padding: 20px 20px;
+        }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1>二维码生成器</h1>
 
-        <div class="form-group">
+<body>
+    <div id="showQrcode" class="container hidden">
+        <h1>请长按识别二维码进群</h1>
+
+        <!-- <div class="form-group">
             <label for="content">输入内容：</label>
             <input type="text" id="content" placeholder="输入要生成二维码的内容">
             <button onclick="makeCode()">生成二维码</button>
-        </div>
+        </div> -->
 
         <div class="qrcode" id="qrcode">
         </div>
     </div>
 
-    <script src="./qrcode.min.js"></script>
+    <div id="readQrcode" class="container2 hidden">
+        <h1 style="color: red;">1.上传群二维码</h1>
+        <h1 style="color: red;">2.点击复制按钮</h1>
+        <h1 style="color: red;">3.在群里@租住并发送链接</h1>
+        <div class="form-group">
+            <label for="qrcode-file">选择二维码图片：</label>
+            <input type="file" id="qrcode-file" accept="image/*" onchange="processQRCode(event)">
+        </div>
+
+        <div id="qrcode-content" class="qrcode-content"  style="display: none;"></div>
+
+        <button id="copy-button" class="copy-button" onclick="copyContent()" disabled>复制内容</button>
+    </div>
+    <!-- https://github.com/davidshimjs/qrcodejs -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <!-- https://github.com/cozmo/jsQR -->
+    <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.min.js"></script>
     <script>
         var qrcode = new QRCode("qrcode");
+        // JavaScript代码，用于获取和处理URL参数
+        function getQueryParams() {
+            var params = {};
+            var queryString = window.location.search.substring(1);
+            var pairs = queryString.split('&');
 
-function makeCode () {      
-    var elText = document.getElementById("content");
-    
-    if (!elText.value) {
-        alert("Input a text");
-        elText.focus();
-        return;
-    }
-    
-    qrcode.makeCode(elText.value);
-}
+            for (var i = 0; i < pairs.length; i++) {
+                var pair = pairs[i].split('=');
+                var key = decodeURIComponent(pair[0]);
+                var value = decodeURIComponent(pair[1]);
+                params[key] = value;
+            }
+            return params;
+        }
 
-makeCode();
 
-$("#content").
-on("blur", function () {
-    makeCode();
-}).
-on("keydown", function (e) {
-    if (e.keyCode == 13) {
-        makeCode();
-    }
-});
+        // JavaScript代码，用于处理二维码上传和显示
+        function processQRCode(event) {
+            var file = event.target.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var img = new Image();
+                img.onload = function () {
+                    var canvas = document.createElement('canvas');
+                    var context = canvas.getContext('2d');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    context.drawImage(img, 0, 0, img.width, img.height);
+
+                    var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                    var qrCodeResult = jsQR(imageData.data, canvas.width, canvas.height);
+
+                    if (qrCodeResult) {
+                        var contentElement = document.getElementById('qrcode-content');
+                        contentElement.textContent = qrCodeResult.data;
+                        contentElement.style.display = 'block';
+
+                        var copyButton = document.getElementById('copy-button');
+                        copyButton.disabled = false;
+                    } else {
+                        console.error('解码二维码失败');
+                    }
+                };
+                img.src = e.target.result;
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+        function copyContent() {
+            var contentElement = document.getElementById('qrcode-content');
+            var content = contentElement.textContent;
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(content).then(function () {
+                    alert('内容已复制到剪贴板');
+                }).catch(function (error) {
+                    console.error('复制内容失败:', error);
+                });
+            } else {
+                console.warn('该浏览器不支持复制到剪贴板');
+            }
+        }
+
+
+        // 示例：获取参数并进行处理
+        window.onload = function () {
+            var queryParams = getQueryParams();
+            // 在控制台输出参数
+            // 示例：获取名为 "name" 的参数并显示在页面上
+            var roomUrl = queryParams['room'];
+            var readQrcode = document.getElementById('readQrcode');
+            var showQrcode = document.getElementById('showQrcode');
+            if (roomUrl) {
+                // 删除元素
+                readQrcode.parentNode.removeChild(readQrcode);
+                showQrcode.classList.remove('hidden');
+                qrcode.makeCode(roomUrl);
+            } else {
+                // 删除元素
+                showQrcode.parentNode.removeChild(showQrcode);
+                readQrcode.classList.remove('hidden');
+            }
+        };
     </script>
 </body>
+
 </html>
