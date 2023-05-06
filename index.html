@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>二维码生成器</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        /* CSS样式，用于布局和样式化 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .qrcode {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>二维码生成器</h1>
+
+        <div class="form-group">
+            <label for="content">输入内容：</label>
+            <input type="text" id="content" placeholder="输入要生成二维码的内容">
+            <button onclick="makeCode()">生成二维码</button>
+        </div>
+
+        <div class="qrcode" id="qrcode">
+        </div>
+    </div>
+
+    <script src="./qrcode.min.js"></script>
+    <script>
+        var qrcode = new QRCode("qrcode");
+
+function makeCode () {      
+    var elText = document.getElementById("content");
+    
+    if (!elText.value) {
+        alert("Input a text");
+        elText.focus();
+        return;
+    }
+    
+    qrcode.makeCode(elText.value);
+}
+
+makeCode();
+
+$("#content").
+on("blur", function () {
+    makeCode();
+}).
+on("keydown", function (e) {
+    if (e.keyCode == 13) {
+        makeCode();
+    }
+});
+    </script>
+</body>
+</html>
