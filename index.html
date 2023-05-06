@@ -88,8 +88,8 @@
             <button onclick="makeCode()">生成二维码</button>
         </div> -->
 
-        <div class="qrcode" id="qrcode">
-        </div>
+        <div class="qrcode hidden" id="qrcode"></div>
+        <div class="qrcode2" id="qrcode2"></div>
     </div>
 
     <div id="readQrcode" class="container2 hidden">
@@ -244,11 +244,11 @@
                 showQrcode.classList.remove('hidden');
                 qrcode.makeCode(roomUrl);
                 var canvas = document.getElementsByTagName('canvas')[0];
-                var originImg=document.getElementsByTagName('img')[0];
-                originImg.style.display = 'none';
-                originImg.parentNode.removeChild(originImg);
+                // var originImg=document.getElementsByTagName('img')[0];
+                // originImg.style.display = 'none';
+                // originImg.parentNode.removeChild(originImg);
                 var img = this.convertCanvasToImage(canvas);
-                document.getElementById("qrcode").append(img);  
+                document.getElementById("qrcode2").append(img);  
             } else {
                 // 删除元素
                 showQrcode.parentNode.removeChild(showQrcode);
