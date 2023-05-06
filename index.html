@@ -23,8 +23,10 @@
         .qrcode {
             text-align: center;
             margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-
 
         .container {
             max-width: 600px;
@@ -199,17 +201,18 @@
                 alert("复制成功")
             } else {
                 alert("复制失败,请手动复制链接地址")
-            }}
+            }
+        }
 
 
-            function copyContent() {
+        function copyContent() {
             var contentElement = document.getElementById('qrcode-content');
             var content = contentElement.textContent;
 
             if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(content).then(function() {
+                navigator.clipboard.writeText(content).then(function () {
                     alert('内容已复制到剪贴板');
-                }).catch(function(error) {
+                }).catch(function (error) {
                     alert('复制内容失败,请手动复制链接地址');
                 });
             } else {
@@ -217,25 +220,40 @@
             }
         }
 
-            // 示例：获取参数并进行处理
-            window.onload = function () {
-                var queryParams = getQueryParams();
-                // 在控制台输出参数
-                // 示例：获取名为 "name" 的参数并显示在页面上
-                var roomUrl = queryParams['room'];
-                var readQrcode = document.getElementById('readQrcode');
-                var showQrcode = document.getElementById('showQrcode');
-                if (roomUrl) {
-                    // 删除元素
-                    readQrcode.parentNode.removeChild(readQrcode);
-                    showQrcode.classList.remove('hidden');
-                    qrcode.makeCode(roomUrl);
-                } else {
-                    // 删除元素
-                    showQrcode.parentNode.removeChild(showQrcode);
-                    readQrcode.classList.remove('hidden');
+
+        function convertCanvasToImage(canvas){
+                    //新建Image对象
+                    var image = new Image();
+                    // canvas.toDataURL 返回的是一串Base64编码的URL
+                    image.src = canvas.toDataURL("image/png");
+                    image.id = 'qrcodeImg';
+                    return image;
                 }
-            };
+
+        // 示例：获取参数并进行处理
+        window.onload = function () {
+            var queryParams = getQueryParams();
+            // 在控制台输出参数
+            // 示例：获取名为 "name" 的参数并显示在页面上
+            var roomUrl = queryParams['room'];
+            var readQrcode = document.getElementById('readQrcode');
+            var showQrcode = document.getElementById('showQrcode');
+            if (roomUrl) {
+                // 删除元素
+                readQrcode.parentNode.removeChild(readQrcode);
+                showQrcode.classList.remove('hidden');
+                qrcode.makeCode(roomUrl);
+                var canvas = document.getElementsByTagName('canvas')[0];
+                var originImg=document.getElementsByTagName('img')[0];
+                originImg.parentNode.removeChild(originImg);
+                var img = this.convertCanvasToImage(canvas);
+                document.getElementById("qrcode").append(img);  
+            } else {
+                // 删除元素
+                showQrcode.parentNode.removeChild(showQrcode);
+                readQrcode.classList.remove('hidden');
+            }
+        };
     </script>
 </body>
 
