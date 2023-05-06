@@ -168,14 +168,15 @@
             var contentElement = document.getElementById('qrcode-content');
             var message = contentElement.textContent;
             if (iosAgent()) {
-                console.log("input 复制方式 " + message);
-                let inputObj = document.createElement("input");
-                inputObj.value = message;
-                document.body.appendChild(inputObj);
-                inputObj.select();
-                inputObj.setSelectionRange(0, inputObj.value.length);
-                _execCommand('Copy');
-                document.body.removeChild(inputObj);
+                // console.log("input 复制方式 " + message);
+                // let inputObj = document.createElement("input");
+                // inputObj.value = message;
+                // document.body.appendChild(inputObj);
+                // inputObj.select();
+                // inputObj.setSelectionRange(0, inputObj.value.length);
+                // _execCommand('Copy');
+                // document.body.removeChild(inputObj);
+                copyContent()
             } else {
                 console.log("document 复制方式 " + message);
                 let domObj = document.createElement("span");
@@ -197,9 +198,24 @@
             if (is) {
                 alert("复制成功")
             } else {
-                alert("复制失败")
+                alert("复制失败,请手动复制链接地址")
             }}
 
+
+            function copyContent() {
+            var contentElement = document.getElementById('qrcode-content');
+            var content = contentElement.textContent;
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(content).then(function() {
+                    alert('内容已复制到剪贴板');
+                }).catch(function(error) {
+                    alert('复制内容失败,请手动复制链接地址');
+                });
+            } else {
+                alert('该浏览器不支持复制到剪贴板,请手动复制链接地址');
+            }
+        }
 
             // 示例：获取参数并进行处理
             window.onload = function () {
