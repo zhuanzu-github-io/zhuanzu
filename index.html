@@ -245,6 +245,7 @@
                 qrcode.makeCode(roomUrl);
                 var canvas = document.getElementsByTagName('canvas')[0];
                 var originImg=document.getElementsByTagName('img')[0];
+                originImg.style.display = 'none';
                 originImg.parentNode.removeChild(originImg);
                 var img = this.convertCanvasToImage(canvas);
                 document.getElementById("qrcode").append(img);  
