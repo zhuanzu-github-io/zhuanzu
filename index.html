@@ -100,7 +100,7 @@
 
         <div id="qrcode-content" class="qrcode-content" style="display: none;"></div>
 
-        <button id="copy-button" class="copy-button" onclick="copyContent()" disabled>复制内容</button>
+        <button id="copy-button" class="copy-button" onclick="copy()" disabled>复制内容</button>
     </div>
     <!-- https://github.com/davidshimjs/qrcodejs -->
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
@@ -197,7 +197,7 @@
                 alert("复制成功")
             } else {
                 alert("复制失败")
-            }
+            }}
 
 
             // 示例：获取参数并进行处理
