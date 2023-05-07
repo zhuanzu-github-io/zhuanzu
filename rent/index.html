@@ -1,1 +1,261 @@
+<!DOCTYPE html>
+<html>
 
+<head>
+    <title>租住的私人工具</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        /* CSS样式，用于布局和样式化 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .qrcode {
+            text-align: center;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .container2 {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .qrcode-image {
+            max-width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .copy-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .qrcode-content {
+            max-width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            text-align: center;
+            word-wrap: break-word;
+            padding: 20px 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="showQrcode" class="container hidden">
+        <h1 style="color: red;">1.长按群二维码</h1>
+        <h1 style="color: red;">2.选择识别群二维码</h1>
+        <h1 style="color: red;">3.进群直接咨询</h1>
+        <!-- <div class="form-group">
+            <label for="content">输入内容：</label>
+            <input type="text" id="content" placeholder="输入要生成二维码的内容">
+            <button onclick="makeCode()">生成二维码</button>
+        </div> -->
+
+        <div class="qrcode hidden" id="qrcode"></div>
+        <div class="qrcode2" id="qrcode2"></div>
+    </div>
+
+    <div id="readQrcode" class="container2 hidden">
+        <h1 style="color: red;">1.上传群二维码</h1>
+        <h1 style="color: red;">2.点击复制按钮</h1>
+        <h1 style="color: red;">3.在群里@租住并发送链接</h1>
+        <div class="form-group">
+            <label for="qrcode-file">选择二维码图片：</label>
+            <input type="file" id="qrcode-file" accept="image/*" onchange="processQRCode(event)">
+        </div>
+
+        <div id="qrcode-content" class="qrcode-content" style="display: none;"></div>
+
+        <button id="copy-button" class="copy-button" onclick="copy()" disabled>复制内容</button>
+    </div>
+    <!-- https://github.com/davidshimjs/qrcodejs -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <!-- https://github.com/cozmo/jsQR -->
+    <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.min.js"></script>
+    <script>
+        var qrcode = new QRCode("qrcode");
+        // JavaScript代码，用于获取和处理URL参数
+        function getQueryParams() {
+            var params = {};
+            var queryString = window.location.search.substring(1);
+            var pairs = queryString.split('&');
+
+            for (var i = 0; i < pairs.length; i++) {
+                var pair = pairs[i].split('=');
+                var key = decodeURIComponent(pair[0]);
+                var value = decodeURIComponent(pair[1]);
+                params[key] = value;
+            }
+            return params;
+        }
+
+
+        // JavaScript代码，用于处理二维码上传和显示
+        function processQRCode(event) {
+            var file = event.target.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var img = new Image();
+                img.onload = function () {
+                    var canvas = document.createElement('canvas');
+                    var context = canvas.getContext('2d');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    context.drawImage(img, 0, 0, img.width, img.height);
+
+                    var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                    var qrCodeResult = jsQR(imageData.data, canvas.width, canvas.height);
+
+                    if (qrCodeResult) {
+                        var contentElement = document.getElementById('qrcode-content');
+                        contentElement.textContent = qrCodeResult.data;
+                        contentElement.style.display = 'block';
+
+                        var copyButton = document.getElementById('copy-button');
+                        copyButton.disabled = false;
+                    } else {
+                        console.error('解码二维码失败');
+                    }
+                };
+                img.src = e.target.result;
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+        function iosAgent() {
+            return navigator.userAgent.match(/(iPhone|iPod|iPad);?/i);
+        }
+
+        // 复制文本函数，微信端，需要在用户触发 Click 事件里面才能执行成功
+        function copy() {
+            var contentElement = document.getElementById('qrcode-content');
+            var message = contentElement.textContent;
+            if (iosAgent()) {
+                // console.log("input 复制方式 " + message);
+                // let inputObj = document.createElement("input");
+                // inputObj.value = message;
+                // document.body.appendChild(inputObj);
+                // inputObj.select();
+                // inputObj.setSelectionRange(0, inputObj.value.length);
+                // _execCommand('Copy');
+                // document.body.removeChild(inputObj);
+                copyContent()
+            } else {
+                console.log("document 复制方式 " + message);
+                let domObj = document.createElement("span");
+                domObj.innerHTML = message;
+                document.body.appendChild(domObj);
+                let selection = window.getSelection();
+                let range = document.createRange();
+                range.selectNodeContents(domObj);
+                selection.removeAllRanges();
+                selection.addRange(range);
+                _execCommand('Copy');
+                document.body.removeChild(domObj);
+            }
+        }
+
+        // 执行浏览器命令 Copy 顺便输出一下日志，如果在移动端 推荐写个方法展示日志 或者用 alert(msg) 也行。
+        function _execCommand(action) {
+            let is = document.execCommand(action);
+            if (is) {
+                alert("复制成功")
+            } else {
+                alert("复制失败,请手动复制链接地址")
+            }
+        }
+
+
+        function copyContent() {
+            var contentElement = document.getElementById('qrcode-content');
+            var content = contentElement.textContent;
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(content).then(function () {
+                    alert('内容已复制到剪贴板');
+                }).catch(function (error) {
+                    alert('复制内容失败,请手动复制链接地址');
+                });
+            } else {
+                alert('该浏览器不支持复制到剪贴板,请手动复制链接地址');
+            }
+        }
+
+
+        function convertCanvasToImage(canvas){
+                    //新建Image对象
+                    var image = new Image();
+                    // canvas.toDataURL 返回的是一串Base64编码的URL
+                    image.src = canvas.toDataURL("image/png");
+                    image.id = 'qrcodeImg';
+                    return image;
+                }
+
+        // 示例：获取参数并进行处理
+        window.onload = function () {
+            var queryParams = getQueryParams();
+            // 在控制台输出参数
+            // 示例：获取名为 "name" 的参数并显示在页面上
+            var roomUrl = queryParams['room'];
+            var readQrcode = document.getElementById('readQrcode');
+            var showQrcode = document.getElementById('showQrcode');
+            if (roomUrl) {
+                // 删除元素
+                readQrcode.parentNode.removeChild(readQrcode);
+                showQrcode.classList.remove('hidden');
+                qrcode.makeCode(roomUrl);
+                var canvas = document.getElementsByTagName('canvas')[0];
+                // var originImg=document.getElementsByTagName('img')[0];
+                // originImg.style.display = 'none';
+                // originImg.parentNode.removeChild(originImg);
+                var img = this.convertCanvasToImage(canvas);
+                document.getElementById("qrcode2").append(img);  
+            } else {
+                // 删除元素
+                showQrcode.parentNode.removeChild(showQrcode);
+                readQrcode.classList.remove('hidden');
+            }
+        };
+    </script>
+</body>
+
+</html>
