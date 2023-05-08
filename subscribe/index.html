@@ -134,6 +134,10 @@
             <input type="text" id="position2" name="position2" maxlength="10" placeholder="选填"><br><br>
             <label for="position3">关键词3(选填)</label>
             <input type="text" id="position3" name="position3" maxlength="10" placeholder="选填"><br><br>
+            <label for="position4">关键词4(选填)</label>
+            <input type="text" id="position4" name="position4" maxlength="10" placeholder="选填"><br><br>
+            <label for="position5">关键词5(选填)</label>
+            <input type="text" id="position5" name="position5" maxlength="10" placeholder="选填"><br><br>
         </form>
         <button id="copy-button" class="copy-button" onclick="submitForm()">复制内容</button>
     </div>
@@ -294,6 +298,8 @@
             var position1 = document.getElementById("position1").value;
             var position2 = document.getElementById("position2").value;
             var position3 = document.getElementById("position3").value;
+            var position4 = document.getElementById("position4").value;
+            var position5 = document.getElementById("position5").value;
             if (!pageInput || !verifyPage(pageInput)) {
                 alert("查询的页数,必须大于0,小于100!")
                 return
@@ -322,24 +328,38 @@
                 alert("关键词1必须填写,内容长度不得小于2或大于10")
                 return
             }
-            if (!position2==="" && !verifyPosition(position2)) {
+            if (position2.length > 0 && !verifyPosition(position2)) {
                 alert("关键词2非必填,若填写，则内容长度不得小于2或大于10")
                 return
             }
-            if (!position3==="" && !verifyPosition(position3)) {
+            if (position3.length > 0 && !verifyPosition(position3)) {
                 alert("关键词3非必填。若填写，则内容长度不得小于2或大于10")
                 return
             }
+            if (position4.length > 0 && !verifyPosition(position4)) {
+                alert("关键词4非必填。若填写，则内容长度不得小于2或大于10")
+                return
+            }
+            if (position5.length > 0 && !verifyPosition(position5)) {
+                alert("关键词5非必填。若填写，则内容长度不得小于2或大于10")
+                return
+            }
             var positions = [position1];
-            if (!position2==="" && verifyPosition(position2)) {
+            if (position2.length > 0 && verifyPosition(position2)) {
                 positions.push(position2)
             }
-            if (!position3==="" && verifyPosition(position3)) {
+            if (position3.length > 0 && verifyPosition(position3)) {
                 positions.push(position3)
+            }
+            if (position4.length > 0 && verifyPosition(position4)) {
+                positions.push(position4)
+            }
+            if (position5.length > 0 && verifyPosition(position5)) {
+                positions.push(position5)
             }
             // 将表单元素值存储到对象中
             var formData = {
-                type: 1,
+                type: 2,
                 page: parseInt(pageInput),
                 city: parseInt(citySelect),
                 roomType: parseInt(roomTypeSelect),
@@ -366,6 +386,8 @@
                 var position1
                 var position2
                 var position3
+                var position4
+                var position5
                 if (data['positions']) {
                     let positions = data['positions']
                     let length = positions.length;
@@ -377,6 +399,12 @@
                     }
                     if (length > 2) {
                         position3 = positions[2];
+                    }
+                    if (length > 3) {
+                        position4 = positions[3];
+                    }
+                    if (length > 4) {
+                        position5 = positions[4];
                     }
 
                 }
@@ -396,11 +424,13 @@
                 var position1Element = document.getElementById("position1");
                 var position2Element = document.getElementById("position2");
                 var position3Element = document.getElementById("position3");
+                var position4Element = document.getElementById("position4");
+                var position5Element = document.getElementById("position5");
                 if (page && verifyPage(page)) {
                     pageInputElement.value = parseInt(page)
                 }
                 if (city && verifyCity(city)) {
-                    citySelectElement.value = city
+                    citySelectElement.value = parseInt(city)
                 }
                 if (roomType && verifyRoomType(roomType)) {
                     roomTypeSelectElement.value = parseInt(roomType)
@@ -419,6 +449,12 @@
                 }
                 if (position3 && verifyPosition(position3)) {
                     position3Element.value = position3
+                }
+                if (position4 && verifyPosition(position4)) {
+                    position4Element.value = position4
+                }
+                if (position5 && verifyPosition(position5)) {
+                    position5Element.value = position5
                 }
             }
         };

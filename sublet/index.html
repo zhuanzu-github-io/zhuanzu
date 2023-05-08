@@ -83,7 +83,6 @@
         <h1 style="color: red;">2.点击复制按钮</h1>
         <h1 style="color: red;">3.在群里@租住并发送链接</h1>
         <form>
-
             <label for="city">城市:</label>
             <select id="city" name="city">
                 <option value=0>北京</option>
@@ -121,24 +120,71 @@
                 <option value=6>三居</option>
                 <option value=7>四居</option>
             </select><br><br>
-            <label for="page">查询页数:</label>
-            <input title="目前只有23个城市,按照字母顺序排列" type="number" id="page" name="page" value=1><br><br>
-            <label for="min-price">最低价格:</label>
-            <input type="number" id="min-price" name="min-price" value=0><br><br>
-            <label for="max-price">最高价格:</label>
-            <input type="number" id="max-price" name="max-price" value=5000><br>
-            <h5 style="color: rgb(255, 47, 0);">接下来请输入查询的小区名或地铁线或地铁站或道路名(最少2个字,最多10个字)</h5>
+            <label for="price">价格:</label>
+            <input type="number" id="price" name="price" value=0><br><br>
+            <label for="title">标题:</label>
+            <input type="text" id="title" name="title" maxlength="20" value="这是一条转租信息"><br><br>
+            <h5 style="color: rgb(255, 47, 0);">接下来请输入小区名或附近地铁线或附近地铁站或附近道路名(名称尽量写全,地铁线用数字)</h5>
             <label for="position1">关键词1(必填):</label>
             <input type="text" id="position1" name="position1" maxlength="10" value="1号线"><br><br>
             <label for="position2">关键词2(选填)</label>
             <input type="text" id="position2" name="position2" maxlength="10" placeholder="选填"><br><br>
             <label for="position3">关键词3(选填)</label>
             <input type="text" id="position3" name="position3" maxlength="10" placeholder="选填"><br><br>
+            <label for="position4">关键词4(选填)</label>
+            <input type="text" id="position4" name="position4" maxlength="10" placeholder="选填"><br><br>
+            <label for="position5">关键词5(选填)</label>
+            <input type="text" id="position5" name="position5" maxlength="10" placeholder="选填"><br><br>
         </form>
+        <h5 style="color: rgb(255, 47, 0);">接下来请上传用于接待租客的微信群二维码(有效期只有7天)</h5>
+        <div class="form-group">
+            <label for="qrcode-file">选择二维码图片：</label>
+            <input type="file" id="qrcode-file" accept="image/*" onchange="processQRCode(event)">
+        </div>
+        <div id="qrcode-content" class="qrcode-content" style="display: none;"></div>
+
         <button id="copy-button" class="copy-button" onclick="submitForm()">复制内容</button>
     </div>
+    <!-- https://github.com/cozmo/jsQR -->
+    <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.min.js"></script>
     <script>
-        const cities =["北京","长沙","成都","重庆","大连","福州","广州","杭州","合肥","济南","昆明","南京","宁波","青岛","上海","深圳","苏州","天津","无锡","武汉","西安","厦门","郑州"];
+
+        // JavaScript代码，用于处理二维码上传和显示
+        function processQRCode(event) {
+            var contentElement = document.getElementById('qrcode-content');
+            contentElement.style.display = 'none';
+            contentElement.textContent ="";
+            var file = event.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var img = new Image();
+                img.onload = function () {
+                    var canvas = document.createElement('canvas');
+                    var context = canvas.getContext('2d');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    context.drawImage(img, 0, 0, img.width, img.height);
+                    var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                    var qrCodeResult = jsQR(imageData.data, canvas.width, canvas.height);
+                    if (qrCodeResult) {
+                        if (!qrCodeResult.data.startsWith("https://weixin.qq.com/g/")){
+                            alert("上传的不是微信群二维码 \n请上传用于接待的微信群二维码")
+                            return
+                        }
+                        contentElement.textContent = qrCodeResult.data.replace("https://weixin.qq.com/g/", "");;
+                        contentElement.style.display = 'block';
+                    } else {
+                        alert('解码失败,请确认上传的是微信群二维码');
+                    }
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+
+
+        const cities = ["北京", "长沙", "成都", "重庆", "大连", "福州", "广州", "杭州", "合肥", "济南", "昆明", "南京", "宁波", "青岛", "上海", "深圳", "苏州", "天津", "无锡", "武汉", "西安", "厦门", "郑州"];
         //验证城市
         function verifyCity(str) {
             // 验证字符串是否为数字
@@ -207,7 +253,14 @@
         }
 
         function verifyPosition(str) {
-            if (str.trim() === "" || str.length > 10 ||str.length < 2) {
+            if (str.trim() === "" || str.length > 10 || str.length < 2) {
+                return false;
+            }
+            return true;
+        }
+
+        function verifyTitle(str) {
+            if (str.trim() === "" || str.length > 20) {
                 return false;
             }
             return true;
@@ -286,18 +339,16 @@
 
         function submitForm() {
             // 获取表单元素
-            var pageInput = document.getElementById("page").value;
             var citySelect = document.getElementById("city").value;
             var roomTypeSelect = document.getElementById("room-type").value;
-            var minPriceInput = document.getElementById("min-price").value;
-            var maxPriceInput = document.getElementById("max-price").value;
+            var priceInput = document.getElementById("price").value;
+            var titleInput = document.getElementById("title").value;
             var position1 = document.getElementById("position1").value;
             var position2 = document.getElementById("position2").value;
             var position3 = document.getElementById("position3").value;
-            if (!pageInput || !verifyPage(pageInput)) {
-                alert("查询的页数,必须大于0,小于100!")
-                return
-            }
+            var position4 = document.getElementById("position4").value;
+            var position5 = document.getElementById("position5").value;
+            var qrcode = document.getElementById('qrcode-content').textContent;
             if (!citySelect || !verifyCity(citySelect)) {
                 alert("暂不支持您所选择的城市,请在城市下拉框中的23个城市中选择!")
                 return
@@ -306,46 +357,61 @@
                 alert("暂不支持您所选择的房型,请在房型下拉框中选择!")
                 return
             }
-            if (!minPriceInput || !verifyPrice(minPriceInput)) {
-                alert("最低价格不得小于0,且不得大于10万!")
+            if (!priceInput || !verifyPrice(priceInput)) {
+                alert("价格不得小于0,且不得大于100万!")
                 return
             }
-            if (!maxPriceInput || !verifyPrice(maxPriceInput)) {
-                alert("最高价格不得小于0,且不得大于10万!")
+            if (!titleInput || !verifyTitle(titleInput)) {
+                alert("转租标题必填,且内容长度不得大于20")
                 return
             }
-            if (!(parseInt(minPriceInput) < parseInt(maxPriceInput))) {
-                alert("最高价格必须大于最低价格")
-                return
-            }
+
             if (!position1 || !verifyPosition(position1)) {
                 alert("关键词1必须填写,内容长度不得小于2或大于10")
                 return
             }
-            if (!position2==="" && !verifyPosition(position2)) {
+            if (position2.length > 0 && !verifyPosition(position2)) {
                 alert("关键词2非必填,若填写，则内容长度不得小于2或大于10")
                 return
             }
-            if (!position3==="" && !verifyPosition(position3)) {
+            if (position3.length > 0 && !verifyPosition(position3)) {
                 alert("关键词3非必填。若填写，则内容长度不得小于2或大于10")
                 return
             }
+            if (position4.length > 0 && !verifyPosition(position4)) {
+                alert("关键词4非必填。若填写，则内容长度不得小于2或大于10")
+                return
+            }
+            if (position5.length > 0 && !verifyPosition(position5)) {
+                alert("关键词5非必填。若填写，则内容长度不得小于2或大于10")
+                return
+            }
             var positions = [position1];
-            if (!position2==="" && verifyPosition(position2)) {
+            if (position2.length > 0 && verifyPosition(position2)) {
                 positions.push(position2)
             }
-            if (!position3==="" && verifyPosition(position3)) {
+            if (position3.length > 0 && verifyPosition(position3)) {
                 positions.push(position3)
+            }
+            if (position4.length > 0 && verifyPosition(position4)) {
+                positions.push(position4)
+            }
+            if (position5.length > 0 && verifyPosition(position5)) {
+                positions.push(position5)
+            }
+            if(qrcode===""||qrcode.length>80){
+                alert("请上传用于接待的微信群二维码!")
+                return
             }
             // 将表单元素值存储到对象中
             var formData = {
-                type: 1,
-                page: parseInt(pageInput),
+                type: 3,
+                price:priceInput,
                 city: parseInt(citySelect),
                 roomType: parseInt(roomTypeSelect),
-                lowest: parseInt(minPriceInput),
-                highest: parseInt(maxPriceInput),
-                positions: positions
+                title:titleInput,
+                positions: positions,
+                qrcode:qrcode
             };
             // 将对象转换为JSON字符串
             copy(JSON.stringify(formData))
@@ -357,15 +423,17 @@
             // 示例：获取名为 "name" 的参数并显示在页面上
             var dataStr = queryParams['data'];
             if (dataStr) {
-                let data=JSON.parse(dataStr);
-                var page = data['page']
+                let data = JSON.parse(dataStr);
                 var city = data['city'];
                 var roomType = data['roomType'];
-                var lowest = data['lowest'];
-                var highest = data['highest'];
+                var price = data['price'];
+                var title = data['title'];
+                var qrcode=data['qrcode']
                 var position1
                 var position2
                 var position3
+                var position4
+                var position5
                 if (data['positions']) {
                     let positions = data['positions']
                     let length = positions.length;
@@ -378,6 +446,12 @@
                     if (length > 2) {
                         position3 = positions[2];
                     }
+                    if (length > 3) {
+                        position4 = positions[3];
+                    }
+                    if (length > 4) {
+                        position5 = positions[4];
+                    }
 
                 }
                 // var page = queryParams['page'];
@@ -388,28 +462,27 @@
                 // var position1 = queryParams['position1'];
                 // var position2 = queryParams['position2'];
                 // var position3 = queryParams['position3'];
-                var pageInputElement = document.getElementById("page");
                 var citySelectElement = document.getElementById("city");
                 var roomTypeSelectElement = document.getElementById("room-type");
-                var minPriceInputElement = document.getElementById("min-price");
-                var maxPriceInputElement = document.getElementById("max-price");
+                var priceInputElement = document.getElementById("price");
+                var titleInputElement = document.getElementById("title");
                 var position1Element = document.getElementById("position1");
                 var position2Element = document.getElementById("position2");
                 var position3Element = document.getElementById("position3");
-                if (page && verifyPage(page)) {
-                    pageInputElement.value = parseInt(page)
-                }
+                var position4Element = document.getElementById("position4");
+                var position5Element = document.getElementById("position5");
+                var qrcodeElement = document.getElementById('qrcode-content');
                 if (city && verifyCity(city)) {
-                    citySelectElement.value = city
+                    citySelectElement.value = parseInt(city)
                 }
                 if (roomType && verifyRoomType(roomType)) {
                     roomTypeSelectElement.value = parseInt(roomType)
                 }
-                if (lowest && verifyPrice(lowest)) {
-                    minPriceInputElement.value = parseInt(lowest)
+                if (price && verifyPrice(price)) {
+                    priceInputElement.value = parseInt(price)
                 }
-                if (highest && verifyPrice(highest)) {
-                    maxPriceInputElement.value = parseInt(highest)
+                if (title && verifyTitle(title)) {
+                    titleInputElement.value = title
                 }
                 if (position1 && verifyPosition(position1)) {
                     position1Element.value = position1
@@ -419,6 +492,16 @@
                 }
                 if (position3 && verifyPosition(position3)) {
                     position3Element.value = position3
+                }
+                if (position4 && verifyPosition(position4)) {
+                    position4Element.value = position4
+                }
+                if (position5 && verifyPosition(position5)) {
+                    position5Element.value = position5
+                }
+                if (qrcode&&qrcode.length>0&&qrcode.length<80){
+                    qrcodeElement.textContent=qrcode
+                    qrcodeElement.style.display = 'block';
                 }
             }
         };
