@@ -121,8 +121,6 @@
                 <option value=6>三居</option>
                 <option value=7>四居</option>
             </select><br><br>
-            <label for="page">查询页数:</label>
-            <input title="目前只有23个城市,按照字母顺序排列" type="number" id="page" name="page" value=1><br><br>
             <label for="min-price">最低价格:</label>
             <input type="number" id="min-price" name="min-price" value=0><br><br>
             <label for="max-price">最高价格:</label>
@@ -290,7 +288,6 @@
 
         function submitForm() {
             // 获取表单元素
-            var pageInput = document.getElementById("page").value;
             var citySelect = document.getElementById("city").value;
             var roomTypeSelect = document.getElementById("room-type").value;
             var minPriceInput = document.getElementById("min-price").value;
@@ -300,10 +297,6 @@
             var position3 = document.getElementById("position3").value;
             var position4 = document.getElementById("position4").value;
             var position5 = document.getElementById("position5").value;
-            if (!pageInput || !verifyPage(pageInput)) {
-                alert("查询的页数,必须大于0,小于100!")
-                return
-            }
             if (!citySelect || !verifyCity(citySelect)) {
                 alert("暂不支持您所选择的城市,请在城市下拉框中的23个城市中选择!")
                 return
@@ -360,7 +353,6 @@
             // 将表单元素值存储到对象中
             var formData = {
                 type: 2,
-                page: parseInt(pageInput),
                 city: parseInt(citySelect),
                 roomType: parseInt(roomTypeSelect),
                 lowest: parseInt(minPriceInput),
@@ -378,7 +370,6 @@
             var dataStr = queryParams['data'];
             if (dataStr) {
                 let data=JSON.parse(dataStr);
-                var page = data['page']
                 var city = data['city'];
                 var roomType = data['roomType'];
                 var lowest = data['lowest'];
@@ -416,7 +407,6 @@
                 // var position1 = queryParams['position1'];
                 // var position2 = queryParams['position2'];
                 // var position3 = queryParams['position3'];
-                var pageInputElement = document.getElementById("page");
                 var citySelectElement = document.getElementById("city");
                 var roomTypeSelectElement = document.getElementById("room-type");
                 var minPriceInputElement = document.getElementById("min-price");
@@ -426,9 +416,6 @@
                 var position3Element = document.getElementById("position3");
                 var position4Element = document.getElementById("position4");
                 var position5Element = document.getElementById("position5");
-                if (page && verifyPage(page)) {
-                    pageInputElement.value = parseInt(page)
-                }
                 if (city && verifyCity(city)) {
                     citySelectElement.value = parseInt(city)
                 }
