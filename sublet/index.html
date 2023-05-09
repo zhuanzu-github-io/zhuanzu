@@ -175,6 +175,7 @@
                         contentElement.style.display = 'block';
                     } else {
                         alert('解码失败,请确认上传的是微信群二维码');
+                        return
                     }
                 };
                 img.src = e.target.result;
@@ -406,7 +407,7 @@
             // 将表单元素值存储到对象中
             var formData = {
                 type: 3,
-                price:priceInput,
+                price:parseInt(priceInput),
                 city: parseInt(citySelect),
                 roomType: parseInt(roomTypeSelect),
                 title:titleInput,
