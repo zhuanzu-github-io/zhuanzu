@@ -322,19 +322,19 @@
                 alert("关键词1必须填写,内容长度不得小于2或大于10")
                 return
             }
-            if (!position2==="" && !verifyPosition(position2)) {
+            if (position2.length > 0 && !verifyPosition(position2)) {
                 alert("关键词2非必填,若填写，则内容长度不得小于2或大于10")
                 return
             }
-            if (!position3==="" && !verifyPosition(position3)) {
+            if (position3.length > 0 && !verifyPosition(position3)) {
                 alert("关键词3非必填。若填写，则内容长度不得小于2或大于10")
                 return
             }
             var positions = [position1];
-            if (!position2==="" && verifyPosition(position2)) {
+            if (position2.length > 0 && verifyPosition(position2)) {
                 positions.push(position2)
             }
-            if (!position3==="" && verifyPosition(position3)) {
+            if (position3.length > 0 && verifyPosition(position3)) {
                 positions.push(position3)
             }
             // 将表单元素值存储到对象中
