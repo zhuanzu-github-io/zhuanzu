@@ -2,143 +2,330 @@
 <html>
 
 <head>
-    <title>租住的私人工具</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>转租查询页面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        /* CSS样式，用于布局和样式化 */
-        body {
-            font-family: Arial, sans-serif;
+        /* 全局样式重置 */
+        * {
             margin: 0;
             padding: 0;
-            text-align: center;
+            box-sizing: border-box;
         }
 
-        .container {
-            max-width: 100%;
-            margin: 0 auto;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
             padding: 20px;
-            text-align: center;
-        }
-
-        .qrcode {
-            text-align: center;
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
+            /* display: flex; */
             justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
         .container {
-            max-width: 600px;
-            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-right: 24px;
+            padding-left: 24px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            position: relative;
+        }
+
+        /* 表单样式 */
+        .form {
+            background-color: #fff;
             padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
 
-        .container2 {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
+        label {
+            display: inline-block;
+            width: 150px;
+            margin-bottom: 5px;
+            font-weight: bold;
         }
 
-        .form-group {
-            margin-bottom: 20px;
+        select {
+            width: 150px;
+            margin-right: 8px;
+            padding: 5px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            text-align: center;
         }
 
-        .qrcode-image {
-            max-width: 100%;
-            margin-bottom: 20px;
+        input[type="number"] {
+            width: 150px;
+            padding: 5px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            width: 150px;
+            padding: 5px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .user-info {
+            font-weight: bold;
+            color: #FFA500;
+            /* 例如，红色 */
+            width: 150px;
+            padding: 5px;
+            font-size: 16px;
+            border-radius: 4px;
+            /* border: 1px solid #ccc; */
+            display: inline-block;
+            text-align: center;
         }
 
         .copy-button {
             display: inline-block;
-            padding: 10px 20px;
+            padding: 10px 30px;
             background-color: #4CAF50;
             color: white;
             border: none;
+            margin-top: 20px;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 18px;
         }
 
-        .hidden {
-            display: none;
-        }
-
-        .qrcode-content {
-            max-width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
+        .info-icon {
+            display: inline-block;
+            position: absolute;
+            top: 50%;
+            right: 0px;
+            transform: translateY(-50%);
+            border-radius: 50%;
+            font-size: 12px;
             text-align: center;
-            word-wrap: break-word;
-            padding: 20px 20px;
+            line-height: 20px;
+            cursor: pointer;
+        }
+
+        .popup {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            /* transform: translateX(25%); */
+        }
+
+        .popup-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            /* height: 175px; */
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .popup h3 {
+            margin-top: 0;
+        }
+
+        .popup p {
+            margin-bottom: 10px;
+        }
+
+        .popup button {
+            background-color: #007bff;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .popup button:hover {
+            background-color: #0056b3;
+        }
+
+
+        /* 移动端适配 */
+        @media only screen and (max-width: 600px) {
+
+            body {
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                overflow-y: scroll;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            select,
+            input[type="number"] {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div id="rent" class="container2 ">
-        <h1 style="color: red;">1.上传群二维码</h1>
-        <h1 style="color: red;">2.点击复制按钮</h1>
-        <h1 style="color: red;">3.在群里@租住并发送链接</h1>
-        <form>
-
+    <div class="form">
+        <div class="container">
             <label for="city">城市:</label>
             <select id="city" name="city">
-                <option value=0>北京</option>
-                <option value=1>长沙</option>
-                <option value=2>成都</option>
-                <option value=3>重庆</option>
-                <option value=4>大连</option>
-                <option value=5>福州</option>
-                <option value=6>广州</option>
-                <option value=7>杭州</option>
-                <option value=8>合肥</option>
-                <option value=9>济南</option>
-                <option value=10>昆明</option>
-                <option value=11>南京</option>
-                <option value=12>宁波</option>
-                <option value=13>青岛</option>
-                <option value=14>上海</option>
-                <option value=15>深圳</option>
-                <option value=16>苏州</option>
-                <option value=17>天津</option>
-                <option value=18>无锡</option>
-                <option value=19>武汉</option>
-                <option value=20>西安</option>
-                <option value=21>厦门</option>
-                <option value=22>郑州</option>
-            </select><br><br>
+                <option value="0">北京</option>
+                <option value="1">长沙</option>
+                <option value="2">成都</option>
+                <option value="3">重庆</option>
+                <option value="4">大连</option>
+                <option value="5">福州</option>
+                <option value="6">广州</option>
+                <option value="7">杭州</option>
+                <option value="8">合肥</option>
+                <option value="9">济南</option>
+                <option value="10">昆明</option>
+                <option value="11">南京</option>
+                <option value="12">宁波</option>
+                <option value="13">青岛</option>
+                <option value="14">上海</option>
+                <option value="15">深圳</option>
+                <option value="16">苏州</option>
+                <option value="17">天津</option>
+                <option value="18">无锡</option>
+                <option value="19">武汉</option>
+                <option value="20">西安</option>
+                <option value="21">厦门</option>
+                <option value="22">郑州</option>
+            </select>
+        </div>
+        <div class="container">
             <label for="room-type">房型:</label>
             <select id="room-type" name="room-type">
-                <option value=0>全部</option>
-                <option value=1>单间</option>
-                <option value=2>次卧</option>
-                <option value=3>主卧</option>
-                <option value=4>一居</option>
-                <option value=5>二居</option>
-                <option value=6>三居</option>
-                <option value=7>四居</option>
-            </select><br><br>
-            <label for="page">查询页数:</label>
-            <input title="目前只有23个城市,按照字母顺序排列" type="number" id="page" name="page" value=1><br><br>
+                <option value="0">全部</option>
+                <option value="1">单间</option>
+                <option value="2">次卧</option>
+                <option value="3">主卧</option>
+                <option value="4">一居</option>
+                <option value="5">二居</option>
+                <option value="6">三居</option>
+                <option value="7">四居</option>
+            </select>
+        </div>
+        <div class="container">
             <label for="min-price">最低价格:</label>
-            <input type="number" id="min-price" name="min-price" value=0><br><br>
-            <label for="max-price">最高价格:</label>
-            <input type="number" id="max-price" name="max-price" value=5000><br>
-            <h5 style="color: rgb(255, 47, 0);">接下来请输入查询的小区名或地铁线或地铁站或道路名(最少2个字,最多10个字)</h5>
-            <label for="position1">关键词1(必填):</label>
-            <input type="text" id="position1" name="position1" maxlength="10" value="1号线"><br><br>
-            <label for="position2">关键词2(选填)</label>
-            <input type="text" id="position2" name="position2" maxlength="10" placeholder="选填"><br><br>
-            <label for="position3">关键词3(选填)</label>
-            <input type="text" id="position3" name="position3" maxlength="10" placeholder="选填"><br><br>
-        </form>
-        <button id="copy-button" class="copy-button" onclick="submitForm()">复制内容</button>
+            <input type="number" id="min-price" name="min-price" value="0">
+            <svg t="1685358048788" onclick="showInfoPopup('lowest')" class="icon info-icon" viewBox="0 0 1024 1024"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#cdcdcd" p-id="2689"></path>
+            </svg>
+        </div>
+        <div class="container">
+            <label for="min-price">最高价格:</label>
+            <input type="number" id="max-price" name="max-price" value=5000>
+            <svg t="1685358048788" onclick="showInfoPopup('highest')" class="icon info-icon" viewBox="0 0 1024 1024"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#cdcdcd" p-id="2689"></path>
+            </svg>
+        </div>
+        <div class="container">
+            <label for="min-price">关键词1(必填):</label>
+            <input type="text" id="position1" name="position1" maxlength="10" value="1号线">
+            <svg t="1685358048788" onclick="showInfoPopup('key1')" class="icon info-icon" viewBox="0 0 1024 1024"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#cdcdcd" p-id="2689"></path>
+            </svg>
+        </div>
+        <div class="container">
+            <label for="min-price">关键词2(选填):</label>
+            <input type="text" id="position2" name="position2" maxlength="10" placeholder="选填">
+            <svg t="1685358048788" onclick="showInfoPopup('key2')" class="icon info-icon" viewBox="0 0 1024 1024"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#cdcdcd" p-id="2689"></path>
+            </svg>
+        </div>
+        <div class="container">
+            <label for="min-price">关键词3(选填):</label>
+            <input type="text" id="position3" name="position3" maxlength="10" placeholder="选填">
+            <svg t="1685358048788" onclick="showInfoPopup('key3')" class="icon info-icon" viewBox="0 0 1024 1024"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#cdcdcd" p-id="2689"></path>
+            </svg>
+        </div>
+        <div class="container">
+            <button type="button" id="copy-button" class="copy-button" onclick="submitForm()">复制内容</button>
+        </div>
+        <!-- 弹窗 -->
+        <div id="info-popup" class="popup">
+            <div class="popup-content">
+                <h3 id="popup-title"></h3>
+                <p id="popup-description" style="text-align: left;"></p>
+                <button onclick="hideInfoPopup()">关闭</button>
+            </div>
+        </div>
     </div>
+
+
+
     <script>
-        const cities =["北京","长沙","成都","重庆","大连","福州","广州","杭州","合肥","济南","昆明","南京","宁波","青岛","上海","深圳","苏州","天津","无锡","武汉","西安","厦门","郑州"];
+        const cities = ["北京", "长沙", "成都", "重庆", "大连", "福州", "广州", "杭州", "合肥", "济南", "昆明", "南京", "宁波", "青岛", "上海", "深圳", "苏州", "天津", "无锡", "武汉", "西安", "厦门", "郑州"];
+        //处理订阅服务激活时长
+        function handleExpire(str) {
+            // 验证字符串是否为数字
+            if (str && /^\d+$/.test(str)) {
+                // 将字符串转换为数字
+                if (num==0){
+                    return '未激活';
+                }
+                var num = parseInt(str)*1000;
+                var date= new Date(num)
+                var year = date.getFullYear();
+                var month = String(date.getMonth() + 1).padStart(2, '0');
+                var day = String(date.getDate()).padStart(2, '0');
+                var hours = String(date.getHours()).padStart(2, '0');
+                var minutes = String(date.getMinutes()).padStart(2, '0');
+                var seconds = String(date.getSeconds()).padStart(2, '0');
+                var formattedTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+                
+                // 判断数字是否大于0小于100
+                if (num >Date.now()) {
+                    return formattedTime+'(已激活)';
+                }else{
+                    return formattedTime+'(已过期)';
+                }
+            }
+            return '未激活';
+        }
+        
+        
         //验证城市
         function verifyCity(str) {
             // 验证字符串是否为数字
@@ -159,7 +346,7 @@
             if (/^\d+$/.test(str)) {
                 // 将字符串转换为数字
                 var num = parseInt(str);
-                // 判断数字是否大于0小于100
+                // 判断数字是否大于0小于7
                 if (num >= 0 && num <= 7) {
                     return true;
                 }
@@ -180,18 +367,6 @@
             return false;
         }
 
-        function verifyRoomType(str) {
-            // 验证字符串是否为数字
-            if (/^\d+$/.test(str)) {
-                // 将字符串转换为数字
-                var num = parseInt(str);
-                // 判断数字是否大于0小于100
-                if (num >= 0 && num <= 7) {
-                    return true;
-                }
-            }
-            return false;
-        }
 
         function verifyPrice(str) {
             // 验证字符串是否为数字
@@ -207,7 +382,7 @@
         }
 
         function verifyPosition(str) {
-            if (str.trim() === "" || str.length > 10 ||str.length < 2) {
+            if (str.trim() === "" || str.length > 10 || str.length < 2) {
                 return false;
             }
             return true;
@@ -265,7 +440,7 @@
         function _execCommand(action) {
             let is = document.execCommand(action);
             if (is) {
-                alert("内容已复制到剪贴板,\n快去群里@租住并粘贴发送吧~")
+                alert("内容已复制到剪贴板,\n快去群里粘贴发送吧~")
             } else {
                 alert("复制失败")
             }
@@ -275,7 +450,7 @@
         function copyContent(content) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(content).then(function () {
-                    alert('内容已复制到剪贴板,快去群里@租住并粘贴发送吧~');
+                    alert('内容已复制到剪贴板,快去群里粘贴发送吧~');
                 }).catch(function (error) {
                     alert('复制内容失败,\n请手动复制链接地址');
                 });
@@ -286,7 +461,6 @@
 
         function submitForm() {
             // 获取表单元素
-            var pageInput = document.getElementById("page").value;
             var citySelect = document.getElementById("city").value;
             var roomTypeSelect = document.getElementById("room-type").value;
             var minPriceInput = document.getElementById("min-price").value;
@@ -294,10 +468,6 @@
             var position1 = document.getElementById("position1").value;
             var position2 = document.getElementById("position2").value;
             var position3 = document.getElementById("position3").value;
-            if (!pageInput || !verifyPage(pageInput)) {
-                alert("查询的页数,必须大于0,小于100!")
-                return
-            }
             if (!citySelect || !verifyCity(citySelect)) {
                 alert("暂不支持您所选择的城市,请在城市下拉框中的23个城市中选择!")
                 return
@@ -340,7 +510,6 @@
             // 将表单元素值存储到对象中
             var formData = {
                 type: 1,
-                page: parseInt(pageInput),
                 city: parseInt(citySelect),
                 roomType: parseInt(roomTypeSelect),
                 lowest: parseInt(minPriceInput),
@@ -357,15 +526,16 @@
             // 示例：获取名为 "name" 的参数并显示在页面上
             var dataStr = queryParams['data'];
             if (dataStr) {
-                let data=JSON.parse(dataStr);
-                var page = data['page']
+                let data = JSON.parse(dataStr);
                 var city = data['city'];
                 var roomType = data['roomType'];
                 var lowest = data['lowest'];
                 var highest = data['highest'];
+
                 var position1
                 var position2
                 var position3
+
                 if (data['positions']) {
                     let positions = data['positions']
                     let length = positions.length;
@@ -379,6 +549,7 @@
                         position3 = positions[2];
                     }
 
+
                 }
                 // var page = queryParams['page'];
                 // var city = queryParams['city'];
@@ -388,7 +559,6 @@
                 // var position1 = queryParams['position1'];
                 // var position2 = queryParams['position2'];
                 // var position3 = queryParams['position3'];
-                var pageInputElement = document.getElementById("page");
                 var citySelectElement = document.getElementById("city");
                 var roomTypeSelectElement = document.getElementById("room-type");
                 var minPriceInputElement = document.getElementById("min-price");
@@ -396,11 +566,11 @@
                 var position1Element = document.getElementById("position1");
                 var position2Element = document.getElementById("position2");
                 var position3Element = document.getElementById("position3");
-                if (page && verifyPage(page)) {
-                    pageInputElement.value = parseInt(page)
-                }
+
+
+
                 if (city && verifyCity(city)) {
-                    citySelectElement.value = city
+                    citySelectElement.value = parseInt(city)
                 }
                 if (roomType && verifyRoomType(roomType)) {
                     roomTypeSelectElement.value = parseInt(roomType)
@@ -422,6 +592,47 @@
                 }
             }
         };
+
+        function showInfoPopup(field) {
+            var popup = document.getElementById('info-popup');
+            var title = document.getElementById('popup-title');
+            var description = document.getElementById('popup-description');
+            if (field === 'lowest') {
+                title.textContent = '最低价格';
+                description.innerHTML = '<div style="padding-top: 10px; padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">最低租金必须大于等于0,小于等于100万</li> <li class="tab-item">最低租金为0时,查询结果中将包含未提及租金的转租信息</li> </ul></div>';
+            } else if (field === 'highest') {
+                title.textContent = '最高价格';
+                description.innerHTML = '<div  style="padding-top: 10px; padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">最高租金必须大于等于最低租金</li><li class="tab-item">最高租金必须小于等于100万</li> </ul></div>';
+            } else if (field === 'key1') {
+                title.textContent = '关键词1说明';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">关键词1是必填项，长度必须大于等于2，小于等于10</li> <li class="tab-item">关键词越简洁，查询时匹配到的转租信息越多</li><li>关键词可以填写小区名、道路名、地铁名等</li> </ul></div>';
+            } else if (field === 'key2') {
+                title.textContent = '查询关键词2';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">关键词2是选填项，长度必须大于等于2，小于等于10</li> <li class="tab-item">关键词越简洁，查询时匹配到的转租信息越多</li><li>关键词可以填写小区名、道路名、地铁名等</li> </ul></div>';
+            } else if (field === 'key3') {
+                title.textContent = '查询关键词3';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">关键词3是选填项，长度必须大于等于2，小于等于10</li> <li class="tab-item">关键词越简洁，查询时匹配到的转租信息越多</li><li>关键词可以填写小区名、道路名、地铁名等</li> </ul></div>';
+            } else if (field === 'key4') {
+                title.textContent = '查询关键词4';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">关键词4是选填项，长度必须大于等于2，小于等于10</li> <li class="tab-item">关键词越简洁，查询时匹配到的转租信息越多</li><li>关键词可以填写小区名、道路名、地铁名等</li> </ul></div>';
+            } else if (field === 'key5') {
+                title.textContent = '查询关键词5';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">关键词5是选填项，长度必须大于等于2，小于等于10</li> <li class="tab-item">关键词越简洁，查询时匹配到的转租信息越多</li><li>关键词可以填写小区名、道路名、地铁名等</li> </ul></div>';
+            } else if (field === 'subscribe-info') {
+                title.textContent = '订阅信息';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">填写页面信息并发送到微信群,订阅信息将自动生效</li> <li class="tab-item">在微信群发送"停止订阅",订阅信息将切换为失效状态</li><li>生效状态的订阅信息,只有开通了订阅服务,才能接收到转租信息的定时推送</li> </ul></div>';
+            } else if (field === 'subscribe-server') {
+                title.textContent = '订阅服务';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">添加微信机器人Avery为好友后,转账备注"订阅"即可激活</li> <li class="tab-item">订阅服务价格为1元/星期,不足一元部分自动换算成秒数,增加订阅服务时长</li><li>订阅服务转账金额尽量每次小于等于1元,按需续订</li> </ul></div>';
+            }
+            popup.style.display = 'flex';
+        }
+        function hideInfoPopup() {
+            var popup = document.getElementById('info-popup');
+            popup.style.display = 'none';
+        }
+
+
     </script>
 </body>
 
