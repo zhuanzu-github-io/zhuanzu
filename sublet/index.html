@@ -2,158 +2,451 @@
 <html>
 
 <head>
-    <title>租住的私人工具</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>移动端前端页面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 ,maximum-scale=1.0">
     <style>
-        /* CSS样式，用于布局和样式化 */
-        body {
-            font-family: Arial, sans-serif;
+        /* 全局样式重置 */
+        * {
             margin: 0;
             padding: 0;
-            text-align: center;
+            box-sizing: border-box;
         }
 
-        .container {
-            max-width: 100%;
-            margin: 0 auto;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
             padding: 20px;
-            text-align: center;
-        }
-
-        .qrcode {
-            text-align: center;
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
+            /* display: flex; */
             justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
         .container {
-            max-width: 600px;
-            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-right: 24px;
+            padding-left: 24px;
+            padding-top: 6px;
+            padding-bottom: 6px;
+            position: relative;
+        }
+
+        /* 表单样式 */
+        .form {
+            background-color: #fff;
             padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
 
-        .container2 {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
+        label {
+            display: inline-block;
+            width: 150px;
+            margin-bottom: 5px;
+            font-weight: bold;
         }
 
-        .form-group {
-            margin-bottom: 20px;
+        select {
+            width: 150px;
+            margin-right: 8px;
+            padding: 5px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            text-align: center;
         }
 
-        .qrcode-image {
-            max-width: 100%;
-            margin-bottom: 20px;
+        input[type="number"] {
+            width: 150px;
+            padding: 5px 5px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            width: 150px;
+            padding: 5px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            text-align: center;
+        }
+
+        textarea {
+            resize: none; 
+            overflow: hidden; 
+            width: 190px;
+            height: 50px;
+            padding: 5px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            text-align: center;
+        }
+
+
+        /* 隐藏默认的文件选择按钮 */
+        input[type="file"] {
+            display: none;
+        }
+
+        /* 自定义文件选择按钮样式 */
+        .custom-file-input {
+            display: inline-block;
+            padding: 5px 5px;
+            background-color: #f2f2f2;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            color: #333;
+            font-size: 14px;
+            cursor: pointer;
+            text-align: center;
+            width: 120px;
+        }
+
+        /* 自定义文件选择按钮的标签样式 */
+        .custom-file-label {
+            display: inline-block;
+            /* margin-left: 10px; */
+        }
+
+        /* 悬停时的样式 */
+        .custom-file-input:hover,
+        .custom-file-input:focus {
+            background-color: #e0e0e0;
+            border-color: #999;
+        }
+
+        /* 激活时的样式 */
+        .custom-file-input:active {
+            background-color: #d2d2d2;
+            border-color: #888;
+        }
+
+        /* 禁用时的样式 */
+        .custom-file-input:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+
+
+
+        .user-info {
+            font-weight: bold;
+            color: #FFA500;
+            /* 例如，红色 */
+            width: 150px;
+            padding: 5px;
+            font-size: 16px;
+            border-radius: 4px;
+            /* border: 1px solid #ccc; */
+            display: inline-block;
+            text-align: center;
         }
 
         .copy-button {
             display: inline-block;
-            padding: 10px 20px;
+            padding: 10px 15px;
             background-color: #4CAF50;
             color: white;
             border: none;
+            margin-top: 10px;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 18px;
         }
 
-        .hidden {
-            display: none;
-        }
-
-        .qrcode-content {
-            max-width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
+        .info-icon {
+            display: inline-block;
+            position: absolute;
+            top: 50%;
+            right: 0px;
+            transform: translateY(-50%);
+            border-radius: 50%;
+            font-size: 12px;
             text-align: center;
-            word-wrap: break-word;
-            padding: 20px 20px;
+            line-height: 20px;
+            cursor: pointer;
+        }
+
+        .popup {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            /* transform: translateX(25%); */
+        }
+
+        .popup-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            /* height: 175px; */
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .popup h3 {
+            margin-top: 0;
+        }
+
+        .popup p {
+            margin-bottom: 10px;
+        }
+
+        .popup button {
+            background-color: #007bff;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .popup button:hover {
+            background-color: #0056b3;
+        }
+
+
+        /* 移动端适配 */
+        @media only screen and (max-width: 600px) {
+
+            body {
+                /* position: relative; */
+                position: static;
+                width: 100%;
+                height: 100%;
+                overflow-y: scroll;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            select,
+            input[type="number"] {
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div id="rent" class="container2 ">
-        <h3 style="color: red;">1.上传群二维码</h3>
-        <h3 style="color: red;">2.点击复制按钮</h3>
-        <h3 style="color: red;">3.在群里@租住并发送链接</h3>
-        <form>
+    <div class="form">
+        <div class="container" id="nick-con">
+            <label for="nick">微信昵称:</label>
+            <span id="nick" name="nick" class="user-info">minry</span>
+        </div>
+        <div class="container" id="info-con">
+            <label for="sublet-info">转租信息:</label>
+            <span id="sublet-info" name="sublet-info" class="user-info">生效中</span>
+            <svg t="1685358048788" onclick="showInfoPopup('sublet-info')" class="icon info-icon" viewBox="0 0 1024 1024"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#cdcdcd" p-id="2689"></path>
+            </svg>
+        </div>
+        <div class="container" id="server-con">
+            <label for="sublet-server">转租服务:</label>
+            <span id="sublet-server" name="sublet-server" class="user-info">未激活</span>
+            <svg t="1685358048788" onclick="showInfoPopup('sublet-server')" class="icon info-icon"
+                viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20"
+                height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#cdcdcd" p-id="2689"></path>
+            </svg>
+        </div>
+        <div class="container" id="qr-con">
+            <label for="sublet-qr">群二维码:</label>
+            <span id="sublet-qr" name="sublet-qr" class="user-info">未上传</span>
+            <svg t="1685358048788" onclick="showInfoPopup('sublet-qr')" class="icon info-icon" viewBox="0 0 1024 1024"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#cdcdcd" p-id="2689"></path>
+            </svg>
+        </div>
+        
+        <!-- <input style="width: 300px; " type="text" id="title" name="title" maxlength="20" placeholder="快输入标题吧~"> -->
+        <!-- <div class="container" style="justify-content: flex-start;">
+            <label for="title" style="width: 50px;padding-right: 10px;">标题:</label>
+            <input style="width: 236px; " type="text" id="title" name="title" maxlength="20" placeholder="快输入标题吧~">
+            <svg t="1685358048788" onclick="showInfoPopup('title')" class="icon info-icon" viewBox="0 0 1024 1024"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#cdcdcd" p-id="2689"></path>
+            </svg>
+        </div> -->
+        <div class="container">
             <label for="city">城市:</label>
             <select id="city" name="city">
-                <option value=0>北京</option>
-                <option value=1>长沙</option>
-                <option value=2>成都</option>
-                <option value=3>重庆</option>
-                <option value=4>大连</option>
-                <option value=5>福州</option>
-                <option value=6>广州</option>
-                <option value=7>杭州</option>
-                <option value=8>合肥</option>
-                <option value=9>济南</option>
-                <option value=10>昆明</option>
-                <option value=11>南京</option>
-                <option value=12>宁波</option>
-                <option value=13>青岛</option>
-                <option value=14>上海</option>
-                <option value=15>深圳</option>
-                <option value=16>苏州</option>
-                <option value=17>天津</option>
-                <option value=18>无锡</option>
-                <option value=19>武汉</option>
-                <option value=20>西安</option>
-                <option value=21>厦门</option>
-                <option value=22>郑州</option>
-            </select><br><br>
+                <option value="0">北京</option>
+                <option value="1">长沙</option>
+                <option value="2">成都</option>
+                <option value="3">重庆</option>
+                <option value="4">大连</option>
+                <option value="5">福州</option>
+                <option value="6">广州</option>
+                <option value="7">杭州</option>
+                <option value="8">合肥</option>
+                <option value="9">济南</option>
+                <option value="10">昆明</option>
+                <option value="11">南京</option>
+                <option value="12">宁波</option>
+                <option value="13">青岛</option>
+                <option value="14">上海</option>
+                <option value="15">深圳</option>
+                <option value="16">苏州</option>
+                <option value="17">天津</option>
+                <option value="18">无锡</option>
+                <option value="19">武汉</option>
+                <option value="20">西安</option>
+                <option value="21">厦门</option>
+                <option value="22">郑州</option>
+            </select>
+        </div>
+        <div class="container">
             <label for="room-type">房型:</label>
             <select id="room-type" name="room-type">
-                <option value=0>全部</option>
-                <option value=1>单间</option>
-                <option value=2>次卧</option>
-                <option value=3>主卧</option>
-                <option value=4>一居</option>
-                <option value=5>二居</option>
-                <option value=6>三居</option>
-                <option value=7>四居</option>
-            </select><br><br>
-            <label for="price">价格:</label>
-            <input type="number" id="price" name="price" value=0><br><br>
-            <label for="title">标题:</label>
-            <input type="text" id="title" style="width: 240px;" name="title" maxlength="20" value="这是一条转租信息"><br><br>
-            <h5 style="color: rgb(255, 47, 0);">接下来请输入小区名或附近地铁线或附近地铁站或附近道路名(名称尽量写全,地铁线用数字)</h5>
-            <label for="position1">关键词1(必填):</label>
-            <input type="text" id="position1" name="position1" maxlength="10" value="1号线"><br><br>
-            <label for="position2">关键词2(选填)</label>
-            <input type="text" id="position2" name="position2" maxlength="10" placeholder="选填"><br><br>
-            <label for="position3">关键词3(选填)</label>
-            <input type="text" id="position3" name="position3" maxlength="10" placeholder="选填"><br><br>
-            <label for="position4">关键词4(选填)</label>
-            <input type="text" id="position4" name="position4" maxlength="10" placeholder="选填"><br><br>
-            <label for="position5">关键词5(选填)</label>
-            <input type="text" id="position5" name="position5" maxlength="10" placeholder="选填"><br><br>
-        </form>
-        <h5 style="color: rgb(255, 47, 0);">接下来请上传用于接待租客的微信群二维码(有效期只有7天)</h5>
-        <div class="form-group">
-            <label for="qrcode-file">选择二维码图片：</label>
-            <input type="file" id="qrcode-file" accept="image/*" onchange="processQRCode(event)">
+                <option value="0">全部</option>
+                <option value="1">单间</option>
+                <option value="2">次卧</option>
+                <option value="3">主卧</option>
+                <option value="4">一居</option>
+                <option value="5">二居</option>
+                <option value="6">三居</option>
+                <option value="7">四居</option>
+            </select>
         </div>
-        <div id="qrcode-content" class="qrcode-content" style="display: none;"></div>
+        <div class="container">
+            <label for="title" >标题:</label>
+            <textarea  id="title" name="title" maxlength="20" placeholder="快输入标题吧~"></textarea>
+            <svg t="1685358048788" onclick="showInfoPopup('title')" class="icon info-icon" viewBox="0 0 1024 1024"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#cdcdcd" p-id="2689"></path>
+            </svg>
+        </div>
+        <div class="container">
+            <label for="price">转租价格:</label>
+            <input type="number" id="price" name="price" value="0">
+            <svg t="1685358048788" onclick="showInfoPopup('price')" class="icon info-icon" viewBox="0 0 1024 1024"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#cdcdcd" p-id="2689"></path>
+            </svg>
+        </div>
+        <div class="container">
+            <label for="min-price">关键词1(必填):</label>
+            <input type="text" id="position1" name="position1" maxlength="10" value="1号线">
+            <svg t="1685358048788" onclick="showInfoPopup('key1')" class="icon info-icon" viewBox="0 0 1024 1024"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#cdcdcd" p-id="2689"></path>
+            </svg>
+        </div>
+        <div class="container">
+            <label for="min-price">关键词2(选填):</label>
+            <input type="text" id="position2" name="position2" maxlength="10" placeholder="选填">
+            <svg t="1685358048788" onclick="showInfoPopup('key2')" class="icon info-icon" viewBox="0 0 1024 1024"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#cdcdcd" p-id="2689"></path>
+            </svg>
+        </div>
+        <div class="container">
+            <label for="min-price">关键词3(选填):</label>
+            <input type="text" id="position3" name="position3" maxlength="10" placeholder="选填">
+            <svg t="1685358048788" onclick="showInfoPopup('key3')" class="icon info-icon" viewBox="0 0 1024 1024"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#cdcdcd" p-id="2689"></path>
+            </svg>
+        </div>
+        <div class="container">
+            <label for="min-price">关键词4(选填):</label>
+            <input type="text" id="position4" name="position4" maxlength="10" placeholder="选填">
+            <svg t="1685358048788" onclick="showInfoPopup('key4')" class="icon info-icon" viewBox="0 0 1024 1024"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#cdcdcd" p-id="2689"></path>
+            </svg>
+        </div>
+        <div class="container">
+            <label for="min-price">关键词5(选填):</label>
+            <input type="text" id="position5" name="position5" maxlength="10" placeholder="选填">
+            <svg t="1685358048788" onclick="showInfoPopup('key5')" class="icon info-icon" viewBox="0 0 1024 1024"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#cdcdcd" p-id="2689"></path>
+            </svg>
+        </div>
+        <div class="container">
+            <label for="qrcode-file" class="custom-file-input">上传群二维码</label>
+            <input type="file" class="custom-file-label" id="qrcode-file" accept="image/*"
+                onchange="processQRCode(event)">
+            <svg t="1685358048788" onclick="showInfoPopup('qrcode-file')" class="icon info-icon" viewBox="0 0 1024 1024"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#cdcdcd" p-id="2689"></path>
+            </svg>
+        </div>
 
-        <button id="copy-button" class="copy-button" onclick="submitForm()">复制内容</button>
+        <div id="qrcode-content" class="container" style="display: none;">
+            <span style="width: 450px; word-break: break-all;font-size: 14px; text-align: center;" id="qrUrl"></span>
+        </div>
+
+        <div class="container">
+            <button type="button" id="copy-button" class="copy-button" onclick="submitForm()">复制内容</button>
+        </div>
+        <!-- 弹窗 -->
+        <div id="info-popup" class="popup">
+            <div class="popup-content">
+                <h3 id="popup-title"></h3>
+                <p id="popup-description" style="text-align: left;"></p>
+                <button onclick="hideInfoPopup()">关闭</button>
+            </div>
+        </div>
     </div>
-    <!-- https://github.com/cozmo/jsQR -->
+
+
     <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.min.js"></script>
     <script>
-
         // JavaScript代码，用于处理二维码上传和显示
         function processQRCode(event) {
             var contentElement = document.getElementById('qrcode-content');
+            var qrUrlElement = document.getElementById('qrUrl');
             contentElement.style.display = 'none';
-            contentElement.textContent ="";
+            qrUrlElement.innerHTML = "";
             var file = event.target.files[0];
             var reader = new FileReader();
             reader.onload = function (e) {
@@ -167,14 +460,14 @@
                     var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
                     var qrCodeResult = jsQR(imageData.data, canvas.width, canvas.height);
                     if (qrCodeResult) {
-                        if (!qrCodeResult.data.startsWith("https://weixin.qq.com/g/")){
-                            alert("上传的不是微信群二维码 \n请上传用于接待的微信群二维码")
+                        if (!qrCodeResult.data.startsWith("https://weixin.qq.com/g/")) {
+                            showTipPopup("温馨提示","请上微信群二维码")
                             return
                         }
-                        contentElement.textContent = qrCodeResult.data.replace("https://weixin.qq.com/g/", "");;
-                        contentElement.style.display = 'block';
+                        qrUrlElement.innerHTML = qrCodeResult.data.replace("https://weixin.qq.com/g/", "");;
+                        contentElement.style.display = 'flex';
                     } else {
-                        alert('解码失败,请确认上传的是微信群二维码');
+                        showTipPopup("温馨提示",'解码失败,请确认上传的是微信群二维码');
                         return
                     }
                 };
@@ -186,6 +479,63 @@
 
 
         const cities = ["北京", "长沙", "成都", "重庆", "大连", "福州", "广州", "杭州", "合肥", "济南", "昆明", "南京", "宁波", "青岛", "上海", "深圳", "苏州", "天津", "无锡", "武汉", "西安", "厦门", "郑州"];
+        //处理订阅服务激活时长
+        function handleExpire(str) {
+            // 验证字符串是否为数字
+            if (str && /^\d+$/.test(str)) {
+                // 将字符串转换为数字
+                if (num == 0) {
+                    return '未激活';
+                }
+                var num = parseInt(str) * 1000;
+                var date = new Date(num)
+                var year = date.getFullYear();
+                var month = String(date.getMonth() + 1).padStart(2, '0');
+                var day = String(date.getDate()).padStart(2, '0');
+                var hours = String(date.getHours()).padStart(2, '0');
+                var minutes = String(date.getMinutes()).padStart(2, '0');
+                var seconds = String(date.getSeconds()).padStart(2, '0');
+                var formattedTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+                // 判断数字是否大于0小于100
+                if (num > Date.now()) {
+                    return formattedTime + '(已激活)';
+                } else {
+                    return formattedTime + '(已过期)';
+                }
+            }
+            return '未激活';
+        }
+
+        //处理群二维码有效时长
+        function handleQrExpire(str) {
+            // 验证字符串是否为数字
+            if (str && /^\d+$/.test(str)) {
+                // 将字符串转换为数字
+                if (num == 0) {
+                    return '未上传二维码';
+                }
+                var num = parseInt(str) * 1000;
+                var date = new Date(num)
+                var year = date.getFullYear();
+                var month = String(date.getMonth() + 1).padStart(2, '0');
+                var day = String(date.getDate()).padStart(2, '0');
+                var hours = String(date.getHours()).padStart(2, '0');
+                var minutes = String(date.getMinutes()).padStart(2, '0');
+                var seconds = String(date.getSeconds()).padStart(2, '0');
+                var formattedTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+                // 判断数字是否大于0小于100
+                if (num > Date.now()) {
+                    return formattedTime + '(生效中)';
+                } else {
+                    return formattedTime + '(已过期)';
+                }
+            }
+            return '未上传二维码';
+        }
+
+
         //验证城市
         function verifyCity(str) {
             // 验证字符串是否为数字
@@ -206,7 +556,7 @@
             if (/^\d+$/.test(str)) {
                 // 将字符串转换为数字
                 var num = parseInt(str);
-                // 判断数字是否大于0小于100
+                // 判断数字是否大于0小于7
                 if (num >= 0 && num <= 7) {
                     return true;
                 }
@@ -227,18 +577,6 @@
             return false;
         }
 
-        function verifyRoomType(str) {
-            // 验证字符串是否为数字
-            if (/^\d+$/.test(str)) {
-                // 将字符串转换为数字
-                var num = parseInt(str);
-                // 判断数字是否大于0小于100
-                if (num >= 0 && num <= 7) {
-                    return true;
-                }
-            }
-            return false;
-        }
 
         function verifyPrice(str) {
             // 验证字符串是否为数字
@@ -266,7 +604,6 @@
             }
             return true;
         }
-
 
 
         function getQueryParams() {
@@ -315,13 +652,13 @@
             }
         }
 
-        // 执行浏览器命令 Copy 顺便输出一下日志，如果在移动端 推荐写个方法展示日志 或者用 alert(msg) 也行。
+        // 执行浏览器命令 Copy 顺便输出一下日志，如果在移动端 推荐写个方法展示日志
         function _execCommand(action) {
             let is = document.execCommand(action);
             if (is) {
-                alert("内容已复制到剪贴板,\n快去群里@租住并粘贴发送吧~")
+                showTipPopup("温馨提示","内容已复制到剪贴板,快去群里粘贴发送吧~")
             } else {
-                alert("复制失败")
+                showTipPopup("温馨提示","复制失败")
             }
         }
 
@@ -329,16 +666,17 @@
         function copyContent(content) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(content).then(function () {
-                    alert('内容已复制到剪贴板,快去群里@租住并粘贴发送吧~');
+                    showTipPopup("温馨提示",'内容已复制到剪贴板,快去群里粘贴发送吧~');
                 }).catch(function (error) {
-                    alert('复制内容失败,\n请手动复制链接地址');
+                    showTipPopup("温馨提示",'复制内容失败,\n请手动复制链接地址');
                 });
             } else {
-                alert('该浏览器不支持复制到剪贴板,请手动复制链接地址');
+                showTipPopup("温馨提示",'该浏览器不支持复制到剪贴板,请手动复制链接地址');
             }
         }
 
         function submitForm() {
+            // 获取表单元素
             // 获取表单元素
             var citySelect = document.getElementById("city").value;
             var roomTypeSelect = document.getElementById("room-type").value;
@@ -349,42 +687,42 @@
             var position3 = document.getElementById("position3").value;
             var position4 = document.getElementById("position4").value;
             var position5 = document.getElementById("position5").value;
-            var qrcode = document.getElementById('qrcode-content').textContent;
+            var qrcode = document.getElementById("qrUrl").textContent;
             if (!citySelect || !verifyCity(citySelect)) {
-                alert("暂不支持您所选择的城市,请在城市下拉框中的23个城市中选择!")
+                showTipPopup("温馨提示","暂不支持您所选择的城市,请在城市下拉框中的23个城市中选择!")
                 return
             }
             if (!roomTypeSelect || !verifyRoomType(roomTypeSelect)) {
-                alert("暂不支持您所选择的房型,请在房型下拉框中选择!")
+                showTipPopup("温馨提示","暂不支持您所选择的房型,请在房型下拉框中选择!")
                 return
             }
             if (!priceInput || !verifyPrice(priceInput)) {
-                alert("价格不得小于0,且不得大于100万!")
+                showTipPopup("温馨提示","价格不得小于0,且不得大于100万!")
                 return
             }
             if (!titleInput || !verifyTitle(titleInput)) {
-                alert("转租标题必填,且内容长度不得大于20")
+                showTipPopup("温馨提示","转租标题必填,且内容长度不得大于20")
                 return
             }
 
             if (!position1 || !verifyPosition(position1)) {
-                alert("关键词1必须填写,内容长度不得小于2或大于10")
+                showTipPopup("温馨提示","关键词1必须填写,内容长度不得小于2或大于10")
                 return
             }
             if (position2.length > 0 && !verifyPosition(position2)) {
-                alert("关键词2非必填,若填写，则内容长度不得小于2或大于10")
+                showTipPopup("温馨提示","关键词2非必填,若填写，则内容长度不得小于2或大于10")
                 return
             }
             if (position3.length > 0 && !verifyPosition(position3)) {
-                alert("关键词3非必填。若填写，则内容长度不得小于2或大于10")
+                showTipPopup("温馨提示","关键词3非必填。若填写，则内容长度不得小于2或大于10")
                 return
             }
             if (position4.length > 0 && !verifyPosition(position4)) {
-                alert("关键词4非必填。若填写，则内容长度不得小于2或大于10")
+                showTipPopup("温馨提示","关键词4非必填。若填写，则内容长度不得小于2或大于10")
                 return
             }
             if (position5.length > 0 && !verifyPosition(position5)) {
-                alert("关键词5非必填。若填写，则内容长度不得小于2或大于10")
+                showTipPopup("温馨提示","关键词5非必填。若填写，则内容长度不得小于2或大于10")
                 return
             }
             var positions = [position1];
@@ -400,19 +738,19 @@
             if (position5.length > 0 && verifyPosition(position5)) {
                 positions.push(position5)
             }
-            if(qrcode===""||qrcode.length>80){
-                alert("请上传用于接待的微信群二维码!")
+            if (qrcode === "" || qrcode.length > 80) {
+                showTipPopup("温馨提示","请上传用于接待的微信群二维码!")
                 return
             }
             // 将表单元素值存储到对象中
             var formData = {
                 type: 3,
-                price:parseInt(priceInput),
+                price: parseInt(priceInput),
                 city: parseInt(citySelect),
                 roomType: parseInt(roomTypeSelect),
-                title:titleInput,
+                title: titleInput,
                 positions: positions,
-                qrcode:qrcode
+                qrcode: qrcode
             };
             // 将对象转换为JSON字符串
             copy(JSON.stringify(formData))
@@ -429,7 +767,13 @@
                 var roomType = data['roomType'];
                 var price = data['price'];
                 var title = data['title'];
-                var qrcode=data['qrcode']
+                var qrcode = data['qrcode']
+
+                var nick = data['name'];
+                var expired = data['expired_time'];
+                var active = data['is_active'];
+                var qrExpired = data['url_expired_time'];
+
                 var position1
                 var position2
                 var position3
@@ -465,14 +809,36 @@
                 // var position3 = queryParams['position3'];
                 var citySelectElement = document.getElementById("city");
                 var roomTypeSelectElement = document.getElementById("room-type");
-                var priceInputElement = document.getElementById("price");
-                var titleInputElement = document.getElementById("title");
+                var priceElement = document.getElementById("price");
+                var titleElement = document.getElementById("title");
                 var position1Element = document.getElementById("position1");
                 var position2Element = document.getElementById("position2");
                 var position3Element = document.getElementById("position3");
                 var position4Element = document.getElementById("position4");
                 var position5Element = document.getElementById("position5");
-                var qrcodeElement = document.getElementById('qrcode-content');
+
+                var nickElement = document.getElementById("nick");
+                var infoElement = document.getElementById("sublet-info");
+                var serverElement = document.getElementById("sublet-server");
+                var qrExpireElement = document.getElementById("sublet-qr");
+                //昵称为空的话,隐藏
+                if (!nick || nick.trim() === "") {
+                    document.getElementById("nick-con").style.display = "none";
+                } else {
+                    nickElement.textContent = nick
+                }
+                //订阅信息默认生效中,判断是否失效
+                if (active && /^\d+$/.test(active)) {
+                    let activeStatus = parseInt(active);
+                    if (activeStatus == 1) {
+                        infoElement.textContent = '已失效'
+                    }
+                }
+                //订阅服务默认未激活,判断是否为数字
+                serverElement.textContent = handleExpire(expired)
+                //微信群二维码默认未上传
+                qrExpireElement.textContent = handleQrExpire(qrExpired)
+
                 if (city && verifyCity(city)) {
                     citySelectElement.value = parseInt(city)
                 }
@@ -480,10 +846,10 @@
                     roomTypeSelectElement.value = parseInt(roomType)
                 }
                 if (price && verifyPrice(price)) {
-                    priceInputElement.value = parseInt(price)
+                    priceElement.value = parseInt(price)
                 }
                 if (title && verifyTitle(title)) {
-                    titleInputElement.value = title
+                    titleElement.value = title
                 }
                 if (position1 && verifyPosition(position1)) {
                     position1Element.value = position1
@@ -500,12 +866,77 @@
                 if (position5 && verifyPosition(position5)) {
                     position5Element.value = position5
                 }
-                if (qrcode&&qrcode.length>0&&qrcode.length<80){
-                    qrcodeElement.textContent=qrcode
-                    qrcodeElement.style.display = 'block';
+                if (qrcode && qrcode.length > 0 && qrcode.length < 80) {
+                    var contentElement = document.getElementById('qrcode-content');
+                    var qrUrlElement = document.getElementById('qrUrl');
+                    qrUrlElement.innerHTML = qrcode;
+                    contentElement.style.display = 'flex';
                 }
+            } else {
+                document.getElementById("nick-con").style.display = "none";
+                document.getElementById("info-con").style.display = "none";
+                document.getElementById("server-con").style.display = "none";
+                document.getElementById("qr-con").style.display = "none";
             }
         };
+
+        function showInfoPopup(field) {
+            var popup = document.getElementById('info-popup');
+            var title = document.getElementById('popup-title');
+            var description = document.getElementById('popup-description');
+            if (field === 'price') {
+                title.textContent = '转租价格';
+                description.innerHTML = '<div style="padding-top: 10px; padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">转租价格必须大于等于0,小于等于100万</li> </ul></div>';
+            } else if (field === 'title') {
+                title.textContent = '转租标题';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">转租标题将展示在租客搜索列表中,是租客是否进群咨询的决定因素之一</li> <li class="tab-item">转租标题字数必须大于等于2,小于等于20</li> </ul></div>';
+            } else if (field === 'key1') {
+                title.textContent = '关键词1说明';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">关键词1是必填项，长度必须大于等于2，小于等于10</li> <li class="tab-item">关键词越详细，被搜索到的几率越高</li><li>关键词可以填写小区名、道路名、地铁名等</li> </ul></div>';
+            } else if (field === 'key2') {
+                title.textContent = '关键词2说明';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">关键词2是选填项，长度必须大于等于2，小于等于10</li> <li class="tab-item">关键词越详细，被搜索到的几率越高</li><li>关键词可以填写小区名、道路名、地铁名等</li> </ul></div>';
+            } else if (field === 'key3') {
+                title.textContent = '关键词3说明';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">关键词3是选填项，长度必须大于等于2，小于等于10</li> <li class="tab-item">关键词越详细，被搜索到的几率越高</li><li>关键词可以填写小区名、道路名、地铁名等</li> </ul></div>';
+            } else if (field === 'key4') {
+                title.textContent = '关键词4说明';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">关键词4是选填项，长度必须大于等于2，小于等于10</li> <li class="tab-item">关键词越详细，被搜索到的几率越高</li><li>关键词可以填写小区名、道路名、地铁名等</li> </ul></div>';
+            } else if (field === 'key5') {
+                title.textContent = '关键词5说明';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">关键词5是选填项，长度必须大于等于2，小于等于10</li> <li class="tab-item">关键词越详细，被搜索到的几率越高</li><li>关键词可以填写小区名、道路名、地铁名等</li> </ul></div>';
+            } else if (field === 'sublet-info') {
+                title.textContent = '转租信息';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">填写页面信息并发送到微信群,转租信息将自动生效</li> <li class="tab-item">在微信群发送"停止转租",转租信息将切换为失效状态</li><li>生效状态的转租信息,只有开通了转租服务,才能被租客搜索到</li> </ul></div>';
+            } else if (field === 'sublet-server') {
+                title.textContent = '转租服务';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">添加微信机器人Avery为好友后,转账备注"转租"即可激活</li> <li>激活转租服务的转租信息,将会被优先展示在租客查询结果中</li><li class="tab-item">转租服务价格为1元/星期,不足一元部分自动换算成秒数,增加转租服务时长</li><li>转租服务转账金额应尽量小于等于1元,按需续订</li> </ul></div>';
+            } else if (field === 'sublet-qr') {
+                title.textContent = '群二维码';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">群二维码默认有效时长6.5天,一旦失效,租客将无法搜到您的转租信息</li> <li class="tab-item">租客进群后会首先查看群公告,请提前将房子图片录入公告</li></ul></div>';
+            } else if (field === 'qrcode-file') {
+                title.textContent = '微信群二维码';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">租客将通过此微信群二维码联系您</li> <li class="tab-item">租客进群后会首先查看群公告,请提前将房子图片录入公告</li><li class="tab-item">系统默认二维码6.5天失效,请及时更新</li></ul></div>';
+            }
+            popup.style.display = 'flex';
+        }
+
+        function showTipPopup(slogan,msg) {
+            var popup = document.getElementById('info-popup');
+            var title = document.getElementById('popup-title');
+            var description = document.getElementById('popup-description');
+
+            title.textContent = slogan;
+            description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">'+msg+'</li> </ul></div>';
+            popup.style.display = 'flex';
+        }
+
+        function hideInfoPopup() {
+            var popup = document.getElementById('info-popup');
+            popup.style.display = 'none';
+        }
+
+
     </script>
 </body>
 

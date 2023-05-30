@@ -74,7 +74,7 @@
         input[type="text"] {
             width: 150px;
             padding: 5px;
-            font-size: 16px;
+            font-size: 14px;
             border-radius: 4px;
             border: 1px solid #ccc;
             display: inline-block;
@@ -436,13 +436,13 @@
             }
         }
 
-        // 执行浏览器命令 Copy 顺便输出一下日志，如果在移动端 推荐写个方法展示日志 或者用 alert(msg) 也行。
+        // 执行浏览器命令 Copy 顺便输出一下日志，如果在移动端 推荐写个方法展示日志
         function _execCommand(action) {
             let is = document.execCommand(action);
             if (is) {
-                alert("内容已复制到剪贴板,\n快去群里粘贴发送吧~")
+                showTipPopup("温馨提示","内容已复制到剪贴板,\n快去群里粘贴发送吧~")
             } else {
-                alert("复制失败")
+                showTipPopup("温馨提示","复制失败")
             }
         }
 
@@ -450,12 +450,12 @@
         function copyContent(content) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(content).then(function () {
-                    alert('内容已复制到剪贴板,快去群里粘贴发送吧~');
+                    showTipPopup("温馨提示",'内容已复制到剪贴板,快去群里粘贴发送吧~');
                 }).catch(function (error) {
-                    alert('复制内容失败,\n请手动复制链接地址');
+                    showTipPopup("温馨提示",'复制内容失败,\n请手动复制链接地址');
                 });
             } else {
-                alert('该浏览器不支持复制到剪贴板,请手动复制链接地址');
+                showTipPopup("温馨提示",'该浏览器不支持复制到剪贴板,请手动复制链接地址');
             }
         }
 
@@ -469,35 +469,35 @@
             var position2 = document.getElementById("position2").value;
             var position3 = document.getElementById("position3").value;
             if (!citySelect || !verifyCity(citySelect)) {
-                alert("暂不支持您所选择的城市,请在城市下拉框中的23个城市中选择!")
+                showTipPopup("温馨提示","暂不支持您所选择的城市,请在城市下拉框中的23个城市中选择!")
                 return
             }
             if (!roomTypeSelect || !verifyRoomType(roomTypeSelect)) {
-                alert("暂不支持您所选择的房型,请在房型下拉框中选择!")
+                showTipPopup("温馨提示","暂不支持您所选择的房型,请在房型下拉框中选择!")
                 return
             }
             if (!minPriceInput || !verifyPrice(minPriceInput)) {
-                alert("最低价格不得小于0,且不得大于10万!")
+                showTipPopup("温馨提示","最低价格不得小于0,且不得大于10万!")
                 return
             }
             if (!maxPriceInput || !verifyPrice(maxPriceInput)) {
-                alert("最高价格不得小于0,且不得大于10万!")
+                showTipPopup("温馨提示","最高价格不得小于0,且不得大于10万!")
                 return
             }
             if (!(parseInt(minPriceInput) < parseInt(maxPriceInput))) {
-                alert("最高价格必须大于最低价格")
+                showTipPopup("温馨提示","最高价格必须大于最低价格")
                 return
             }
             if (!position1 || !verifyPosition(position1)) {
-                alert("关键词1必须填写,内容长度不得小于2或大于10")
+                showTipPopup("温馨提示","关键词1必须填写,内容长度不得小于2或大于10")
                 return
             }
             if (position2.length > 0 && !verifyPosition(position2)) {
-                alert("关键词2非必填,若填写，则内容长度不得小于2或大于10")
+                showTipPopup("温馨提示","关键词2非必填,若填写，则内容长度不得小于2或大于10")
                 return
             }
             if (position3.length > 0 && !verifyPosition(position3)) {
-                alert("关键词3非必填。若填写，则内容长度不得小于2或大于10")
+                showTipPopup("温馨提示","关键词3非必填。若填写，则内容长度不得小于2或大于10")
                 return
             }
             var positions = [position1];
@@ -627,6 +627,17 @@
             }
             popup.style.display = 'flex';
         }
+
+        function showTipPopup(slogan,msg) {
+            var popup = document.getElementById('info-popup');
+            var title = document.getElementById('popup-title');
+            var description = document.getElementById('popup-description');
+            title.textContent = slogan;
+            description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">'+msg+'</li> </ul></div>';
+            popup.style.display = 'flex';
+        }
+
+
         function hideInfoPopup() {
             var popup = document.getElementById('info-popup');
             popup.style.display = 'none';
