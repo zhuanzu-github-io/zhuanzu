@@ -2,100 +2,60 @@
 <html>
 
 <head>
-    <title>转租接待群</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        /* CSS样式，用于布局和样式化 */
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
             text-align: center;
-        }
-
-        .container {
-            max-width: 100%;
-            margin: 0 auto;
             padding: 20px;
-            text-align: center;
         }
 
-        .qrcode {
-            text-align: center;
+        h1 {
             margin-top: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        .container {
-            max-width: 600px;
+        #qrcode {
+            max-width: 300px;
             margin: 0 auto;
-            padding: 20px;
         }
 
-        .container2 {
-            max-width: 600px;
+        #qrcode2 {
+            padding-top: 15px;
+            padding-bottom: 15px;
+            max-width: 300px;
             margin: 0 auto;
-            padding: 20px;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .qrcode-image {
-            max-width: 100%;
-            margin-bottom: 20px;
-        }
-
-        .copy-button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .qrcode-content {
-            max-width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-            text-align: center;
-            word-wrap: break-word;
-            padding: 20px 20px;
-        }
     </style>
 </head>
 
 <body>
-    <div id="showQrcode" class="container">
-        <h2 id="topic1" style="color: red;">1.长按识别二维码</h1>
-        <h2 id="topic2" style="color: red;">2.进群看公告</h1>
-        <h2 id="topic3" style="color: red;">3.开始咨询</h1>
-        <!-- <div class="form-group">
-            <label for="content">输入内容：</label>
-            <input type="text" id="content" placeholder="输入要生成二维码的内容">
-            <button onclick="makeCode()">生成二维码</button>
-        </div> -->
+    <h1 style="color: rgb(236, 182, 102);">转租接待群</h1>
 
-        <div class="qrcode hidden" id="qrcode"></div>
-        <div class="qrcode2" id="qrcode2"></div>
+    <div id="qrcode"></div>
+    <div id="qrcode2"></div>
+
+    <div style="padding-top: 20px; text-align: center;">
+        <!-- <svg t="1685505711607" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2450" width="40" height="40" style="fill: #F69661;">
+            <path d="M512 0C229.215086 0 0 229.231543 0 512c0 282.784914 229.215086 512 512 512s512-229.215086 512-512C1024 229.231543 794.786743 0 512 0zM512 950.857143C269.999543 950.857143 73.142857 754.000457 73.142857 512 73.142857 270.017829 269.999543 73.142857 512 73.142857s438.857143 196.874971 438.857143 438.857143C950.857143 754.000457 754.000457 950.857143 512 950.857143z"></path>
+            <path d="M585.142857 402.285714 475.428571 402.285714 438.857143 402.285714 402.285714 402.285714 402.285714 438.857143 438.857143 438.857143 438.857143 768 402.285714 768 402.285714 804.571429 621.714286 804.571429 621.714286 768 585.142857 768Z"></path>
+            <path d="M512 274.285714m-73.142857 0a40 40 0 1 0 146.285714 0 40 40 0 1 0-146.285714 0Z"></path>
+        </svg> -->
+        <span style="font-weight: bold; color: #666666; font-size: 20px; margin-top: 10px;">咨询前先看群公告，详情都在公告里</span>
     </div>
+
 
     <!-- https://github.com/davidshimjs/qrcodejs -->
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <script>
-        var qrcode = new QRCode("qrcode");
+        var qrcode = new QRCode("qrcode", {
+            text: 'your content',
+            width: 256,
+            height: 256,
+            colorDark: '#0c6eb7',
+            colorLight: '#ffffff',
+            correctLevel: QRCode.CorrectLevel.H
+        });
         // JavaScript代码，用于获取和处理URL参数
         function getQueryParams() {
             var params = {};
@@ -125,17 +85,19 @@
             // 示例：获取名为 "name" 的参数并显示在页面上
             var roomUrl = queryParams['room'];
             if (roomUrl) {
-                roomUrl="https://weixin.qq.com/g/"+roomUrl
-            }else{
-                document.getElementById("topic1").innerHTML = "1.长按二维码"
-                document.getElementById("topic2").innerHTML = "2.选择打开对方名片"
-                document.getElementById("topic3").innerHTML = "3.添加好友开始咨询"
+                roomUrl = "https://weixin.qq.com/g/" + roomUrl
+            } else {
+                // document.getElementById("topic1").innerHTML = "1.长按二维码"
+                // document.getElementById("topic2").innerHTML = "2.选择打开对方名片"
+                // document.getElementById("topic3").innerHTML = "3.添加好友开始咨询"
                 roomUrl = "wxp://f2f0N4K2IQnTaWdte17YsIrH9ZFotEhlWxKozogQ6v0BdXE"
             }
+            document.getElementById('qrcode').style.display = 'none';
             qrcode.makeCode(roomUrl);
             var canvas = document.getElementsByTagName('canvas')[0];
             var img = this.convertCanvasToImage(canvas);
             document.getElementById("qrcode2").append(img);
+
         };
     </script>
 </body>
