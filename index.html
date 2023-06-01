@@ -25,14 +25,13 @@
             max-width: 300px;
             margin: 0 auto;
         }
-
     </style>
 </head>
 
 <body>
     <h1 style="color: rgb(236, 182, 102);">转租接待群</h1>
 
-    <div id="qrcode"></div>
+    <div id="qrcode" style="display: none;"></div>
     <div id="qrcode2"></div>
 
     <div style="padding-top: 20px; text-align: center;">
@@ -48,14 +47,7 @@
     <!-- https://github.com/davidshimjs/qrcodejs -->
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <script>
-        var qrcode = new QRCode("qrcode", {
-            text: 'your content',
-            width: 256,
-            height: 256,
-            colorDark: '#0c6eb7',
-            colorLight: '#ffffff',
-            correctLevel: QRCode.CorrectLevel.H
-        });
+
         // JavaScript代码，用于获取和处理URL参数
         function getQueryParams() {
             var params = {};
@@ -90,9 +82,19 @@
                 // document.getElementById("topic1").innerHTML = "1.长按二维码"
                 // document.getElementById("topic2").innerHTML = "2.选择打开对方名片"
                 // document.getElementById("topic3").innerHTML = "3.添加好友开始咨询"
-                roomUrl = "wxp://f2f0N4K2IQnTaWdte17YsIrH9ZFotEhlWxKozogQ6v0BdXE"
+                location.href = "https://fzchats.uk/qrcb"
+                return
             }
-            document.getElementById('qrcode').style.display = 'none';
+            // document.getElementById('qrcode').style.display = 'none';
+            var qrcode = new QRCode("qrcode", {
+                text: 'your content',
+                width: 256,
+                height: 256,
+                colorDark: '#0c6eb7',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
             qrcode.makeCode(roomUrl);
             var canvas = document.getElementsByTagName('canvas')[0];
             var img = this.convertCanvasToImage(canvas);
