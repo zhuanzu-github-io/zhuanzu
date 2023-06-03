@@ -719,10 +719,10 @@
                 description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">关键词5是选填项，长度必须大于等于2，小于等于10</li> <li class="tab-item">关键词越简洁，查询时匹配到的转租信息越多</li><li>关键词可以填写小区名、道路名、地铁名等</li> </ul></div>';
             } else if (field === 'subscribe-info') {
                 title.textContent = '订阅信息';
-                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">填写页面信息并发送到微信群,订阅信息将自动生效</li> <li class="tab-item">在微信群发送"停止订阅",订阅信息将切换为失效状态</li><li>生效状态的订阅信息,只有开通了订阅服务,才能接收到转租信息的定时推送</li> </ul></div>';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">填写页面信息并发送到微信群,订阅信息将自动生效</li> <li class="tab-item">在微信群发送"停止订阅",订阅信息将切换为失效状态</li> </ul></div>';
             } else if (field === 'subscribe-server') {
                 title.textContent = '订阅服务';
-                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">添加微信机器人Avery为好友后,转账备注"订阅"即可激活</li> <li class="tab-item">订阅服务价格为1元/星期,不足一元部分自动换算成秒数,增加订阅服务时长</li><li>订阅服务转账金额尽量每次小于等于1元,按需续订</li> </ul></div>';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">每次更新订阅信息,订阅服务到期时间都会变成7天后</li> <li class="tab-item">订阅信息生效的情况下,机器人Avery会在每天9点和18点@您,并向您发送新增的满足您订阅要求的转租信息</li></ul></div>';
             }
             popup.style.display = 'flex';
         }
