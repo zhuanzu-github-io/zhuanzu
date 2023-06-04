@@ -439,10 +439,13 @@
     </div>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.min.js"></script> -->
+    <script src="jsQR.min.js"></script> 
     <script>
-        // JavaScript代码，用于处理二维码上传和显示
-        function processQRCode(event) {
+
+
+ // JavaScript代码，用于处理二维码上传和显示
+ function processQRCode(event) {
             var contentElement = document.getElementById('qrcode-content');
             var qrUrlElement = document.getElementById('qrUrl');
             contentElement.style.display = 'none';
@@ -475,6 +478,45 @@
             };
             reader.readAsDataURL(file);
         }
+
+
+
+
+
+        // JavaScript代码，用于处理二维码上传和显示
+        // function processQRCode(event) {
+        //     var contentElement = document.getElementById('qrcode-content');
+        //     var qrUrlElement = document.getElementById('qrUrl');
+        //     contentElement.style.display = 'none';
+        //     qrUrlElement.innerHTML = "";
+        //     var file = event.target.files[0];
+        //     var reader = new FileReader();
+        //     reader.onload = function (e) {
+        //         var img = new Image();
+        //         img.onload = function () {
+        //             var canvas = document.createElement('canvas');
+        //             var context = canvas.getContext('2d');
+        //             canvas.width = img.width;
+        //             canvas.height = img.height;
+        //             context.drawImage(img, 0, 0, img.width, img.height);
+        //             var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        //             var qrCodeResult = jsQR(imageData.data, canvas.width, canvas.height);
+        //             if (qrCodeResult) {
+        //                 if (!qrCodeResult.data.startsWith("https://weixin.qq.com/g/")) {
+        //                     showTipPopup("温馨提示","请上微信群二维码")
+        //                     return
+        //                 }
+        //                 qrUrlElement.innerHTML = qrCodeResult.data.replace("https://weixin.qq.com/g/", "");;
+        //                 contentElement.style.display = 'flex';
+        //             } else {
+        //                 showTipPopup("温馨提示",'解码失败,请确认上传的是微信群二维码');
+        //                 return
+        //             }
+        //         };
+        //         img.src = e.target.result;
+        //     };
+        //     reader.readAsDataURL(file);
+        // }
 
 
 
