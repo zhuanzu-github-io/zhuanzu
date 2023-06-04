@@ -360,6 +360,16 @@
             </svg>
         </div>
         <div class="container">
+            <label for="note">小红书链接:</label>
+            <input type="text" id="note" name="note" placeholder="请直接粘贴">
+            <svg t="1685358048788" onclick="showInfoPopup('note')" class="icon info-icon" viewBox="0 0 1024 1024"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#cdcdcd" p-id="2689"></path>
+            </svg>
+        </div>
+        <div class="container">
             <label for="min-price">关键词1(必填):</label>
             <input type="text" id="position1" name="position1" maxlength="10" value="世纪大道金茂大厦">
             <svg t="1685358048788" onclick="showInfoPopup('key1')" class="icon info-icon" viewBox="0 0 1024 1024"
@@ -730,6 +740,7 @@
             var position4 = document.getElementById("position4").value;
             var position5 = document.getElementById("position5").value;
             var qrcode = document.getElementById("qrUrl").textContent;
+            var note = document.getElementById("note").value;
             if (!citySelect || !verifyCity(citySelect)) {
                 showTipPopup("温馨提示","暂不支持您所选择的城市,请在城市下拉框中的23个城市中选择!")
                 return
@@ -784,6 +795,13 @@
                 showTipPopup("温馨提示","请上传用于接待的微信群二维码!")
                 return
             }
+            //匹配小红书url
+            var noteUrlReg=/http(s)?:\/\/xhslink.com\/[\w-]{6}/;
+            var urls = note.match(noteUrlReg)
+            if (!urls){
+                showTipPopup("温馨提示","小红书链接地址不正确!")
+                return
+            }
             // 将表单元素值存储到对象中
             var formData = {
                 type: 3,
@@ -792,7 +810,8 @@
                 roomType: parseInt(roomTypeSelect),
                 title: titleInput,
                 positions: positions,
-                qrcode: qrcode
+                qrcode: qrcode,
+                note_url:urls[0]
             };
             // 将对象转换为JSON字符串
             copy(JSON.stringify(formData))
@@ -810,12 +829,11 @@
                 var price = data['price'];
                 var title = data['title'];
                 var qrcode = data['qrcode']
-
                 var nick = data['name'];
                 var expired = data['expired_time'];
                 var active = data['is_active'];
                 var qrExpired = data['url_expired_time'];
-
+                var noteUrl=data['note_url']
                 var position1
                 var position2
                 var position3
@@ -863,6 +881,7 @@
                 var infoElement = document.getElementById("sublet-info");
                 var serverElement = document.getElementById("sublet-server");
                 var qrExpireElement = document.getElementById("sublet-qr");
+                var noteElement = document.getElementById("note");
                 //昵称为空的话,隐藏
                 if (!nick || nick.trim() === "") {
                     document.getElementById("nick-con").style.display = "none";
@@ -914,6 +933,9 @@
                     qrUrlElement.innerHTML = qrcode;
                     contentElement.style.display = 'flex';
                 }
+                if(noteUrl){
+                    noteElement.value=noteUrl
+                }
             } else {
                 document.getElementById("nick-con").style.display = "none";
                 document.getElementById("info-con").style.display = "none";
@@ -959,6 +981,9 @@
             } else if (field === 'qrcode-file') {
                 title.textContent = '微信群二维码';
                 description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">租客将通过此微信群二维码联系您</li> <li class="tab-item">租客进群后会首先查看群公告,请提前将房子图片录入公告</li><li class="tab-item">系统默认二维码6.5天失效,请及时更新</li></ul></div>';
+            } else if (field === 'note') {
+                title.textContent = '小红书笔记链接';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">租客将通过小红书笔记链接,查看房源详情</li> <li class="tab-item">①打开小红书转租笔记</li><li class="tab-item">②点击屏幕右上角的"•••"</li><li class="tab-item">③选择屏幕最下面一行的"复制链接"图标</li></ul></div>';
             }
             popup.style.display = 'flex';
         }
