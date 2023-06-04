@@ -29,7 +29,7 @@
 </head>
 
 <body>
-    <h1 style="color: rgb(236, 182, 102);">转租接待群</h1>
+    <h1 id="slogan" style="color: rgb(236, 182, 102);">转租接待群</h1>
 
     <div id="qrcode" style="display: none;"></div>
     <div id="qrcode2"></div>
@@ -40,7 +40,7 @@
             <path d="M585.142857 402.285714 475.428571 402.285714 438.857143 402.285714 402.285714 402.285714 402.285714 438.857143 438.857143 438.857143 438.857143 768 402.285714 768 402.285714 804.571429 621.714286 804.571429 621.714286 768 585.142857 768Z"></path>
             <path d="M512 274.285714m-73.142857 0a40 40 0 1 0 146.285714 0 40 40 0 1 0-146.285714 0Z"></path>
         </svg> -->
-        <span style="font-weight: bold; color: #666666; font-size: 20px; margin-top: 10px;">咨询前先看群公告，详情都在公告里</span>
+        <span style="font-weight: bold; color: #666666; font-size: 20px; margin-top: 10px;">咨询前请先看群公告，房源信息在那里</span>
     </div>
 
 
@@ -76,8 +76,14 @@
             // 在控制台输出参数
             // 示例：获取名为 "name" 的参数并显示在页面上
             var roomUrl = queryParams['room'];
+            var userName = queryParams['name'];
             if (roomUrl) {
                 roomUrl = "https://weixin.qq.com/g/" + roomUrl
+                if(userName){
+                    //获取元素
+                    var element = document.getElementById('slogan');
+                    element.innerText = userName+"\n转租接待群";
+                }
             } else {
                 // document.getElementById("topic1").innerHTML = "1.长按二维码"
                 // document.getElementById("topic2").innerHTML = "2.选择打开对方名片"
