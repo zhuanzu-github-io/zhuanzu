@@ -82,8 +82,8 @@
         }
 
         textarea {
-            resize: none; 
-            overflow: hidden; 
+            resize: none;
+            overflow: hidden;
             width: 200px;
             height: 50px;
             padding: 5px;
@@ -286,7 +286,7 @@
                     fill="#cdcdcd" p-id="2689"></path>
             </svg>
         </div>
-        
+
         <!-- <input style="width: 300px; " type="text" id="title" name="title" maxlength="20" placeholder="快输入标题吧~"> -->
         <!-- <div class="container" style="justify-content: flex-start;">
             <label for="title" style="width: 50px;padding-right: 10px;">标题:</label>
@@ -340,8 +340,8 @@
             </select>
         </div>
         <div class="container">
-            <label for="title" >标题:</label>
-            <textarea  id="title" name="title" maxlength="20" placeholder="快输入标题吧~"></textarea>
+            <label for="title">标题:</label>
+            <textarea id="title" name="title" maxlength="20" placeholder="快输入标题吧~"></textarea>
             <svg t="1685358048788" onclick="showInfoPopup('title')" class="icon info-icon" viewBox="0 0 1024 1024"
                 version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
                 <path
@@ -360,8 +360,8 @@
             </svg>
         </div>
         <div class="container">
-            <label for="note">小红书链接:</label>
-            <input type="text" id="note" name="note" placeholder="请直接粘贴">
+            <label for="note">小红书或抖音:</label>
+            <input type="text" id="note" name="note" placeholder="复制链接后请直接粘贴">
             <svg t="1685358048788" onclick="showInfoPopup('note')" class="icon info-icon" viewBox="0 0 1024 1024"
                 version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
                 <path
@@ -450,12 +450,12 @@
 
 
     <!-- <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.min.js"></script> -->
-    <script src="jsQR.min.js"></script> 
+    <script src="jsQR.min.js"></script>
     <script>
 
 
- // JavaScript代码，用于处理二维码上传和显示
- function processQRCode(event) {
+        // JavaScript代码，用于处理二维码上传和显示
+        function processQRCode(event) {
             var contentElement = document.getElementById('qrcode-content');
             var qrUrlElement = document.getElementById('qrUrl');
             contentElement.style.display = 'none';
@@ -474,13 +474,13 @@
                     var qrCodeResult = jsQR(imageData.data, canvas.width, canvas.height);
                     if (qrCodeResult) {
                         if (!qrCodeResult.data.startsWith("https://weixin.qq.com/g/")) {
-                            showTipPopup("温馨提示","请上微信群二维码")
+                            showTipPopup("温馨提示", "请上传微信群二维码")
                             return
                         }
                         qrUrlElement.innerHTML = qrCodeResult.data.replace("https://weixin.qq.com/g/", "");;
                         contentElement.style.display = 'flex';
                     } else {
-                        showTipPopup("温馨提示",'解码失败,请确认上传的是微信群二维码');
+                        showTipPopup("温馨提示", '解码失败,请确认上传的是微信群二维码');
                         return
                     }
                 };
@@ -708,9 +708,9 @@
         function _execCommand(action) {
             let is = document.execCommand(action);
             if (is) {
-                showTipPopup("温馨提示","内容已复制到剪贴板,快去群里粘贴发送吧~")
+                showTipPopup("温馨提示", "内容已复制到剪贴板,快去群里粘贴发送吧~")
             } else {
-                showTipPopup("温馨提示","复制失败")
+                showTipPopup("温馨提示", "复制失败")
             }
         }
 
@@ -718,12 +718,12 @@
         function copyContent(content) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(content).then(function () {
-                    showTipPopup("温馨提示",'内容已复制到剪贴板,快去群里粘贴发送吧~');
+                    showTipPopup("温馨提示", '内容已复制到剪贴板,快去群里粘贴发送吧~');
                 }).catch(function (error) {
-                    showTipPopup("温馨提示",'复制内容失败,\n请手动复制链接地址');
+                    showTipPopup("温馨提示", '复制内容失败,\n请手动复制链接地址');
                 });
             } else {
-                showTipPopup("温馨提示",'该浏览器不支持复制到剪贴板,请手动复制链接地址');
+                showTipPopup("温馨提示", '该浏览器不支持复制到剪贴板,请手动复制链接地址');
             }
         }
 
@@ -742,40 +742,40 @@
             var qrcode = document.getElementById("qrUrl").textContent;
             var note = document.getElementById("note").value;
             if (!citySelect || !verifyCity(citySelect)) {
-                showTipPopup("温馨提示","暂不支持您所选择的城市,请在城市下拉框中的23个城市中选择!")
+                showTipPopup("温馨提示", "暂不支持您所选择的城市,请在城市下拉框中的23个城市中选择!")
                 return
             }
             if (!roomTypeSelect || !verifyRoomType(roomTypeSelect)) {
-                showTipPopup("温馨提示","暂不支持您所选择的房型,请在房型下拉框中选择!")
+                showTipPopup("温馨提示", "暂不支持您所选择的房型,请在房型下拉框中选择!")
                 return
             }
             if (!priceInput || !verifyPrice(priceInput)) {
-                showTipPopup("温馨提示","价格不得小于0,且不得大于100万!")
+                showTipPopup("温馨提示", "价格不得小于0,且不得大于100万!")
                 return
             }
             if (!titleInput || !verifyTitle(titleInput)) {
-                showTipPopup("温馨提示","转租标题必填,且内容长度不得大于20")
+                showTipPopup("温馨提示", "转租标题必填,且内容长度不得大于20")
                 return
             }
 
             if (!position1 || !verifyPosition(position1)) {
-                showTipPopup("温馨提示","关键词1必须填写,内容长度不得小于2或大于10")
+                showTipPopup("温馨提示", "关键词1必须填写,内容长度不得小于2或大于10")
                 return
             }
             if (position2.length > 0 && !verifyPosition(position2)) {
-                showTipPopup("温馨提示","关键词2非必填,若填写，则内容长度不得小于2或大于10")
+                showTipPopup("温馨提示", "关键词2非必填,若填写，则内容长度不得小于2或大于10")
                 return
             }
             if (position3.length > 0 && !verifyPosition(position3)) {
-                showTipPopup("温馨提示","关键词3非必填。若填写，则内容长度不得小于2或大于10")
+                showTipPopup("温馨提示", "关键词3非必填。若填写，则内容长度不得小于2或大于10")
                 return
             }
             if (position4.length > 0 && !verifyPosition(position4)) {
-                showTipPopup("温馨提示","关键词4非必填。若填写，则内容长度不得小于2或大于10")
+                showTipPopup("温馨提示", "关键词4非必填。若填写，则内容长度不得小于2或大于10")
                 return
             }
             if (position5.length > 0 && !verifyPosition(position5)) {
-                showTipPopup("温馨提示","关键词5非必填。若填写，则内容长度不得小于2或大于10")
+                showTipPopup("温馨提示", "关键词5非必填。若填写，则内容长度不得小于2或大于10")
                 return
             }
             var positions = [position1];
@@ -792,15 +792,19 @@
                 positions.push(position5)
             }
             if (qrcode === "" || qrcode.length > 80) {
-                showTipPopup("温馨提示","请上传用于接待的微信群二维码!")
+                showTipPopup("温馨提示", "请上传用于接待的微信群二维码!")
                 return
             }
             //匹配小红书url
-            var noteUrlReg=/http(s)?:\/\/xhslink.com\/[\w-]{6}/;
+            var noteUrlReg = /http(s)?:\/\/xhslink.com\/[\w-]{6}/;
             var urls = note.match(noteUrlReg)
-            if (!urls){
-                showTipPopup("温馨提示","小红书链接地址不正确!")
-                return
+            if (!urls) {
+                var douyinUrlReg = /https:\/\/v.douyin.com\/[\w-]{6}/;
+                urls = note.match(douyinUrlReg)
+                if (!urls) {
+                    showTipPopup("温馨提示", "请输入正确的抖音或小红书链接地址")
+                    return
+                }
             }
             // 将表单元素值存储到对象中
             var formData = {
@@ -811,7 +815,7 @@
                 title: titleInput,
                 positions: positions,
                 qrcode: qrcode,
-                note_url:urls[0]
+                note_url: urls[0]
             };
             // 将对象转换为JSON字符串
             copy(JSON.stringify(formData))
@@ -833,7 +837,7 @@
                 var expired = data['expired_time'];
                 var active = data['is_active'];
                 var qrExpired = data['url_expired_time'];
-                var noteUrl=data['note_url']
+                var noteUrl = data['note_url']
                 var position1
                 var position2
                 var position3
@@ -933,8 +937,8 @@
                     qrUrlElement.innerHTML = qrcode;
                     contentElement.style.display = 'flex';
                 }
-                if(noteUrl){
-                    noteElement.value=noteUrl
+                if (noteUrl) {
+                    noteElement.value = noteUrl
                 }
             } else {
                 document.getElementById("nick-con").style.display = "none";
@@ -982,19 +986,19 @@
                 title.textContent = '微信群二维码';
                 description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">租客将通过此微信群二维码联系您</li> <li class="tab-item">租客进群后会首先查看群公告,请提前将房子图片录入公告</li><li class="tab-item">系统默认二维码6.5天失效,请及时更新</li></ul></div>';
             } else if (field === 'note') {
-                title.textContent = '小红书笔记链接';
-                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">租客将通过小红书笔记链接,查看房源详情</li> <li class="tab-item">①打开小红书转租笔记</li><li class="tab-item">②点击屏幕右上角的"•••"</li><li class="tab-item">③选择屏幕最下面一行的"复制链接"图标</li></ul></div>';
+                title.textContent = '小红书笔记或抖音视频链接';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"><br/> <li class="tab-item active">租客将通过小红书笔记链接或抖音视频链接,查看房源详情</li> <br/> <li class="tab-item">①打开小红书转租笔记</li><li class="tab-item">②点击屏幕右上角的"•••"</li><li class="tab-item">③选择屏幕最下面一行的"复制链接"图标</li> <br/><li class="tab-item">①打开抖音转租视频</li><li class="tab-item">②点击屏幕右右下角的"•••"</li><li class="tab-item">③选择屏幕倒数第二行的"复制链接"图标</li></ul></div>';
             }
             popup.style.display = 'flex';
         }
 
-        function showTipPopup(slogan,msg) {
+        function showTipPopup(slogan, msg) {
             var popup = document.getElementById('info-popup');
             var title = document.getElementById('popup-title');
             var description = document.getElementById('popup-description');
 
             title.textContent = slogan;
-            description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">'+msg+'</li> </ul></div>';
+            description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">' + msg + '</li> </ul></div>';
             popup.style.display = 'flex';
         }
 
