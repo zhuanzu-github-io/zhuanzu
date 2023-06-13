@@ -61,6 +61,35 @@
             height: 150px;
         }
 
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-right: 24px;
+            padding-left: 24px;
+            padding-top: 6px;
+            padding-bottom: 6px;
+            position: relative;
+        }
+
+
+        .copy-button {
+            display: inline-block;
+            margin: auto 10px;
+            padding: 8px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            margin-top: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+            width: 100px;
+        }
+
+       
+
+
         /* #qrcode {
             max-width: 300px;
             margin: 0 auto;
@@ -82,62 +111,85 @@
 </head>
 
 <body>
-    <div class="module">
-        <h2>地图</h2>
-        <div class="map-address">
-            <p id="poiaddress" style="padding-bottom: 5px;">
-                上海长宁中山公园定西路
-            </p>
-            <p>
-                <svg onclick=mapDetail() t="1686494247641" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                    xmlns="http://www.w3.org/2000/svg" p-id="2378" width="24" height="24">
-                    <path
-                        d="M688.96 517.12a31.872 31.872 0 0 0-7.68-12.224L455.04 278.592a32 32 0 0 0-45.248 0l-22.592 22.656a32 32 0 0 0 0 45.248l186.752 186.816L391.04 716.16a32 32 0 0 0 0 45.248l22.656 22.656a32 32 0 0 0 45.248 0l226.24-226.304a32 32 0 0 0 3.776-40.768z"
-                        fill="#2c2c2c" p-id="2379"></path>
-                </svg>
-            </p>
+    <div id="tencentMap" style="width: 100vw;height: 95vh;display: none;position: fixed;">
+        <!-- <iframe  id="mapPage" width="100%" height="100%" class="iframeElement" frameborder=0
+            src="http://xhslink.com/I74q8q">
+        </iframe> -->
+        <embed id="mapPage" type="text/html"  width="100%" height="92%" >
+        <div class="container">
+            <button class="copy-button" onclick="closeMap()">关闭</button>
         </div>
-        <div id="map"></div>
     </div>
-    <div class="module">
-        <h2>概况</h2>
-        <p><span>房源类型</span><span id="roomType"></span></p>
-        <p><span>房源位置</span><span id="position1"></span></p>
-        <p><span>房源价格</span><span id="price"></span></p>
-        <p><span>合同甲方</span><span id="party"></span></p>
-        <p><span>剩余租期</span><span id="endtime"></span></p>
-        <p><span>能否短租</span><span id="rental"></span></p>
-        <p><span>付款方式</span><span id="pay"></span></p>
-        <p><span>附近交通</span><span id="position2"></span></p>
-        <p><span onclick=noteDetail() style="color:coral;font-size: 14px;">点击查看视频图文详情》</span></p>
+    <div id="content">
+        <div class="module">
+            <h2>地图</h2>
+            <div class="map-address">
+                <p id="poiaddress" style="padding-bottom: 5px;">
+                    上海长宁中山公园定西路
+                </p>
+                <p>
+                    <svg onclick=mapDetail() t="1686494247641" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" p-id="2378" width="24" height="24">
+                        <path
+                            d="M688.96 517.12a31.872 31.872 0 0 0-7.68-12.224L455.04 278.592a32 32 0 0 0-45.248 0l-22.592 22.656a32 32 0 0 0 0 45.248l186.752 186.816L391.04 716.16a32 32 0 0 0 0 45.248l22.656 22.656a32 32 0 0 0 45.248 0l226.24-226.304a32 32 0 0 0 3.776-40.768z"
+                            fill="#2c2c2c" p-id="2379"></path>
+                    </svg>
+                </p>
+            </div>
+            <div id="map"></div>
+        </div>
+        <div class="module">
+            <h2>概况</h2>
+            <p><span>房源类型</span><span id="roomType"></span></p>
+            <p><span>房源位置</span><span id="position1"></span></p>
+            <p><span>房源价格</span><span id="price"></span></p>
+            <p><span>合同甲方</span><span id="party"></span></p>
+            <p><span>剩余租期</span><span id="endtime"></span></p>
+            <p><span>能否短租</span><span id="rental"></span></p>
+            <p><span>付款方式</span><span id="pay"></span></p>
+            <p><span>附近交通</span><span id="position2"></span></p>
+            <p><span onclick=showIframe() style="color:coral;font-size: 14px;">点击查看视频图文详情</span></p>
+        </div>
+        <div class="module">
+            <h2>描述</h2>
+            <p id="rentDesc" style="white-space: pre-line;">
+                这种类型的房间有一张单间床，例如可以转换成床的沙发。部分一室公寓配有额外的床铺。其他房间空间更大：工作室房间可以像家具齐全的公寓，这意味着它将有一个小厨房。请与酒店联系以了解有关其单间客房的更多信息。</p>
+        </div>
+        <div class="module">
+            <h2>联系方式</h2>
+            <!-- <div style="  background-color: #f0f0f0;"> -->
+
+            <div class="qrcode" id="qrcode2"></div>
+
+            <div id="qrcode" style="display: none;"></div>
+
+        </div>
     </div>
-    <div class="module">
-        <h2>描述</h2>
-        <p id="rentDesc">
-            这种类型的房间有一张单间床，例如可以转换成床的沙发。部分一室公寓配有额外的床铺。其他房间空间更大：工作室房间可以像家具齐全的公寓，这意味着它将有一个小厨房。请与酒店联系以了解有关其单间客房的更多信息。</p>
-    </div>
-    <div class="module">
-        <h2>联系方式</h2>
-        <!-- <div style="  background-color: #f0f0f0;"> -->
-
-        <div class="qrcode" id="qrcode2"></div>
-
-        <div id="qrcode" style="display: none;"></div>
-
-    </div>
-
     <script src="qrcode.min.js"></script>
     <script src="https://map.qq.com/api/js?v=2.exp&key=UXFBZ-XLWCZ-4SBXH-7WULJ-W45P5-2IBFF"></script>
     <script>
         var houseTypes = ["未提及", "单间", "次卧", "主卧", "一居室", "两居室", "三居室", "四居室"]
         var mapUrl;
         var noteDetailUrl;
+        function showIframe() {
+            var mapElement = document.getElementById('tencentMap');
+            mapElement.style.display = "block"
+            document.getElementById('content').style.display = "none";
+
+        }
+
+        function closeMap() {
+            var mapElement = document.getElementById('tencentMap');
+            mapElement.style.display = "none";
+            document.getElementById('content').style.display = "block";
+        }
+
         function mapDetail() {
             window.location.href = mapUrl;
         }
-        function noteDetail() {
-            window.location.href = noteDetailUrl;
-        }
+        // function noteDetail() {
+        //     window.location.href = noteDetailUrl;
+        // }
         // JavaScript代码，用于获取和处理URL参数
         function getQueryParams() {
             var params = {};
@@ -160,6 +212,19 @@
             image.id = 'qrcodeImg';
             return image;
         }
+
+        function dateFormat(str) {
+            var dateArray = str.split("/")
+            if (dateArray[1].length == 1) {
+                dateArray[1] = "0" + dateArray[1]
+            }
+            if (dateArray[2].length == 1) {
+                dateArray[2] = "0" + dateArray[2]
+            }
+            return dateArray[0] + "-" + dateArray[1] + "-" + dateArray[2]
+
+        }
+
         // 示例：获取参数并进行处理
         window.onload = function () {
             var queryParams = getQueryParams();
@@ -172,7 +237,7 @@
                     document.getElementById("price").innerHTML = price + ' RMB/月'
                 }
                 var roomType = data['roomType'];
-                if(roomType){
+                if (roomType) {
                     document.getElementById("roomType").innerHTML = houseTypes[roomType]
                 }
                 var position1
@@ -200,10 +265,10 @@
                     }
                 }
 
-                if(position1){
+                if (position1) {
                     document.getElementById("position1").innerHTML = position1
                 }
-                if(position2){
+                if (position2) {
                     document.getElementById("position2").innerHTML = position2
                 }
 
@@ -214,30 +279,32 @@
                 var noteUrl = data['note_url']
                 if (noteUrl) {
                     noteDetailUrl = noteUrl
+                    document.getElementById('mapPage').src=noteDetailUrl
+
                 }
                 var endtime = data['endtime']
-                if (endtime){
-                    document.getElementById("endtime").innerHTML = new Date(endtime*1000).toLocaleDateString()+'到期'
+                if (endtime) {
+                    document.getElementById("endtime").innerHTML = dateFormat(new Date(endtime * 1000).toLocaleDateString()) + '到期'
                 }
                 var rental = data['rental']
-                if(rental){
+                if (rental) {
                     document.getElementById("rental").innerHTML = '不能'
-                    if (rental==1){
+                    if (rental == 1) {
                         document.getElementById("rental").innerHTML = '能'
                     }
                 }
                 var party = data['party']
-                if (party){
+                if (party) {
                     document.getElementById("party").innerHTML = party
 
                 }
                 var pay = data['pay']
-                if (pay){
+                if (pay) {
                     document.getElementById("pay").innerHTML = pay
 
                 }
                 var rentDesc = data['rent_desc']
-                if(rentDesc){
+                if (rentDesc) {
                     document.getElementById("rentDesc").innerHTML = rentDesc
                 }
                 var lat = data['lat']
@@ -286,7 +353,7 @@
                 if (poiaddress) {
                     document.getElementById("poiaddress").innerHTML = poiaddress
                 }
-            
+
 
             } else {
                 // document.getElementById("topic1").innerHTML = "1.长按二维码"
