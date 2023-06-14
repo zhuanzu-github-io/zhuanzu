@@ -232,10 +232,12 @@
                 let data = JSON.parse(dataStr);
 
                 var price = data['price'];
+                document.getElementById("price").innerHTML = 0 + ' RMB/月'
                 if (price) {
                     document.getElementById("price").innerHTML = price + ' RMB/月'
                 }
                 var roomType = data['roomType'];
+                document.getElementById("roomType").innerHTML = houseTypes[0]
                 if (roomType) {
                     document.getElementById("roomType").innerHTML = houseTypes[roomType]
                 }
@@ -287,12 +289,13 @@
 
                 }
                 var endtime = data['endtime']
+                document.getElementById("endtime").innerHTML = dateFormat(new Date().toLocaleDateString()) + '到期'
                 if (endtime) {
                     document.getElementById("endtime").innerHTML = dateFormat(new Date(endtime * 1000).toLocaleDateString()) + '到期'
                 }
                 var rental = data['rental']
+                document.getElementById("rental").innerHTML = '不能'
                 if (rental) {
-                    document.getElementById("rental").innerHTML = '不能'
                     if (rental == 1) {
                         document.getElementById("rental").innerHTML = '能'
                     }
