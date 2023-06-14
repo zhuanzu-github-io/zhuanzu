@@ -87,7 +87,7 @@
             width: 100px;
         }
 
-       
+
 
 
         /* #qrcode {
@@ -277,7 +277,13 @@
                 }
                 var noteUrl = data['note_url']
                 if (noteUrl) {
-                    document.getElementById('tencentMap').innerHTML='<embed id="mapPage" src='+noteUrl+' type="text/html"  width="100%" height="92%" > <div class="container"> <button class="copy-button" onclick="closeMap()">关闭</button> </div>'
+                    var protocolRegex = /^(https?:\/\/)/i;
+                    // 判断 URL 是否以 HTTPS 开头
+                    if (protocolRegex.test(noteUrl)) {
+                        // 如果不是 HTTPS，替换为 HTTPS 开头
+                        noteUrl = 'https://' + noteUrl.replace(protocolRegex, '');
+                    }
+                    document.getElementById('tencentMap').innerHTML = '<embed id="mapPage" src=' + noteUrl + ' type="text/html"  width="100%" height="92%" > <div class="container"> <button class="copy-button" onclick="closeMap()">关闭</button> </div>'
 
                 }
                 var endtime = data['endtime']
