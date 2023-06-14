@@ -407,8 +407,8 @@
 
             for (var i = 0; i < pairs.length; i++) {
                 var pair = pairs[i].split('=');
-                var key = decodeURI(pair[0]);
-                var value = decodeURI(pair[1]);
+                var key = decodeURIComponent(pair[0]);
+                var value = decodeURIComponent(pair[1]);
                 params[key] = value;
             }
             return params;
