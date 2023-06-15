@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>自定义点聚合功能</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        #mapContainer {
+            position: relative;
+            height: 100%;
+            width: 100%;
+        }
+
+        .clusterBubble {
+            border-radius: 50%;
+            color: #fff;
+            font-weight: 500;
+            text-align: center;
+            opacity: 0.88;
+            background-image: linear-gradient(139deg, #ff3d66 0%, #ff3574 100%);
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.20);
+            position: absolute;
+            top: 0px;
+            left: 0px;
+        }
+
+        .locicon {
+            position: absolute;
+            bottom: 20px;
+            right: 15px;
+            width: 50px;
+            height: 50px;
+            z-index: 10000;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-right: 24px;
+            padding-left: 24px;
+            padding-top: 6px;
+            padding-bottom: 6px;
+            position: relative;
+        }
+
+
+        .copy-button {
+            display: inline-block;
+            margin: auto 10px;
+            padding: 8px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            margin-top: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+            width: 100px;
+        }
+
+        #closeBtn {
+            position: absolute;
+            top: 2%;
+            /* 下移 */
+            right: 3%;
+            /* 右移 */
+            cursor: pointer;
+            z-index: 10;
+            font-size: 30px;
+            /* 增大图标尺寸 */
+            /* background: #0047AB; */
+            /* background: #FF0000; */
+            /* background: #228B22; */
+            /* background: #EE82EE; */
+            /* background: #FF4500; */
+            /* background: #4169E1; */
+            /* background: #FFD700; */
+            /* background: #008000; */
+            /* background: #B22222; */
+            /* background: #20B2AA; */
+            border-radius: 50%;
+            padding: 10px;
+            /* 增大按钮尺寸 */
+            line-height: 1;
+            text-align: center;
+        }
+    </style>
+</head>
+<script charset="utf-8" src="https://map.qq.com/api/gljs?v=1.exp&key=UXFBZ-XLWCZ-4SBXH-7WULJ-W45P5-2IBFF"></script>
+
+<body onload="init()">
+    <div id="tencentMap" style="width: 100vw;height: 100vh;display: none;position: relative;padding:0px;"></div>
+    <div id="content" style="width: 100%;height: 100%;">
+        <div id='mapContainer'></div>
+        <img class="locicon" onclick="setCenter()"
+            src="data:image/png;base64,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"
+            alt="">
+    </div>
+    <script>
+        var map;
+        var center = new TMap.LatLng(39.953416, 116.380945);
+        var ClusterBubbleClick;
+        function closeMap() {
+            var mapElement = document.getElementById('tencentMap');
+            mapElement.style.display = "none";
+            document.getElementById('content').style.display = "block";
+        }
+        function init() {
+            var drawContainer = document.getElementById('mapContainer');
+            map = new TMap.Map('mapContainer', {
+                zoom: 16.5,
+                minZoom: 10,             //此处设置地图的缩放级别  最小值
+                maxZoom: 17,           //此处设置地图的缩放级别  最大值
+                pitch: 0,
+                center: center,
+                mapStyleId: 'style 1'
+            });
+
+            // 创建点聚合
+            var markerCluster = new TMap.MarkerCluster({
+                id: 'cluster',
+                map: map,
+                enableDefaultStyle: false, // 关闭默认样式
+                minimumClusterSize: 3,
+                geometries: [{ // 点数组
+                    id: "1",
+                    position: new TMap.LatLng(39.953416, 116.480945)
+                },
+                {
+                    id: "2",
+                    position: new TMap.LatLng(39.984104, 116.407503)
+                },
+                {
+                    id: "3",
+                    position: new TMap.LatLng(39.908802, 116.497502)
+                },
+                {
+                    id: "4",
+                    position: new TMap.LatLng(40.040417, 116.373514)
+                },
+                {
+                    id: "5",
+                    position: new TMap.LatLng(39.953416, 116.380945)
+                },
+                {
+                    id: "6",
+                    position: new TMap.LatLng(39.984104, 116.307503)
+                },
+                {
+                    id: "7",
+                    position: new TMap.LatLng(39.908802, 116.397502)
+                },
+                {
+                    id: "8",
+                    position: new TMap.LatLng(40.040417, 116.273514)
+                },
+                ],
+                zoomOnClick: true,
+                gridSize: 60,
+                averageCenter: false
+            });
+            var clusterBubbleList = [];
+            var markerGeometries = [];
+            var marker = null;// 监听聚合簇变化
+            markerCluster.on('cluster_changed', function (e) {
+                // 销毁旧聚合簇生成的覆盖物
+                if (clusterBubbleList.length) {
+                    clusterBubbleList.forEach(function (item) {
+                        item.destroy();
+                    })
+                    clusterBubbleList = [];
+                }
+                markerGeometries = [];
+
+                // 根据新的聚合簇数组生成新的覆盖物和点标记图层
+                var clusters = markerCluster.getClusters();
+                clusters.forEach(function (item) {
+                    if (item.geometries.length > 1) {
+                        let clusterBubble = new ClusterBubble({
+                            map,
+                            position: item.center,
+                            content: item.geometries.length,
+                        });
+                        clusterBubble.on('click', () => {
+                            map.fitBounds(item.bounds);
+                        });
+                        clusterBubbleList.push(clusterBubble);
+                    } else {
+                        markerGeometries.push({
+                            id: item.geometries[0].id,
+                            position: item.center
+                        });
+                    }
+                });
+                if (marker) {
+                    // 已创建过点标记图层，直接更新数据
+                    marker.setGeometries(markerGeometries);
+                } else {
+                    // 创建点标记图层
+                    marker = new TMap.MultiMarker({
+                        map,
+                        styles: {
+                            default: new TMap.MarkerStyle({
+                                'width': 50,
+                                'height': 50,
+                                'anchor': {
+                                    x: 17,
+                                    y: 21,
+                                },
+                                'src': 'data:image/png;base64,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',
+                            }),
+                        },
+                        geometries: markerGeometries
+                    });
+                    //监听marker点击事件
+                    marker.on("click", eventClick)
+                }
+            });
+            var eventClick = function (evt) {
+                var mapElement = document.getElementById('tencentMap');
+                mapElement.style.display = "block"
+                document.getElementById('content').style.display = "none";
+                mapElement.innerHTML = '<embed id="mapPage" src=' + 'https://fzchats.uk/qrcb' + ' type="text/html"  width="100%" height="90%" > <div class="container"> <button class="copy-button" onclick="closeMap()">关闭</button> </div>'
+                // mapElement.innerHTML = '<span onclick="closeMap()"  id="closeBtn">&times;</span><embed id="mapPage" src=' + 'https://fzchats.uk/qrcb' + ' type="text/html"  width="100%" height="100%" > '
+                // mapElement.innerHTML = '<img onclick="closeMap()"  id="closeBtn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAA8VJREFUeF7tm01oE0EUx/8v1X4dbKUHSzcqiAeFFkqVigXJRgXpxU296aEFDyp6qVJBsVSU+gEW24ug3tqD4sVmPVg8aBKEFkVLwYIe1SalPfhVxH5oMrIxgSU0u7OTTROc7DEz7817v3nz5jMEyT+S3H+UAJQiQHICpSEgeQCsXRKcUzsa/1CihRh2gmgrgE1IJGqTHeDxfAcwD8Y+McL7dcwzWR8enV6LzsnrEJj1aR0AAoxwKOmws2+eGJ4BCDZE9FFnovy1XQfwpb19w9Kv8m4QTgBQ+E2xrBkDw/3K6pWhurGxBZd0JtW4CiCmaj0E9DKgxk0j07oI+MGAfiWsD7il3xUAM/sCrZ4yNgRgr1uG2eiZSMSpe/PL4Otc28sZQFTVThJwN1dDROQZcMob1u+JyJqiSlx8VtX6GXBJXEPukgRcawjrvaKahCMg6tduE8NZ0YbdlGOEQW9IPyeiUwhAMfR8prOikeAYQCHHvF0Pi+QERwBS2f6VnSGFLE/EaY+T2cERgJiqja/hVCfKcUIJ6228wtwAjEUOgFu8igtc7zzvYokLgLG8XV4s/5yvFZ7bsIwVY0XVyhaeZTMXgJhP6wPhCq+hFY07sH77Nvz+OIPlqXe8YqvWq9zdDE9tDeJz81ie/sCvi+GyEtGv2gnwAVC1qJONTfVBH2pPH0+2/W3gDhbHxVasVW2t2NhzJqlnYeQRfgaf2vljLo8pYd1rJ2ALwNjSMsJjO0Xm8ormJtT1GSnj3ycCwey8oePr9UEsvZlyYgaI4YjdVpoHwDAjdDpqGUCmA04g5CJrtpMYRhoiepeV7bYAYqo2J3CYkWxTxBERGQsH55WwXi8MwDjGiiORUxZz4pCTurwRWQZPk9XxmmUERP1aJzEM8zaWrR6PYzx1ROxghC5vSB/JJmsJIKZqNwBcEGk4U8bKwXw5n7LhphLWL4oB8AcegLGjbgDIlhOM39NTneiMYWkf0UMlFDwmCuA5GNvvFoDVIJh1O5kpuG0ieqGEggfEAPgOvwVRC3djnBUzQz4vPZ+2hbFJJfJkVwlAFgLWSdAfkHwISJ8EZZ8GpV8ISb8UNhKn1JshA8CsT5N7Oyz9gUhqGMh7JJYEIPuhqPTH4qlhIO/FSHofIfXVmAFB+stRA4LU1+PpoSD1A4k0BKmfyBRTJIg+jUn7YHszZHfMV8icIPIkJtOfnAGYZgc5H0qaiUr7VNYMQerH0pnjS8rn8tmSppR/mLCbQYqh3JVZoBgcEbWhBECU3P8iV4qA/6UnRf2QPgL+AoKzWl/96g9rAAAAAElFTkSuQmCC" alt="">'
+                // +'<embed id="mapPage" src=' + 'https://fzchats.uk/qrcb' + ' type="text/html"  width="100%" height="100%" > '
+                // console.log(evt.geometry.id)
+
+            }
+            //添加坐标
+            markerCluster.updateGeometries(
+                [
+                    {
+                        "styleId": "marker",
+                        "id": "14",
+                        "position": new TMap.LatLng(39.994104, 116.287503),
+                    }
+                ]
+            )
+            var circle = new TMap.MultiCircle({
+                map,
+                styles: {
+                    // 设置圆形样式
+                    circle: new TMap.CircleStyle({
+                        color: 'rgba(255, 61, 102, 0.08)',
+                        showBorder: true,
+                        borderColor: 'rgba(255,255,255,1)',
+                        borderWidth: 1
+                    })
+                },
+                geometries: [
+                    {
+                        styleId: 'circle',
+                        center: center,
+                        radius: 200
+                    }
+                ]
+            })
+        }
+        // 以下代码为基于DOMOverlay实现聚合点气泡
+        //设置地图中心点事件
+        function setCenter() {
+            map.easeTo({ zoom: 16.5, rotation: 0, center: center }, { duration: 1000 });//平滑缩放,旋转到指定级别
+        }
+        function ClusterBubble(options) {
+            TMap.DOMOverlay.call(this, options);
+        }
+
+        ClusterBubble.prototype = new TMap.DOMOverlay();
+
+        ClusterBubble.prototype.onInit = function (options) {
+            this.content = options.content;
+            this.position = options.position;
+        };
+
+        // 销毁时需要删除监听器
+        ClusterBubble.prototype.onDestroy = function () {
+            this.dom.removeEventListener('click', this.onClick);
+            this.removeAllListeners();
+        };
+
+        ClusterBubble.prototype.onClick = function () {
+            this.emit('click');
+        };
+
+        // 创建气泡DOM元素
+        ClusterBubble.prototype.createDOM = function () {
+            var dom = document.createElement('div');
+            dom.classList.add('clusterBubble');
+            dom.innerText = this.content;
+            dom.style.cssText = [
+                'width: ' + (40 + parseInt(this.content) * 2) + 'px;',
+                'height: ' + (40 + parseInt(this.content) * 2) + 'px;',
+                'line-height: ' + (40 + parseInt(this.content) * 2) + 'px;',
+            ].join(' ');
+
+            // 监听点击事件，实现zoomOnClick
+            this.onClick = this.onClick.bind(this);
+            // dom.addEventListener('click', this.onClick);
+            dom.addEventListener('touchend', this.onClick);
+            return dom;
+        };
+
+        ClusterBubble.prototype.updateDOM = function () {
+            if (!this.map) {
+                return;
+            }
+            // 经纬度坐标转容器像素坐标
+            let pixel = this.map.projectToContainer(this.position);
+
+            // 使文本框中心点对齐经纬度坐标点
+            let left = pixel.getX() - this.dom.clientWidth / 2 + 'px';
+            let top = pixel.getY() - this.dom.clientHeight / 2 + 'px';
+            this.dom.style.transform = `translate(${left}, ${top})`;
+
+            this.emit('dom_updated');
+        };
+
+        window.ClusterBubble = ClusterBubble;
+    </script>
+</body>
+
+</html>
