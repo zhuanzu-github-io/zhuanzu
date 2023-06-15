@@ -65,26 +65,30 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding-right: 24px;
+            padding-top: 2%;
+            /* height: 8%; */
+            /* padding-right: 24px;
             padding-left: 24px;
             padding-top: 6px;
             padding-bottom: 6px;
-            position: relative;
+            position: relative; */
         }
 
 
         .copy-button {
             display: inline-block;
-            margin: auto 10px;
+            /* margin-top: 10px;
+            margin-bottom: 20px; */
+            /* margin: auto; */
             padding: 8px 10px;
             background-color: #4CAF50;
             color: white;
             border: none;
-            margin-top: 10px;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 18px;
+            font-size: 17px;
             width: 100px;
+            /* height: 40px; */
         }
 
 
@@ -111,7 +115,7 @@
 </head>
 
 <body>
-    <div id="tencentMap" style="width: 100vw;height: 95vh;display: none;position: fixed;padding:0px;">
+    <div id="tencentMap" style="width: 100vw;height: 100vh;display: none;position: fixed;padding:0px;">
         <!-- <iframe  id="mapPage" width="100%" height="100%" class="iframeElement" frameborder=0
             src="http://xhslink.com/I74q8q">
         </iframe> -->
@@ -285,7 +289,7 @@
                         // 如果不是 HTTPS，替换为 HTTPS 开头
                         noteUrl = 'https://' + noteUrl.replace(protocolRegex, '');
                     }
-                    document.getElementById('tencentMap').innerHTML = '<embed id="mapPage" src=' + noteUrl + ' type="text/html"  width="95%" height="92%" > <div class="container"> <button class="copy-button" onclick="closeMap()">关闭</button> </div>'
+                    document.getElementById('tencentMap').innerHTML = '<embed id="mapPage" src=' + noteUrl + ' type="text/html"  width="95%" height="90%" > <div class="container"> <button class="copy-button"  onclick="closeMap()">关闭</button> </div>'
                     // document.getElementById('tencentMap').innerHTML = '<embed id="mapPage" src=' + 'https://xhslink.com/TtQPbr' + ' type="text/html"  width="95%" height="92%" > <div class="container"> <button class="copy-button" onclick="closeMap()">关闭</button> </div>'
 
                 }
