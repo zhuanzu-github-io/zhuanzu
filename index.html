@@ -91,6 +91,9 @@
             /* height: 40px; */
         }
 
+        img {
+            -webkit-touch-callout: none;
+        }
 
 
 
@@ -174,6 +177,12 @@
     <script>
         var houseTypes = ["未提及", "单间", "次卧", "主卧", "一居室", "两居室", "三居室", "四居室"]
         var mapUrl;
+        function iosAgent() {
+            return navigator.userAgent.match(/(iPhone|iPod|iPad);?/i);
+        }
+        function isInEmbed() {
+            return window !== window.parent;
+        }
         function showIframe() {
             var mapElement = document.getElementById('tencentMap');
             mapElement.style.display = "block"
@@ -339,7 +348,7 @@
                     qrcode.makeCode(qrcodeUrl);
                     var canvas = document.getElementsByTagName('canvas')[0];
                     var img = this.convertCanvasToImage(canvas);
-                    img.style.padding = "10px";
+                    img.style.padding = "20px";
                     img.style.width = "175px";
                     img.style.height = "175px";
                     var element = document.getElementById("qrcode2");
@@ -347,6 +356,20 @@
                     element.style.display = "flex";
                     element.style.flexDirection = "column";
                     element.style.alignItems = "center";
+                    if (iosAgent() && isInEmbed()) {
+                        //被嵌入时,ios端传递数据到父页面
+                        img.addEventListener('touchstart', function (e) {
+                            // console.log("111111111111111111")
+                            // 执行 touchstart 事件的处理逻辑
+                            window.parent.postMessage(JSON.stringify({ status: 1, url: img.src}), '*')
+                        }, false);
+
+                        img.addEventListener('touchend', function (e) {
+                            // console.log("22222")
+                            // 执行 touchend 事件的处理逻辑
+                            window.parent.postMessage(JSON.stringify({ status: 2 }), '*')
+                        }, false);
+                    }
                 }
                 if (lat && lng) {
                     var map = new qq.maps.Map(document.getElementById('map'), {

@@ -69,11 +69,16 @@
             width: 100px;
         }
 
+        img {
+            -webkit-touch-callout: none;
+
+        }
+
         #closeBtn {
             position: absolute;
-            top: 2%;
+            top: 60%;
             /* 下移 */
-            right: 3%;
+            right: 5%;
             /* 右移 */
             cursor: pointer;
             z-index: 10;
@@ -100,6 +105,8 @@
 <script charset="utf-8" src="https://map.qq.com/api/gljs?v=1.exp&key=UXFBZ-XLWCZ-4SBXH-7WULJ-W45P5-2IBFF"></script>
 
 <body onload="init()">
+    <img id="qrcode-img" draggable="false"
+        style="height:170px;width: 170px;position: fixed;opacity: 0;z-index: -1;display: none;" />
     <div id="tencentMap" style="width: 100vw;height: 100vh;display: none;position: relative;padding:0px;"></div>
     <div id="content" style="width: 100%;height: 100%;">
         <div id='mapContainer'></div>
@@ -111,12 +118,49 @@
         var map;
         var center = new TMap.LatLng(39.953416, 116.380945);
         var ClusterBubbleClick;
+        function iosAgent() {
+            return navigator.userAgent.match(/(iPhone|iPod|iPad);?/i);
+        }
         function closeMap() {
             var mapElement = document.getElementById('tencentMap');
             mapElement.style.display = "none";
             document.getElementById('content').style.display = "block";
         }
         function init() {
+            //解决ios中embed标签内无法识别二维码
+            if (iosAgent()) {
+                window.addEventListener("message", function (e) {
+                    // var data = {}
+                    var data = JSON.parse(JSON.stringify(e.data))
+                    if (typeof data == "string") {
+                        data = JSON.parse(data)
+                    }
+                    if (data.status === 1) {
+                        // console.log(data)
+                        var img = document.getElementById("qrcode-img")
+                        // img:show时将图片置于顶层, 并设置src为含有二维码的图片地址
+                        // var img = document.getElementById("qrcode-img")
+                        img.setAttribute('src', data.url);
+                        img.style = `display: block;position: fixed;width:100%;height:100%;opacity: 0;z-index: 10001;`
+                        setTimeout(function () {
+                            // console.log("3333333333")
+                            var img = document.getElementById("qrcode-img")
+                            img.removeAttribute('src');
+                            img.style = 'position: fixed;opacity: 0;z-index: -1;display: none;'
+                        }, 1500);
+
+                    }
+                    if (data.status === 2) {
+                        // console.log(data)
+                        // img:hide时将，将图片置于底层
+                        var img = document.getElementById("qrcode-img")
+                        img.removeAttribute('src');
+                        img.style = 'position: fixed;opacity: 0;z-index: -1;display: none;'
+                    }
+                }
+                )
+            }
+
             var drawContainer = document.getElementById('mapContainer');
             map = new TMap.Map('mapContainer', {
                 zoom: 16.5,
@@ -231,10 +275,9 @@
                 var mapElement = document.getElementById('tencentMap');
                 mapElement.style.display = "block"
                 document.getElementById('content').style.display = "none";
-                mapElement.innerHTML = '<embed id="mapPage" src=' + 'https://fzchats.uk/qrcb' + ' type="text/html"  width="100%" height="90%" > <div class="container"> <button class="copy-button" onclick="closeMap()">关闭</button> </div>'
-                // mapElement.innerHTML = '<span onclick="closeMap()"  id="closeBtn">&times;</span><embed id="mapPage" src=' + 'https://fzchats.uk/qrcb' + ' type="text/html"  width="100%" height="100%" > '
-                // mapElement.innerHTML = '<img onclick="closeMap()"  id="closeBtn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAA8VJREFUeF7tm01oE0EUx/8v1X4dbKUHSzcqiAeFFkqVigXJRgXpxU296aEFDyp6qVJBsVSU+gEW24ug3tqD4sVmPVg8aBKEFkVLwYIe1SalPfhVxH5oMrIxgSU0u7OTTROc7DEz7817v3nz5jMEyT+S3H+UAJQiQHICpSEgeQCsXRKcUzsa/1CihRh2gmgrgE1IJGqTHeDxfAcwD8Y+McL7dcwzWR8enV6LzsnrEJj1aR0AAoxwKOmws2+eGJ4BCDZE9FFnovy1XQfwpb19w9Kv8m4QTgBQ+E2xrBkDw/3K6pWhurGxBZd0JtW4CiCmaj0E9DKgxk0j07oI+MGAfiWsD7il3xUAM/sCrZ4yNgRgr1uG2eiZSMSpe/PL4Otc28sZQFTVThJwN1dDROQZcMob1u+JyJqiSlx8VtX6GXBJXEPukgRcawjrvaKahCMg6tduE8NZ0YbdlGOEQW9IPyeiUwhAMfR8prOikeAYQCHHvF0Pi+QERwBS2f6VnSGFLE/EaY+T2cERgJiqja/hVCfKcUIJ6228wtwAjEUOgFu8igtc7zzvYokLgLG8XV4s/5yvFZ7bsIwVY0XVyhaeZTMXgJhP6wPhCq+hFY07sH77Nvz+OIPlqXe8YqvWq9zdDE9tDeJz81ie/sCvi+GyEtGv2gnwAVC1qJONTfVBH2pPH0+2/W3gDhbHxVasVW2t2NhzJqlnYeQRfgaf2vljLo8pYd1rJ2ALwNjSMsJjO0Xm8ormJtT1GSnj3ycCwey8oePr9UEsvZlyYgaI4YjdVpoHwDAjdDpqGUCmA04g5CJrtpMYRhoiepeV7bYAYqo2J3CYkWxTxBERGQsH55WwXi8MwDjGiiORUxZz4pCTurwRWQZPk9XxmmUERP1aJzEM8zaWrR6PYzx1ROxghC5vSB/JJmsJIKZqNwBcEGk4U8bKwXw5n7LhphLWL4oB8AcegLGjbgDIlhOM39NTneiMYWkf0UMlFDwmCuA5GNvvFoDVIJh1O5kpuG0ieqGEggfEAPgOvwVRC3djnBUzQz4vPZ+2hbFJJfJkVwlAFgLWSdAfkHwISJ8EZZ8GpV8ISb8UNhKn1JshA8CsT5N7Oyz9gUhqGMh7JJYEIPuhqPTH4qlhIO/FSHofIfXVmAFB+stRA4LU1+PpoSD1A4k0BKmfyBRTJIg+jUn7YHszZHfMV8icIPIkJtOfnAGYZgc5H0qaiUr7VNYMQerH0pnjS8rn8tmSppR/mLCbQYqh3JVZoBgcEbWhBECU3P8iV4qA/6UnRf2QPgL+AoKzWl/96g9rAAAAAElFTkSuQmCC" alt="">'
-                // +'<embed id="mapPage" src=' + 'https://fzchats.uk/qrcb' + ' type="text/html"  width="100%" height="100%" > '
+                mapElement.innerHTML = '<embed id="mapPage" src=' + 'http://192.168.0.101:8080/?data=%7B%22roomType%22:4%2C%22positions%22:%5B%22%E6%B5%8B%E8%AF%95%E5%B0%8F%E5%8C%BA%22%2C%22%E6%B5%8B%E8%AF%95%22%5D%2C%22qrcode%22:%22AQYAAHjxoh2QKtrFysturGhmBwEmdBM1tcL-ZlVHgKRDXnXZ6QOmuJglhr4bH-PK%22%2C%22name%22:%22Minry%22%2C%22note_url%22:%22http:%2F%2Fxhslink.com%2FTtQPbr%22%2C%22endtime%22:1693526400%2C%22party%22:%22%E6%B5%8B%E8%AF%95%E6%96%B9%22%2C%22pay%22:%22%E6%B5%8B%E8%AF%95%22%2C%22rent_desc%22:%22%E6%B5%8B%E8%AF%95%22%2C%22lat%22:30.59276%2C%22lng%22:114.30525%2C%22poiaddress%22:%22%E6%B9%96%E5%8C%97%E7%9C%81%E6%AD%A6%E6%B1%89%E5%B8%82%E6%B1%9F%E5%B2%B8%E5%8C%BA%E6%B2%BF%E6%B1%9F%E5%A4%A7%E9%81%93188%E5%8F%B7%22%2C%22poiname%22:%22%E6%AD%A6%E6%B1%89%E5%B8%82%E4%BA%BA%E6%B0%91%E6%94%BF%E5%BA%9C%22%2C%22cityname%22:%22%E6%AD%A6%E6%B1%89%E5%B8%82%22%7D' + ' type="text/html"  width="100%" height="100%" > ' +
+                    '<img onclick="closeMap()"  id="closeBtn" src="data:image/png;base64,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" alt="">'
+
                 // console.log(evt.geometry.id)
 
             }
