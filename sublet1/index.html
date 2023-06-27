@@ -392,7 +392,7 @@
             <label for="rental">能否短租:</label>
             <select id="rental" name="rental">
                 <option value="0" selected>不能</option>
-                <option value="1">能</option>
+                <option value="1" >能</option>
             </select>
         </div>
         <div class="container">
@@ -535,23 +535,7 @@
             <button onclick="hideInfoPopup()">关闭</button>
         </div>
     </div>
-    <script type="text/javascript" src="./grid.js"></script>
-    <script type="text/javascript" src="./version.js"></script>
-    <script type="text/javascript" src="./detector.js"></script>
-    <script type="text/javascript" src="./formatinf.js"></script>
-    <script type="text/javascript" src="./errorlevel.js"></script>
-    <script type="text/javascript" src="./bitmat.js"></script>
-    <script type="text/javascript" src="./datablock.js"></script>
-    <script type="text/javascript" src="./bmparser.js"></script>
-    <script type="text/javascript" src="./datamask.js"></script>
-    <script type="text/javascript" src="./rsdecoder.js"></script>
-    <script type="text/javascript" src="./gf256poly.js"></script>
-    <script type="text/javascript" src="./gf256.js"></script>
-    <script type="text/javascript" src="./decoder.js"></script>
-    <script type="text/javascript" src="./qrcode.js"></script>
-    <script type="text/javascript" src="./findpat.js"></script>
-    <script type="text/javascript" src="./alignpat.js"></script>
-    <script type="text/javascript" src="./databr.js"></script>
+    <script src="/sublet/jsQR.min.js"></script>
     <script>
         var currentPage = 0;
         var pages = [];
@@ -613,100 +597,37 @@
                 showPage(currentPage - 1);
             }
         }
-
-
-
-        qrcode.callback = function (result) {
+        // JavaScript代码，用于处理二维码上传和显示
+        function processQRCode(event) {
             var contentElement = document.getElementById('qrcode-content');
             var qrUrlElement = document.getElementById('qrUrl');
             contentElement.style.display = 'none';
             qrUrlElement.innerHTML = "";
-            if (result) {
-                if (!qrcode.result.startsWith("https://weixin.qq.com/g/")) {
-                    showTipPopup("温馨提示", "请上传微信群二维码")
-                    return
-                }
-                qrUrlElement.innerHTML = qrcode.result.replace("https://weixin.qq.com/g/", "");;
-                contentElement.style.display = 'flex';
-            } else {
-                showTipPopup("温馨提示", '解码失败,请确认上传的是微信群二维码');
-                return
-            }
-        }
-
-        // JavaScript代码，用于处理二维码上传和显示
-        function processQRCode(event) {
             var file = event.target.files[0];
             var reader = new FileReader();
             reader.onload = function (e) {
-                var image = new Image();
-                image.onload = function () {
-                    // var canvas = document.createElement('canvas');
-                    // var context = canvas.getContext('2d');
-                    // canvas.width = img.width;
-                    // canvas.height = img.height;
-                    // context.drawImage(img, 0, 0, img.width, img.height);
-                    // var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-
-
-
-                    // if (qrcode.result) {
-                    //     if (!qrcode.result.startsWith("https://weixin.qq.com/g/")) {
-                    //         showTipPopup("温馨提示", "请上传微信群二维码")
-                    //         return
-                    //     }
-                    //     qrUrlElement.innerHTML = qrcode.result.replace("https://weixin.qq.com/g/", "");;
-                    //     contentElement.style.display = 'flex';
-                    // } else {
-                    //     showTipPopup("温馨提示", '解码失败,请确认上传的是微信群二维码');
-                    //     return
-                    // }
-
-
-                    //var canvas_qr = document.getElementById("qr-canvas");
-                    var canvas_out = document.getElementById("out-canvas");
-                    if (canvas_out != null) {
-                        var outctx = canvas_out.getContext('2d');
-                        outctx.clearRect(0, 0, 320, 240);
-                        outctx.drawImage(image, 0, 0, 320, 240);
+                var img = new Image();
+                img.onload = function () {
+                    var canvas = document.createElement('canvas');
+                    var context = canvas.getContext('2d');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    context.drawImage(img, 0, 0, img.width, img.height);
+                    var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                    var qrCodeResult = jsQR(imageData.data, canvas.width, canvas.height);
+                    if (qrCodeResult) {
+                        if (!qrCodeResult.data.startsWith("https://weixin.qq.com/g/")) {
+                            showTipPopup("温馨提示", "请上传微信群二维码")
+                            return
+                        }
+                        qrUrlElement.innerHTML = qrCodeResult.data.replace("https://weixin.qq.com/g/", "");;
+                        contentElement.style.display = 'flex';
+                    } else {
+                        showTipPopup("温馨提示", '解码失败,请确认上传的是微信群二维码');
+                        return
                     }
-
-                    var canvas_qr = document.createElement('canvas');
-                    var context = canvas_qr.getContext('2d');
-                    var nheight = image.height;
-                    var nwidth = image.width;
-                    if (image.width * image.height > qrcode.maxImgSize) {
-                        var ir = image.width / image.height;
-                        nheight = Math.sqrt(qrcode.maxImgSize / ir);
-                        nwidth = ir * nheight;
-                    }
-
-                    canvas_qr.width = nwidth;
-                    canvas_qr.height = nheight;
-
-                    context.drawImage(image, 0, 0, canvas_qr.width, canvas_qr.height);
-                    qrcode.width = canvas_qr.width;
-                    qrcode.height = canvas_qr.height;
-                    try {
-                        qrcode.imagedata = context.getImageData(0, 0, canvas_qr.width, canvas_qr.height);
-                    } catch (e) {
-                        qrcode.result = "Cross domain image reading not supported in your browser! Save it to your computer then drag and drop the file!";
-                        if (qrcode.callback != null)
-                            qrcode.callback(qrcode.result);
-                        return;
-                    }
-
-                    try {
-                        qrcode.result = qrcode.process(context);
-                    }
-                    catch (e) {
-                        console.log(e);
-                        qrcode.result = "error decoding QR Code";
-                    }
-                    if (qrcode.callback != null)
-                        qrcode.callback(qrcode.result);
                 };
-                image.src = e.target.result;
+                img.src = e.target.result;
             };
             reader.readAsDataURL(file);
         }
@@ -1146,7 +1067,7 @@
                 qrcode: qrcode,
                 note_url: urls[0],
                 endtime: seconds,
-                rental: parseInt(rental),
+                rental:  parseInt(rental),
                 party: party,
                 pay: pay,
                 rent_desc: rentDesc
