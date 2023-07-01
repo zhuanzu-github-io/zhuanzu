@@ -399,7 +399,7 @@
                     new Swiper({
                         imgArr: imgArr, // 图片数组
                         aniTIme: 1000, // 动画执行的时间
-                        intervalTime: 1000, // 图片停留的时间
+                        intervalTime: 600000, // 图片停留的时间
                         autoplay: false // 是否自动播放
                     }).init();
                 }
@@ -412,7 +412,7 @@
                     vidElement.style.display = "block"
                     vidElement.innerHTML = '<video id="my-player" class="video-js" controls preload="auto"  > <source src="' + imgArr[0] + '" type="video/mp4"/> </video>'
                     var wid=vidElement.offsetWidth
-                    let options = { width: wid, height: 264, autoplay: 'muted',loop:true }
+                    let options = { width: wid, height: 264 ,loop:true }
                     if (media.length > 1){
                         options.poster=imgArr[1]
                     }
