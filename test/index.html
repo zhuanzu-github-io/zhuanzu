@@ -4,6 +4,7 @@
 <head>
     <title>页面</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="/test/video-js.css" rel="stylesheet" />
     <style>
         body {
             background-color: #f0f0f0;
@@ -120,7 +121,7 @@
         }
 
         .swiper-list {
-            width: 98%;
+            /* width: 98%; */
             height: 360px;
             margin: 0 auto;
             position: relative;
@@ -129,6 +130,11 @@
             background-color:#ffffff;
             justify-content: center;
             align-items: center;
+
+            margin-bottom: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            /* background-color: #ffffff; */
+            /* padding: 15px; */
         }
 
         .swiper-main {
@@ -201,8 +207,29 @@
 </head>
 
 <body>
-    <div id="pics" class="swiper-list"></div>
+    
     <div id="content">
+        <div class="module">
+            <video
+      id="my-video"
+      class="video-js"
+      width="627"
+      height="258"
+      poster=""
+      data-setup='{"controls": true, "autoplay": true, "preload": "auto"}'
+    >
+      <source src="https://detail.fzchats.uk/?proxyUrl=http://sns-video-hw.xhscdn.com/stream/110/258/01e48912e72aa2dd0103710388b771f040_258.mp4" type="video/mp4" />
+      <p class="vjs-no-js">
+        To view this video please enable JavaScript, and consider upgrading to a
+        web browser that
+        <a href="https://videojs.com/html5-video-support/" target="_blank"
+          >supports HTML5 video</a
+        >
+      </p>
+    </video>
+        </div>
+
+        <div id="pics" class="swiper-list"></div>
         <div class="module">
             <h2>地图</h2>
             <div class="map-address">
@@ -237,7 +264,7 @@
                 这种类型的房间有一张单间床，例如可以转换成床的沙发。部分一室公寓配有额外的床铺。其他房间空间更大：工作室房间可以像家具齐全的公寓，这意味着它将有一个小厨房。请与酒店联系以了解有关其单间客房的更多信息。</p>
         </div>
         <div class="module">
-            <h2>联系方式</h2>
+            <h2>联系方式<span style="font-size: 12px; color: red;">(长按识别)</span></h2>
             <!-- <div style="  background-color: #f0f0f0;"> -->
 
             <div class="qrcode" id="qrcode2"></div>
@@ -246,8 +273,9 @@
 
         </div>
     </div>
-    <script src="/test/qrcode.min.js"></script>
-    <script src="/test/slider.js"></script>
+    <script src="/qrcode.min.js"></script>
+    <script src="/slider.js"></script>
+    <script src="/test/video.min.js"></script>
     <script src="https://map.qq.com/api/js?v=2.exp&key=4RWBZ-F2UWV-KATP5-UD3YA-YFYI5-FDBYJ"></script>
     <script>
         var houseTypes = ["未提及", "单间", "次卧", "主卧", "一居室", "两居室", "三居室", "四居室"]
