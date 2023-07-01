@@ -113,26 +113,101 @@
             flex-direction: column;
             align-items: center; */
         /* } */
+        ul {
+            padding: 0;
+            list-style: none;
+            margin: 0px;
+        }
+
+        .swiper-list {
+            width: 98%;
+            height: 360px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            display: none;
+            background-color:#ffffff;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .swiper-main {
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            justify-content: center;
+        }
+
+        .swiper-item {
+            height: 100%;
+            display: inline;
+            position: absolute;
+        }
+
+        img {
+            width: auto;
+            height: 360px;
+            display: block;
+            max-width: 100%;
+        }
+
+        .swiper-spot {
+            width: 100%;
+            height: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            bottom: 10px;
+        }
+
+        .swiper-spot .spot-item {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: #ccc;
+            margin-left: 10px;
+        }
+
+        .swiper-spot .spot-item:nth-of-type(1) {
+            margin-left: 0;
+        }
+
+        .leftBtn {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+        }
+
+        .rightBtn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+        }
+
+        li a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
 
 </head>
 
 <body>
-    <div id="tencentMap" style="width: 100vw;height: 100vh;display: none;position: fixed;padding:0px;">
-        <!-- <iframe  id="mapPage" width="100%" height="100%" class="iframeElement" frameborder=0
-            src="http://xhslink.com/I74q8q">
-        </iframe> -->
-        <!-- <embed id="mapPage" type="text/html"  width="100%" height="92%" >
-        <div class="container">
-            <button class="copy-button" onclick="closeMap()">关闭</button>
-        </div> -->
-    </div>
+    <div id="pics" class="swiper-list"></div>
     <div id="content">
         <div class="module">
             <h2>地图</h2>
             <div class="map-address">
                 <p id="poiaddress" style="padding-bottom: 5px;">
-                    
+
                 </p>
                 <p>
                     <svg onclick=mapDetail() t="1686494247641" class="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -155,7 +230,6 @@
             <p><span>能否短租</span><span id="rental"></span></p>
             <p><span>付款方式</span><span id="pay"></span></p>
             <p><span>附近交通</span><span id="position2"></span></p>
-            <p><span onclick=showIframe() style="color:coral;font-size: 16px;">点击查看视频图文详情</span></p>
         </div>
         <div class="module">
             <h2>描述</h2>
@@ -172,7 +246,8 @@
 
         </div>
     </div>
-    <script src="qrcode.min.js"></script>
+    <script src="/qrcode.min.js"></script>
+    <script src="/slider.js"></script>
     <script src="https://map.qq.com/api/js?v=2.exp&key=4RWBZ-F2UWV-KATP5-UD3YA-YFYI5-FDBYJ"></script>
     <script>
         var houseTypes = ["未提及", "单间", "次卧", "主卧", "一居室", "两居室", "三居室", "四居室"]
@@ -183,18 +258,8 @@
         function isInEmbed() {
             return window !== window.parent;
         }
-        function showIframe() {
-            var mapElement = document.getElementById('tencentMap');
-            mapElement.style.display = "block"
-            document.getElementById('content').style.display = "none";
 
-        }
 
-        function closeMap() {
-            var mapElement = document.getElementById('tencentMap');
-            mapElement.style.display = "none";
-            document.getElementById('content').style.display = "block";
-        }
 
         function mapDetail() {
             window.location.href = mapUrl;
@@ -290,17 +355,23 @@
                 if (name) {
                     document.title = name + "的转租信息";
                 }
-                var noteUrl = data['note_url']
-                if (noteUrl) {
-                    var protocolRegex = /^(https?:\/\/)/i;
-                    // 判断 URL 是否以 HTTPS 开头
-                    if (protocolRegex.test(noteUrl)) {
-                        // 如果不是 HTTPS，替换为 HTTPS 开头
-                        noteUrl = 'https://' + noteUrl.replace(protocolRegex, '');
-                    }
-                    document.getElementById('tencentMap').innerHTML = '<embed id="mapPage" src=' + noteUrl + ' type="text/html"  width="95%" height="90%" > <div class="container"> <button class="copy-button"  onclick="closeMap()">关闭</button> </div>'
-                    // document.getElementById('tencentMap').innerHTML = '<embed id="mapPage" src=' + 'https://xhslink.com/TtQPbr' + ' type="text/html"  width="95%" height="92%" > <div class="container"> <button class="copy-button" onclick="closeMap()">关闭</button> </div>'
-
+                var mediaType = data['media_type']
+                var media = data['media']
+                if (mediaType && media && mediaType === "normal" && media.length > 0) {
+                    //展示轮播
+                    document.getElementById("pics").style.display = "block"
+                    let imgArr = media.map((imgPath) => {
+                        return {
+                            url: '#',
+                            imgPath: imgPath
+                        };
+                    });
+                    new Swiper({
+                        imgArr: imgArr, // 图片数组
+                        aniTIme: 1000, // 动画执行的时间
+                        intervalTime: 1000, // 图片停留的时间
+                        autoplay: false // 是否自动播放
+                    }).init();
                 }
                 var endtime = data['endtime']
                 document.getElementById("endtime").innerHTML = dateFormat(new Date().toLocaleDateString()) + '到期'
@@ -361,7 +432,7 @@
                         img.addEventListener('touchstart', function (e) {
                             // console.log("111111111111111111")
                             // 执行 touchstart 事件的处理逻辑
-                            window.parent.postMessage(JSON.stringify({ status: 1, url: img.src}), '*')
+                            window.parent.postMessage(JSON.stringify({ status: 1, url: img.src }), '*')
                         }, false);
 
                         img.addEventListener('touchend', function (e) {
