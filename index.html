@@ -4,6 +4,8 @@
 <head>
     <title>页面</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- <link href="/test/video-js.css" rel="stylesheet" /> -->
+    <link href="https://cdn.staticfile.org/video.js/8.5.0/video-js.min.css" rel="stylesheet" />
     <style>
         body {
             background-color: #f0f0f0;
@@ -126,7 +128,7 @@
             position: relative;
             overflow: hidden;
             display: none;
-            background-color:#ffffff;
+            background-color: #ffffff;
             justify-content: center;
             align-items: center;
 
@@ -201,15 +203,35 @@
             justify-content: center;
             align-items: center;
         }
+
+        .vid-module {
+            margin-bottom: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
     </style>
 
 </head>
 
 <body>
-    
+
     <div id="content">
+        <div id="vid" class="vid-module" style="display: none;">
+            <!-- <video id="my-video" class="video-js" width="627" height="258" poster=""
+                data-setup='{"controls": true, "autoplay": true, "preload": "auto"}'>
+                <source
+                    src="https://detail.fzchats.uk/?proxyUrl=http://sns-video-hw.xhscdn.com/stream/110/258/01e48912e72aa2dd0103710388b771f040_258.mp4"
+                    type="video/mp4" />
+                <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider upgrading to a
+                    web browser that
+                    <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                </p>
+            </video> -->
+        </div>
+
         <div id="pics" class="swiper-list"></div>
-        <div class="module">
+        <div id="loc" class="module">
             <h2>地图</h2>
             <div class="map-address">
                 <p id="poiaddress" style="padding-bottom: 5px;">
@@ -254,6 +276,8 @@
     </div>
     <script src="/qrcode.min.js"></script>
     <script src="/slider.js"></script>
+    <!-- <script src="/test/video.min.js"></script> -->
+    <script src="https://cdn.staticfile.org/video.js/8.5.0/video.min.js"></script>
     <script src="https://map.qq.com/api/js?v=2.exp&key=4RWBZ-F2UWV-KATP5-UD3YA-YFYI5-FDBYJ"></script>
     <script>
         var houseTypes = ["未提及", "单间", "次卧", "主卧", "一居室", "两居室", "三居室", "四居室"]
@@ -369,7 +393,7 @@
                     let imgArr = media.map((imgPath) => {
                         return {
                             url: '#',
-                            imgPath: "https://detail.fzchats.uk/?proxyUrl="+imgPath
+                            imgPath: "https://detail.fzchats.uk/?proxyUrl=" + imgPath
                         };
                     });
                     new Swiper({
@@ -378,6 +402,26 @@
                         intervalTime: 1000, // 图片停留的时间
                         autoplay: false // 是否自动播放
                     }).init();
+                }
+                if (mediaType && media && mediaType === "video" && media.length > 0) {
+                    let imgArr = media.map((imgPath) => {
+                        return "https://detail.fzchats.uk/?proxyUrl=" + imgPath
+                    });
+                    //展示视频
+                    var vidElement = document.getElementById("vid")
+                    vidElement.style.display = "block"
+                    vidElement.innerHTML = '<video id="my-player" class="video-js" controls preload="auto"  > <source src="' + imgArr[0] + '" type="video/mp4"/> </video>'
+                    var wid=vidElement.offsetWidth
+                    let options = { width: wid, height: 264, autoplay: 'muted',loop:true }
+                    if (media.length > 1){
+                        options.poster=imgArr[1]
+                    }
+                    videojs('my-player', options, function () {
+                        videojs.log('播放器准备好了!');
+                        // 最新的浏览器一般禁止video自动播放，直接调用play()会报错。只有用户在页面上操作后或者在video标签上添加muted（静音）属性，才能调用play函数。
+                        // this.play();
+                    });
+
                 }
                 var endtime = data['endtime']
                 document.getElementById("endtime").innerHTML = dateFormat(new Date().toLocaleDateString()) + '到期'
