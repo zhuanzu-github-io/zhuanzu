@@ -194,10 +194,10 @@
 				let angle = that.angle({ X: that.startX, Y: that.startY }, { X: that.endX, Y: that.endY });
 				if (Math.abs(angle) > 30) return;
 			    if (that.endX > that.startX){ // 右滑
-			    	return
+			    	// return
 					that.prevSlider();
 			    } else { // 左滑
-			    	return
+			    	// return
 					that.nextSlider();
 			    }
 				that.timer = setInterval(that.nextSlider.bind(that, that.aniTIme), that.intervalTime);
