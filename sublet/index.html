@@ -369,7 +369,7 @@
                 <option value="16">苏州</option>
                 <option value="17">天津</option>
                 <option value="18">无锡</option>
-                <option value="19">武汉</option>
+                <option value="19" selected>武汉</option>
                 <option value="20">西安</option>
                 <option value="21">厦门</option>
                 <option value="22">郑州</option>
@@ -378,8 +378,8 @@
         <div class="container">
             <label for="room-type">房型:</label>
             <select id="room-type" name="room-type">
-                <option value="0">全部</option>
-                <option value="1">单间</option>
+                <!-- <option value="0">全部</option> -->
+                <option value="1" selected>单间</option>
                 <option value="2">次卧</option>
                 <option value="3">主卧</option>
                 <option value="4">一居</option>
@@ -792,7 +792,7 @@
                 // 将字符串转换为数字
                 var num = parseInt(str);
                 // 判断数字是否大于0小于7
-                if (num >= 0 && num <= 7) {
+                if (num >= 1 && num <= 7) {
                     return true;
                 }
             }
@@ -1264,6 +1264,10 @@
                 }
                 if (roomType && verifyRoomType(roomType)) {
                     roomTypeSelectElement.value = parseInt(roomType)
+                    if (roomTypeSelectElement.value==0){
+                        //删除了下拉框中value为0的选项,现将为0的数据回显时置为1
+                        roomTypeSelectElement.value=1
+                    }
                 }
                 if (price && verifyPrice(price)) {
                     priceElement.value = parseInt(price)
