@@ -485,13 +485,16 @@
                         sl.noMoreData()
                         return
                     }
-
-                    // 我这里用jquery的不是因为需要jquery，只是jquery的语法看起来比较简单。大家都认识。
-                    // 如果你不是用jquery，可以看看原生的insertAdjacentHTML方法来替代append
-                    let data = getData()
-                    page++
-                    sl.contentDom.insertAdjacentHTML('beforeend', getDataHtml(data));
-                    sl.unLock()
+                    console.log("开始休眠")
+                    setTimeout(() => {
+                        console.log("执行休眠后代码")
+                        // 我这里用jquery的不是因为需要jquery，只是jquery的语法看起来比较简单。大家都认识。
+                        // 如果你不是用jquery，可以看看原生的insertAdjacentHTML方法来替代append
+                        let data = getData()
+                        page++
+                        sl.contentDom.insertAdjacentHTML('beforeend', getDataHtml(data));
+                        sl.unLock()
+                    }, 350);
                 },
                 // 你也可以关闭下拉刷新
                 enablePullRefresh: false,
