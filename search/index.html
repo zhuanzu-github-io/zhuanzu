@@ -270,7 +270,8 @@
     <div id="tencentMap" style="width: 94vw;height: 100vh;display: none;position: relative;padding-top:10px;"></div>
     <div class="div1" id="div1">
         <div class="container">
-            <button class="left-button" onclick="redirectToLink('https://zu.fzchats.uk/map')">地图</button>
+            <button class="left-button" onclick="redirectToLink('https://zu.fzchats.uk/map')">地 图</button>
+            <button class="right-button" onclick="redirectToLink('https://zu.fzchats.uk/notes')">小红书</button>
             <!-- <button class="right-button">右侧按钮</button> -->
             <!-- <label for="room-type">租期:</label> -->
             <select id="rental" name="rental">
@@ -481,7 +482,7 @@
                     }
                     document.getElementById("no-data").style.display = "none";
                     sl.container.style.display = "block";
-                    if (page === pages + 1) {
+                    if (page >= pages + 1) {
                         // 没有数据的时候需要调用noMoreData
                         sl.noMoreData()
                         return
@@ -593,7 +594,7 @@
             });
             //使用map筛选符合条件的转租
             //keyword 如果为空,则不筛选关键词
-
+            pages = Math.ceil(effectData.length / pageSize)
             scroll.contentDom.innerHTML = ''
             page = 1
             scroll.refreshData()
