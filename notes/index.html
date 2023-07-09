@@ -130,7 +130,7 @@
         }
 
         select {
-            width: 80px;
+            width: 100px;
             /* margin-right: 8px; */
             padding: 3px;
             font-size: 14px;
@@ -153,7 +153,7 @@
         /* 卡片样式 */
         .card {
             display: flex;
-            flex-direction:column;
+            flex-direction: column;
             align-items: center;
             padding: 10px;
             border: 1px solid #ccc;
@@ -165,7 +165,7 @@
         .carda {
             width: 100%;
             display: flex;
-            flex-direction:row;
+            flex-direction: row;
             /* flex-direction:column; */
             align-items: center;
             padding: 10px;
@@ -222,8 +222,8 @@
             font-size: 14px;
             color: #777;
             margin-bottom: 5px;
-            padding-left:15px;
-            padding-right:15px;
+            padding-left: 15px;
+            padding-right: 15px;
         }
 
         .card-price {
@@ -289,8 +289,13 @@
 <body>
 
     <div class="div1" id="div1">
-        <div class="container" style="height: 38px;">
+        <div class="container">
             <button class="left-button" onclick="redirectToLink('https://zu.fzchats.uk/search')">群转租</button>
+            <select id="sort" name="sort">
+                <!-- <option value="0">全部</option> -->
+                <option value="0" selected>时间排序</option>
+                <option value="1">价格排序</option>
+            </select>
         </div>
         <div class="container">
             <input type="text" id="keyword" placeholder="搜索">
@@ -298,24 +303,24 @@
 
         <div class="container">
             <label style="width: 35px;">未知:</label>
-            <input type="checkbox" value="0" >
+            <input type="checkbox" value="0">
             <label style="width: 35px;">单间:</label>
-            <input type="checkbox" value="1" >
+            <input type="checkbox" value="1">
             <label style="width: 35px;">次卧:</label>
-            <input type="checkbox" value="2" >
+            <input type="checkbox" value="2">
             <label style="width: 35px;">主卧:</label>
-            <input type="checkbox" value="3" >
+            <input type="checkbox" value="3">
 
         </div>
         <div class="container">
             <label style="width: 50px;">一居室:</label>
-            <input type="checkbox" value="4" >
+            <input type="checkbox" value="4">
             <label style="width: 50px;">二居室:</label>
-            <input type="checkbox" value="5" >
+            <input type="checkbox" value="5">
             <label style="width: 50px;">三居室:</label>
-            <input type="checkbox" value="6" >
+            <input type="checkbox" value="6">
             <label style="width: 50px;">四居室:</label>
-            <input type="checkbox" value="7" >
+            <input type="checkbox" value="7">
 
         </div>
         <div class="container">
@@ -356,41 +361,41 @@
             window.location.href = url;
         }
 
-        function showDetail(id){
-            window.open("https://www.xiaohongshu.com/discovery/item/"+id, "_blank");
+        function showDetail(id) {
+            window.open("https://www.xiaohongshu.com/discovery/item/" + id, "_blank");
         }
-        
+
 
         fetch('/notes/1.json')
             .then((response) => response.json())
-            .then((json) => locationData=locationData.concat(json));
+            .then((json) => locationData = locationData.concat(json));
 
 
         fetch('/notes/2.json')
             .then((response) => response.json())
-            .then((json) => locationData=locationData.concat(json));
+            .then((json) => locationData = locationData.concat(json));
 
         fetch('/notes/3.json')
             .then((response) => response.json())
-            .then((json) => locationData=locationData.concat(json));
+            .then((json) => locationData = locationData.concat(json));
 
         fetch('/notes/4.json')
             .then((response) => response.json())
-            .then((json) =>locationData=locationData.concat(json));
+            .then((json) => locationData = locationData.concat(json));
 
 
         fetch('/notes/5.json')
             .then((response) => response.json())
-            .then((json) => locationData=locationData.concat(json));
+            .then((json) => locationData = locationData.concat(json));
 
         fetch('/notes/6.json')
             .then((response) => response.json())
-            .then((json) => locationData=locationData.concat(json));
+            .then((json) => locationData = locationData.concat(json));
 
         (async function () {
             init()
         })()
-        
+
 
 
         // function refreshData() {
@@ -422,24 +427,24 @@
                 var imgUrl = 'data:image/png;base64,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'
                 if (item['cover_url'].length > 0) {
                     // imgUrl = 'https://detail.fzchats.uk/?proxyUrl=' + item['cover_url']
-                    imgUrl =  item['cover_url']
+                    imgUrl = item['cover_url']
                 }
                 // var rentalStatus = "不短租"
                 // if (item['rental'] == 1) {
                 //     rentalStatus = "可短租"
                 // }
-                var ctime=formatTimestamp(item['note_create_time'])
-                var mtime=formatTimestamp(item['last_update_time'])
-                var info=item['info']
+                var ctime = formatTimestamp(item['note_create_time'])
+                var mtime = formatTimestamp(item['last_update_time'])
+                var info = item['info']
                 var index = info.indexOf("|");
                 var title = info.substring(0, index);
-                var content= info.substring(index + 1);
-                var priceStr='￥' + item['price'] + '/月'
-                if (item['price']==0){
-                    var priceStr='不详'
+                var content = info.substring(index + 1);
+                var priceStr = '￥' + item['price'] + '/月'
+                if (item['price'] == 0) {
+                    var priceStr = '不详'
                 }
-                var house=["不详","单间","次卧","主卧","一居室","两居室","三居室","四居室"][item['room_type']]
-                return '<div class="card" onclick=showDetail("' + item['note_id'] + '")> <div class="carda"> <div class="card-image"> <img src="' + imgUrl + '" > </div> <div class="card-content"> <div class="card-title">' + title + '</div> <div class="card-attribute">创建时间:'+ ctime +'</div> <div class="card-attribute">更新时间:' + mtime + '</div> <div class="card-attribute">户型:' + house + '</div> <div class="card-price">价格:<span style="color:red;">' + priceStr + '</span></div> </div> </div> <div class="card-description"><p style="text-indent: 2em;">' + content + '</p></div> </div>';
+                var house = ["不详", "单间", "次卧", "主卧", "一居室", "两居室", "三居室", "四居室"][item['room_type']]
+                return '<div class="card" onclick=showDetail("' + item['note_id'] + '")> <div class="carda"> <div class="card-image"> <img src="' + imgUrl + '" > </div> <div class="card-content"> <div class="card-title">' + title + '</div> <div class="card-attribute">创建时间:' + ctime + '</div> <div class="card-attribute">更新时间:' + mtime + '</div> <div class="card-attribute">户型:' + house + '</div> <div class="card-price">价格:<span style="color:red;">' + priceStr + '</span></div> </div> </div> <div class="card-description"><p style="text-indent: 2em;">' + content + '</p></div> </div>';
             }).join('');
         }
 
@@ -491,6 +496,7 @@
             var highest = document.getElementById('highest');
             var roomTypeCheckboxes = document.querySelectorAll('input[type="checkbox"]');
             var keywordInput = document.getElementById('keyword');
+            var sort = document.getElementById('sort');
             // 为价格区间输入框添加事件监听
             lowest.addEventListener('change', handleInputChange);
             highest.addEventListener('change', handleInputChange);
@@ -500,6 +506,7 @@
             });
             // 为关键词输入框添加事件监听
             keywordInput.addEventListener('change', handleInputChange);
+            sort.addEventListener('change', handleInputChange);
 
             effectData = locationData
             // effectData = []
@@ -570,6 +577,8 @@
 
 
         function handleInputChange() {
+            var sort = document.getElementById('sort').value;
+
             var lowest = document.getElementById('lowest').value;
             lowest = lowest.replace(/\s/g, "");
             var lowestNum = parseInt(lowest);
@@ -614,7 +623,13 @@
                     return false
                 }
                 return true
-            }).sort((a, b) =>b['last_update_time']- a['last_update_time'] );
+            }).sort((a, b) => {
+                if (sort === "0") {
+                    return b['last_update_time'] - a['last_update_time']; // 由大到小排序
+                } else {
+                    return a['price'] - b['price']; // 由小到大排序
+                }
+            });
             //使用map筛选符合条件的转租
             //keyword 如果为空,则不筛选关键词
             pages = Math.ceil(effectData.length / pageSize)
