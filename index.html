@@ -393,7 +393,8 @@
                     let imgArr = media.map((imgPath) => {
                         return {
                             url: '#',
-                            imgPath: "https://detail.fzchats.uk/?proxyUrl=" + imgPath
+                            imgPath:  imgPath+"?imageView2/2/w/540/format/jpg"
+                            // imgPath: "https://detail.fzchats.uk/?proxyUrl=" + imgPath
                         };
                     });
                     new Swiper({
@@ -405,16 +406,17 @@
                 }
                 if (mediaType && media && mediaType === "video" && media.length > 0) {
                     let imgArr = media.map((imgPath) => {
-                        return "https://detail.fzchats.uk/?proxyUrl=" + imgPath
+                        return imgPath
+                        // return "https://detail.fzchats.uk/?proxyUrl=" + imgPath
                     });
                     //展示视频
                     var vidElement = document.getElementById("vid")
                     vidElement.style.display = "block"
-                    vidElement.innerHTML = '<video id="my-player" class="video-js" controls preload="auto"  > <source src="' + imgArr[0] + '" type="video/mp4"/> </video>'
+                    vidElement.innerHTML = '<video id="my-player" class="video-js" controls preload="auto"  > <source src="' + "https://detail.fzchats.uk/?proxyUrl="+imgArr[0] + '" type="video/mp4"/> </video>'
                     var wid=vidElement.offsetWidth
                     let options = { width: wid, height: 264 ,loop:true }
                     if (media.length > 1){
-                        options.poster=imgArr[1]
+                        options.poster=imgArr[1]+"?imageView2/2/w/540/format/jpg"
                     }
                     videojs('my-player', options, function () {
                         videojs.log('播放器准备好了!');
