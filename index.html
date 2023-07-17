@@ -404,8 +404,9 @@
                     let imgArr = media.map((imgPath) => {
                         return {
                             url: '#',
-                            imgPath:  imgPath+"?imageView2/2/w/540/format/jpg"
-                            // imgPath: "https://detail.fzchats.uk/?proxyUrl=" + imgPath
+                            imgPath:  "https://sns-img-hw.xhscdn.com"+new URL(imgPath).pathname+"?imageView2/2/w/540/format/jpg"
+                            // imgPath:  imgPath+"?imageView2/2/w/540/format/jpg"
+                            
                         };
                     });
                     new Swiper({
@@ -426,7 +427,8 @@
                     var wid=vidElement.offsetWidth
                     let options = { width: wid, height: 264 ,loop:true }
                     if (media.length > 1){
-                        options.poster=imgArr[1]
+                        options.poster="https://sns-img-hw.xhscdn.com"+new URL(media[1]).pathname+"?imageView2/2/w/540/format/jpg"
+                        // options.poster=imgArr[1]
                     }
                     videojs('my-player', options, function () {
                         videojs.log('播放器准备好了!');
