@@ -417,13 +417,14 @@
                     }).init();
                 }
                 if (mediaType && media && mediaType === "video" && media.length > 0) {
-                    let imgArr = media.map((imgPath) => {
-                       return "https://detail.fzchats.uk/?proxyUrl=" + imgPath
-                    });
+                    // let imgArr = media.map((imgPath) => {
+                    //    return "https://detail.fzchats.uk/?proxyUrl=" + imgPath
+                    // });
+                    var vedioUrl="https://sns-img-hw.xhscdn.com"+new URL(media[0]).pathname
                     //展示视频
                     var vidElement = document.getElementById("vid")
                     vidElement.style.display = "block"
-                    vidElement.innerHTML = '<video id="my-player" class="video-js" controls preload="auto"  > <source src="' +imgArr[0] + '" type="video/mp4"/> </video>'
+                    vidElement.innerHTML = '<video id="my-player" class="video-js" controls preload="auto"  > <source src="' +vedioUrl + '" type="video/mp4"/> </video>'
                     var wid=vidElement.offsetWidth
                     let options = { width: wid, height: 264 ,loop:true }
                     if (media.length > 1){
