@@ -420,7 +420,8 @@
                     // let imgArr = media.map((imgPath) => {
                     //    return "https://detail.fzchats.uk/?proxyUrl=" + imgPath
                     // });
-                    var vedioUrl="http://sns-video-hw.xhscdn.com"+new URL(media[0]).pathname
+                    // var vedioUrl="http://sns-video-hw.xhscdn.com"+new URL(media[0]).pathname
+                    var vedioUrl=media[0].replace("http://", "https://");
                     //展示视频
                     var vidElement = document.getElementById("vid")
                     vidElement.style.display = "block"
