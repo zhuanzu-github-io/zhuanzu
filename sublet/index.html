@@ -308,7 +308,7 @@
             </svg>
         </div>
         <div class="container" id="qr-con">
-            <label for="sublet-qr">群二维码:</label>
+            <label for="sublet-qr">微信名片:</label>
             <span id="sublet-qr" name="sublet-qr" class="user-info">未上传</span>
             <svg t="1685358048788" onclick="showInfoPopup('sublet-qr')" class="icon info-icon" viewBox="0 0 1024 1024"
                 version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
@@ -507,7 +507,7 @@
             </svg>
         </div>
         <div class="container">
-            <label for="qrcode-file" class="custom-file-input">上传群二维码</label>
+            <label for="qrcode-file" class="custom-file-input">上传微信二维码</label>
             <input type="file" class="custom-file-label" id="qrcode-file" accept="image/*"
                 onchange="processQRCode(event)">
             <svg t="1685358048788" onclick="showInfoPopup('qrcode-file')" class="icon info-icon" viewBox="0 0 1024 1024"
@@ -622,14 +622,14 @@
             contentElement.style.display = 'none';
             qrUrlElement.innerHTML = "";
             if (result) {
-                if (!qrcode.result.startsWith("https://weixin.qq.com/g/")) {
-                    showTipPopup("温馨提示", "请上传微信群二维码")
+                if ((!qrcode.result.startsWith("https://weixin.qq.com/g/"))&&(!qrcode.result.startsWith("https://u.wechat.com"))) {
+                    showTipPopup("温馨提示", "请上传黑白样式微信二维码")
                     return
                 }
-                qrUrlElement.innerHTML = qrcode.result.replace("https://weixin.qq.com/g/", "");;
+                qrUrlElement.innerHTML = qrcode.result;
                 contentElement.style.display = 'flex';
             } else {
-                showTipPopup("温馨提示", '解码失败,请确认上传的是微信群二维码');
+                showTipPopup("温馨提示", '解码失败,请确认上传的是黑白样式微信二维码');
                 return
             }
         }
@@ -1118,8 +1118,8 @@
             if (position5.length > 0 && verifyPosition(position5)) {
                 positions.push(position5)
             }
-            if (qrcode === "" || qrcode.length > 80) {
-                showTipPopup("温馨提示", "请上传用于接待的微信群二维码!")
+            if (qrcode === "" || qrcode.length > 120) {
+                showTipPopup("温馨提示", "请上传黑白样式的微信二维码!")
                 return
             }
             //匹配小红书url
@@ -1290,7 +1290,7 @@
                 if (position5 && verifyPosition(position5)) {
                     position5Element.value = position5
                 }
-                if (qrcode && qrcode.length > 0 && qrcode.length < 80) {
+                if (qrcode && qrcode.length > 0 && qrcode.length < 120) {
                     var contentElement = document.getElementById('qrcode-content');
                     var qrUrlElement = document.getElementById('qrUrl');
                     qrUrlElement.innerHTML = qrcode;
@@ -1381,14 +1381,14 @@
                 title.textContent = '转租服务';
                 description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation">  <li class="tab-item active">每次更新转租信息后,转租服务到期时间都会变成7天后</li><li class="tab-item">转租信息生效,以及接待群二维码生效的情况下,转租信息可被搜索</li><li  class="tab-item">租客可通过查询结果中的群二维码,直接进入转租接待群</li> </ul></div>';
             } else if (field === 'sublet-qr') {
-                title.textContent = '群二维码';
-                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">群二维码默认有效时长6.5天,一旦失效,租客将无法搜到您的转租信息</li> <li class="tab-item">租客进群后会首先查看群公告,请提前将房源信息录入公告</li></ul></div>';
+                title.textContent = '微信名片';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">微信名片默认有效时长30天,一旦失效,租客将无法搜索到您的转租信息</li> <li class="tab-item">请及时更新微信名片哦~</li></ul></div>';
             } else if (field === 'qrcode-file') {
-                title.textContent = '微信群二维码';
-                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">租客将通过此微信群二维码联系您</li> <li class="tab-item">租客进群后会首先查看群公告,请提前将房子图片录入公告</li><li class="tab-item">系统默认二维码6.5天失效,请及时更新</li></ul></div>';
+                title.textContent = '微信二维码';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">租客将通过微信二维码联系您</li><li class="tab-item">系统默认微信二维码有效期30天,记得及时更新哦~</li></ul></div>';
             } else if (field === 'note') {
-                title.textContent = '小红书笔记或抖音视频链接';
-                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"><br/> <li class="tab-item active">租客将通过小红书笔记链接或抖音视频链接,查看房源详情</li> <br/> <li class="tab-item">①打开小红书转租笔记</li><li class="tab-item">②点击屏幕右上角的"•••"</li><li class="tab-item">③选择屏幕最下面一行的"复制链接"图标</li> <br/><li class="tab-item">①打开抖音转租视频</li><li class="tab-item">②点击屏幕右右下角的"•••"</li><li class="tab-item">③选择屏幕倒数第二行的"复制链接"图标</li></ul></div>';
+                title.textContent = '小红书笔记';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"><br/> <li class="tab-item active">租客将通过小红书笔记链接,查看房源详情</li> <br/> <li class="tab-item">①打开小红书转租笔记</li><li class="tab-item">②点击屏幕右上角的"•••"</li><li class="tab-item">③选择屏幕最下面一行的"复制链接"图标</li> <br/><li class="tab-item">①打开抖音转租视频(暂不支持抖音)</li><li class="tab-item">②点击屏幕右右下角的"•••"</li><li class="tab-item">③选择屏幕倒数第二行的"复制链接"图标</li></ul></div>';
             }
             popup.style.display = 'flex';
         }

@@ -472,7 +472,9 @@
                 var cityname = data['cityname'];
                 var qrcodeUrl = data['qrcode']
                 if (qrcodeUrl) {
-                    qrcodeUrl = "https://weixin.qq.com/g/" + qrcodeUrl
+                    if (!qrcodeUrl.startsWith("http")){
+                        qrcodeUrl = "https://weixin.qq.com/g/" + qrcodeUrl
+                    }
                     // document.getElementById('qrcode').style.display = 'none';
                     var qrcode = new QRCode("qrcode", {
                         text: 'your content',
