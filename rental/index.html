@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>转租页面</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0 ,maximum-scale=1.0,maximum-scale=1.0, user-scalable=no">
+    <style>
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding: 20px;
+            /* display: flex; */
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-right: 24px;
+            padding-left: 24px;
+            padding-top: 6px;
+            padding-bottom: 6px;
+            position: relative;
+        }
+
+        /* 表单样式 */
+        .form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        label {
+            display: inline-block;
+            width: 150px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        select {
+            width: 160px;
+            margin-right: 8px;
+            padding: 5px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            text-align: center;
+        }
+
+        input[type="number"] {
+            width: 160px;
+            padding: 5px 5px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            width: 160px;
+            padding: 5px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            text-align: center;
+        }
+
+        input[type="date"] {
+            width: 160px;
+            margin-right: 8px;
+            padding: 5px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            text-align: center;
+        }
+
+        textarea {
+            resize: none;
+            overflow: hidden;
+            width: 200px;
+            height: 50px;
+            padding: 5px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            text-align: center;
+        }
+
+
+        /* 隐藏默认的文件选择按钮 */
+        input[type="file"] {
+            display: none;
+        }
+
+        /* 自定义文件选择按钮样式 */
+        .custom-file-input {
+            display: inline-block;
+            padding: 5px 5px;
+            background-color: #f2f2f2;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            color: #333;
+            font-size: 14px;
+            cursor: pointer;
+            text-align: center;
+            width: 120px;
+        }
+
+        /* 自定义文件选择按钮的标签样式 */
+        .custom-file-label {
+            display: inline-block;
+            /* margin-left: 10px; */
+        }
+
+        /* 悬停时的样式 */
+        .custom-file-input:hover,
+        .custom-file-input:focus {
+            background-color: #e0e0e0;
+            border-color: #999;
+        }
+
+        /* 激活时的样式 */
+        .custom-file-input:active {
+            background-color: #d2d2d2;
+            border-color: #888;
+        }
+
+        /* 禁用时的样式 */
+        .custom-file-input:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+
+
+
+        .user-info {
+            font-weight: bold;
+            color: #FFA500;
+            /* 例如，红色 */
+            width: 150px;
+            padding: 5px;
+            font-size: 16px;
+            border-radius: 4px;
+            /* border: 1px solid #ccc; */
+            display: inline-block;
+            text-align: center;
+        }
+
+        .copy-button {
+            display: inline-block;
+            margin: auto 10px;
+            padding: 8px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            margin-top: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100px;
+        }
+
+
+        .info-icon {
+            display: inline-block;
+            position: absolute;
+            top: 50%;
+            right: 0px;
+            transform: translateY(-50%);
+            border-radius: 50%;
+            font-size: 12px;
+            text-align: center;
+            line-height: 20px;
+            cursor: pointer;
+        }
+
+        .popup {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            /* transform: translateX(25%); */
+        }
+
+        .popup-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            /* height: 175px; */
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .popup h3 {
+            margin-top: 0;
+        }
+
+        .popup p {
+            margin-bottom: 10px;
+        }
+
+        .popup button {
+            background-color: #007bff;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .popup button:hover {
+            background-color: #0056b3;
+        }
+
+
+        /* 移动端适配 */
+        @media only screen and (max-width: 600px) {
+
+            body {
+                /* position: relative; */
+                position: static;
+                width: 100%;
+                height: 100%;
+                overflow-y: scroll;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            select,
+            input[type="number"] {
+                font-size: 14px;
+            }
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .button-div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* height: 100vh; */
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page form">
+        <div class="container" id="nick-con">
+            <label for="nick">微信昵称:</label>
+            <span id="nick" name="nick" class="user-info">minry</span>
+        </div>
+        <div class="container" id="info-con">
+            <label for="sublet-info">转租信息:</label>
+            <span id="sublet-info" name="sublet-info" class="user-info">生效中</span>
+            <svg t="1685358048788" onclick="showInfoPopup('sublet-info')" class="icon info-icon" viewBox="0 0 1024 1024"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#00BFFF" p-id="2689"></path>
+            </svg>
+        </div>
+        <div class="container" id="server-con">
+            <label for="sublet-server">转租服务:</label>
+            <span id="sublet-server" name="sublet-server" class="user-info">未激活</span>
+            <svg t="1685358048788" onclick="showInfoPopup('sublet-server')" class="icon info-icon"
+                viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20"
+                height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#00BFFF" p-id="2689"></path>
+            </svg>
+        </div>
+        <div class="container" id="qr-con">
+            <label for="sublet-qr">微信名片:</label>
+            <span id="sublet-qr" name="sublet-qr" class="user-info">未上传</span>
+            <svg t="1685358048788" onclick="showInfoPopup('sublet-qr')" class="icon info-icon" viewBox="0 0 1024 1024"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#00BFFF" p-id="2689"></path>
+            </svg>
+        </div>
+
+        <!-- <input style="width: 300px; " type="text" id="title" name="title" maxlength="20" placeholder="快输入标题吧~"> -->
+        <!-- <div class="container" style="justify-content: flex-start;">
+                <label for="title" style="width: 50px;padding-right: 10px;">标题:</label>
+                <input style="width: 236px; " type="text" id="title" name="title" maxlength="20" placeholder="快输入标题吧~">
+                <svg t="1685358048788" onclick="showInfoPopup('title')" class="icon info-icon" viewBox="0 0 1024 1024"
+                    version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                    <path
+                        d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                        fill="#00BFFF" p-id="2689"></path>
+                </svg>
+            </div> -->
+        <div class="container button-div">
+            <button class="copy-button" onclick="nextPage()">开始编辑</button>
+
+        </div>
+    </div>
+
+
+    <div class="page form">
+        <div class="container">
+            <label for="title">转租标题:</label>
+            <textarea id="title" name="title" maxlength="20" placeholder="快输入标题吧~"></textarea>
+            <svg t="1685358048788" onclick="showInfoPopup('title')" class="icon info-icon" viewBox="0 0 1024 1024"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#00BFFF" p-id="2689"></path>
+            </svg>
+        </div>
+        <div class="container">
+            <label for="city">城市:</label>
+            <select id="city" name="city">
+                <option value="0">北京</option>
+                <option value="1">长沙</option>
+                <option value="2">成都</option>
+                <option value="3">重庆</option>
+                <option value="4">大连</option>
+                <option value="5">福州</option>
+                <option value="6">广州</option>
+                <option value="7">杭州</option>
+                <option value="8">合肥</option>
+                <option value="9">济南</option>
+                <option value="10">昆明</option>
+                <option value="11">南京</option>
+                <option value="12">宁波</option>
+                <option value="13">青岛</option>
+                <option value="14">上海</option>
+                <option value="15">深圳</option>
+                <option value="16">苏州</option>
+                <option value="17">天津</option>
+                <option value="18">无锡</option>
+                <option value="19" selected>武汉</option>
+                <option value="20">西安</option>
+                <option value="21">厦门</option>
+                <option value="22">郑州</option>
+            </select>
+        </div>
+        <div class="container">
+            <label for="room-type">房型:</label>
+            <select id="room-type" name="room-type">
+                <!-- <option value="0">全部</option> -->
+                <option value="1" selected>单间</option>
+                <option value="2">次卧</option>
+                <option value="3">主卧</option>
+                <option value="4">一居</option>
+                <option value="5">二居</option>
+                <option value="6">三居</option>
+                <option value="7">四居</option>
+            </select>
+        </div>
+        <div class="container">
+            <label for="rental">能否短租:</label>
+            <select id="rental" name="rental">
+                <option value="0" selected>不能</option>
+                <option value="1">能</option>
+            </select>
+        </div>
+        <div class="container">
+            <label for="showType">转租群:</label>
+            <select id="showType" name="showType">
+                <option value="0" selected>不同步</option>
+                <option value="1">同步展示</option>
+            </select>
+        </div>
+        <div class="container">
+            <label for="price">转租价格:</label>
+            <input type="number" id="price" name="price" value="0">
+            <svg t="1685358048788" onclick="showInfoPopup('price')" class="icon info-icon" viewBox="0 0 1024 1024"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#00BFFF" p-id="2689"></path>
+            </svg>
+        </div>
+
+        <div class="container">
+            <label for="position1">房源小区:</label>
+            <input type="text" id="position1" name="position1" maxlength="10" value="" placeholder="小区">
+        </div>
+
+        <div class="container">
+            <label for="party">合同甲方:</label>
+            <input type="text" id="party" name="party" maxlength="10" value="房东">
+        </div>
+
+
+        <div class="container">
+            <label for="pay">付款方式:</label>
+            <input type="text" id="pay" name="pay" maxlength="10" value="押一付三">
+        </div>
+
+
+        <div class="container">
+            <label for="poiname">地图定位:</label>
+            <input readonly type="text" id="poiname" name="poiname" value="" onclick="chooseLocation()">
+        </div>
+
+
+
+        <div class="container">
+            <label for="rentDesc">转租描述:</label>
+            <textarea style="height: 160px;" id="rentDesc" name="rentDesc" maxlength="80"
+                placeholder="大家都想了解地理位置、家电设施、出租&转租原因...,80字以内"></textarea>
+
+        </div>
+        <div class="container">
+            <button id="backHome" style="display: none;" class="copy-button" onclick="previousPage()">上一页</button>
+            <button class="copy-button" onclick="nextPage()">下一页</button>
+        </div>
+    </div>
+    </div>
+    <div id="tencentMap" style="width: 92vw;height: 95vh;display: none;">
+        <iframe id="mapPage" width="100%" height="92%" frameborder=0
+            src="https://apis.map.qq.com/tools/locpicker?search=1&type=1&key=4RWBZ-F2UWV-KATP5-UD3YA-YFYI5-FDBYJ&referer=myapp&total=10">
+        </iframe>
+        <div class="container">
+            <button class="copy-button" onclick="closeMap()">关闭</button>
+        </div>
+    </div>
+
+    <div class="page form">
+        <div class="container">
+            <label for="note">笔记或视频:</label>
+            <input type="text" id="note" name="note" placeholder="复制链接后请直接粘贴">
+            <svg t="1685358048788" onclick="showInfoPopup('note')" class="icon info-icon" viewBox="0 0 1024 1024"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#00BFFF" p-id="2689"></path>
+            </svg>
+        </div>
+        <div class="container">
+            <label for="min-price">地铁交通:</label>
+            <input type="text" id="position2" name="position2" maxlength="10" placeholder="2号线广埠屯站">
+            <svg t="1685358048788" onclick="showInfoPopup('key2')" class="icon info-icon" viewBox="0 0 1024 1024"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#00BFFF" p-id="2689"></path>
+            </svg>
+        </div>
+        <div class="container">
+            <label for="min-price">附近地标:</label>
+            <input type="text" id="position3" name="position3" maxlength="10" placeholder="世纪公园人民广场">
+            <svg t="1685358048788" onclick="showInfoPopup('key3')" class="icon info-icon" viewBox="0 0 1024 1024"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#00BFFF" p-id="2689"></path>
+            </svg>
+        </div>
+        <div class="container">
+            <label for="min-price">附近道路:</label>
+            <input type="text" id="position4" name="position4" maxlength="10" placeholder="江汉路,西藏路">
+            <svg t="1685358048788" onclick="showInfoPopup('key4')" class="icon info-icon" viewBox="0 0 1024 1024"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#00BFFF" p-id="2689"></path>
+            </svg>
+        </div>
+        <div class="container">
+            <label for="min-price">其它(选填):</label>
+            <input type="text" id="position5" name="position5" maxlength="10" placeholder="嗯,可以填租客关注的点">
+            <svg t="1685358048788" onclick="showInfoPopup('key5')" class="icon info-icon" viewBox="0 0 1024 1024"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#00BFFF" p-id="2689"></path>
+            </svg>
+        </div>
+        <div class="container">
+            <label for="qrcode-file" class="custom-file-input">上传微信二维码</label>
+            <input type="file" class="custom-file-label" id="qrcode-file" accept="image/*"
+                onchange="processQRCode(event)">
+            <svg t="1685358048788" onclick="showInfoPopup('qrcode-file')" class="icon info-icon" viewBox="0 0 1024 1024"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
+                <path
+                    d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
+                    fill="#00BFFF" p-id="2689"></path>
+            </svg>
+        </div>
+
+        <div id="qrcode-content" class="container" style="display: none;">
+            <span style="width: 450px; word-break: break-all;font-size: 14px; text-align: center;" id="qrUrl"></span>
+        </div>
+
+        <div class="container">
+            <button class="copy-button" onclick="previousPage()">上一页</button>
+            <button type="button" id="copy-button" class="copy-button" onclick="submitForm()">复制内容</button>
+        </div>
+    </div>
+    <!-- 弹窗 -->
+    <div id="info-popup" class="popup">
+        <div class="popup-content">
+            <h3 id="popup-title"></h3>
+            <p id="popup-description" style="text-align: left;"></p>
+            <button onclick="hideInfoPopup()">关闭</button>
+        </div>
+    </div>
+    <script type="text/javascript" src="/sublet/grid.js"></script>
+    <script type="text/javascript" src="/sublet/version.js"></script>
+    <script type="text/javascript" src="/sublet/detector.js"></script>
+    <script type="text/javascript" src="/sublet/formatinf.js"></script>
+    <script type="text/javascript" src="/sublet/errorlevel.js"></script>
+    <script type="text/javascript" src="/sublet/bitmat.js"></script>
+    <script type="text/javascript" src="/sublet/datablock.js"></script>
+    <script type="text/javascript" src="/sublet/bmparser.js"></script>
+    <script type="text/javascript" src="/sublet/datamask.js"></script>
+    <script type="text/javascript" src="/sublet/rsdecoder.js"></script>
+    <script type="text/javascript" src="/sublet/gf256poly.js"></script>
+    <script type="text/javascript" src="/sublet/gf256.js"></script>
+    <script type="text/javascript" src="/sublet/decoder.js"></script>
+    <script type="text/javascript" src="/sublet/qrcode.js"></script>
+    <script type="text/javascript" src="/sublet/findpat.js"></script>
+    <script type="text/javascript" src="/sublet/alignpat.js"></script>
+    <script type="text/javascript" src="/sublet/databr.js"></script>
+    <script>
+        var currentPage = 0;
+        var pages = [];
+        var positionJson
+        var dataStr
+        var rentalId
+        function chooseLocation() {
+            for (var i = 0; i < pages.length; i++) {
+                pages[i].classList.remove('active');
+            }
+            var mapElement = document.getElementById('tencentMap');
+            mapElement.style.display = "block"
+
+        }
+        window.addEventListener('message', function (event) {
+            // 接收位置信息，用户选择确认位置点后选点组件会触发该事件，回传用户的位置信息
+            var loc = event.data;
+            if (loc && loc.module == 'locationPicker') {//防止其他应用也会向该页面post信息，需判断module是否为'locationPicker'
+                console.log('location', loc);
+                positionJson = loc
+                var poiElement = document.getElementById('poiname');
+                poiElement.value = positionJson['poiname']
+                closeMap()
+            }
+        }, false);
+
+
+        function closeMap() {
+            var mapElement = document.getElementById('tencentMap');
+            mapElement.style.display = "none"
+            pages[currentPage].classList.add('active');
+        }
+        function init() {
+            pages = document.getElementsByClassName('page');
+            // showPage(0);
+        }
+
+        function showPage(index) {
+            for (var i = 0; i < pages.length; i++) {
+                pages[i].classList.remove('active');
+            }
+            pages[index].classList.add('active');
+            currentPage = index;
+        }
+
+        function nextPage() {
+            if (currentPage == 1) {
+                if (!nextPageVerify()) {
+                    return
+                }
+            }
+            if (currentPage < pages.length - 1) {
+                showPage(currentPage + 1);
+            }
+
+        }
+
+        function previousPage() {
+            if (currentPage > 0) {
+                showPage(currentPage - 1);
+            }
+        }
+
+
+
+        qrcode.callback = function (result) {
+            var contentElement = document.getElementById('qrcode-content');
+            var qrUrlElement = document.getElementById('qrUrl');
+            contentElement.style.display = 'none';
+            qrUrlElement.innerHTML = "";
+            if (result) {
+                if ((!qrcode.result.startsWith("https://weixin.qq.com/g/"))&&(!qrcode.result.startsWith("https://u.wechat.com"))) {
+                    showTipPopup("温馨提示", "请上传黑白样式微信二维码")
+                    return
+                }
+                qrUrlElement.innerHTML = qrcode.result;
+                contentElement.style.display = 'flex';
+            } else {
+                showTipPopup("温馨提示", '解码失败,请确认上传的是黑白样式微信二维码');
+                return
+            }
+        }
+
+        // JavaScript代码，用于处理二维码上传和显示
+        function processQRCode(event) {
+            var file = event.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var image = new Image();
+                image.onload = function () {
+                    // var canvas = document.createElement('canvas');
+                    // var context = canvas.getContext('2d');
+                    // canvas.width = img.width;
+                    // canvas.height = img.height;
+                    // context.drawImage(img, 0, 0, img.width, img.height);
+                    // var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+
+
+
+                    // if (qrcode.result) {
+                    //     if (!qrcode.result.startsWith("https://weixin.qq.com/g/")) {
+                    //         showTipPopup("温馨提示", "请上传微信群二维码")
+                    //         return
+                    //     }
+                    //     qrUrlElement.innerHTML = qrcode.result.replace("https://weixin.qq.com/g/", "");;
+                    //     contentElement.style.display = 'flex';
+                    // } else {
+                    //     showTipPopup("温馨提示", '解码失败,请确认上传的是微信群二维码');
+                    //     return
+                    // }
+
+
+                    //var canvas_qr = document.getElementById("qr-canvas");
+                    var canvas_out = document.getElementById("out-canvas");
+                    if (canvas_out != null) {
+                        var outctx = canvas_out.getContext('2d');
+                        outctx.clearRect(0, 0, 320, 240);
+                        outctx.drawImage(image, 0, 0, 320, 240);
+                    }
+
+                    var canvas_qr = document.createElement('canvas');
+                    var context = canvas_qr.getContext('2d');
+                    var nheight = image.height;
+                    var nwidth = image.width;
+                    if (image.width * image.height > qrcode.maxImgSize) {
+                        var ir = image.width / image.height;
+                        nheight = Math.sqrt(qrcode.maxImgSize / ir);
+                        nwidth = ir * nheight;
+                    }
+
+                    canvas_qr.width = nwidth;
+                    canvas_qr.height = nheight;
+
+                    context.drawImage(image, 0, 0, canvas_qr.width, canvas_qr.height);
+                    qrcode.width = canvas_qr.width;
+                    qrcode.height = canvas_qr.height;
+                    try {
+                        qrcode.imagedata = context.getImageData(0, 0, canvas_qr.width, canvas_qr.height);
+                    } catch (e) {
+                        qrcode.result = "Cross domain image reading not supported in your browser! Save it to your computer then drag and drop the file!";
+                        if (qrcode.callback != null)
+                            qrcode.callback(qrcode.result);
+                        return;
+                    }
+
+                    try {
+                        qrcode.result =void(0);
+                        qrcode.result = qrcode.process(context);
+                    }
+                    catch (e) {
+                        console.log(e);
+                        qrcode.result = "error decoding QR Code";
+                    }
+                    if (qrcode.callback != null)
+                        qrcode.callback(qrcode.result);
+                };
+                image.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+
+        const cities = ["北京", "长沙", "成都", "重庆", "大连", "福州", "广州", "杭州", "合肥", "济南", "昆明", "南京", "宁波", "青岛", "上海", "深圳", "苏州", "天津", "无锡", "武汉", "西安", "厦门", "郑州"];
+        //处理订阅服务激活时长
+        function handleExpire(str) {
+            // 验证字符串是否为数字
+            if (str && /^\d+$/.test(str)) {
+                // 将字符串转换为数字
+                if (num == 0) {
+                    return '未激活';
+                }
+                var num = parseInt(str) * 1000;
+                var date = new Date(num)
+                var year = date.getFullYear();
+                var month = String(date.getMonth() + 1).padStart(2, '0');
+                var day = String(date.getDate()).padStart(2, '0');
+                var hours = String(date.getHours()).padStart(2, '0');
+                var minutes = String(date.getMinutes()).padStart(2, '0');
+                var seconds = String(date.getSeconds()).padStart(2, '0');
+                var formattedTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+                // 判断数字是否大于0小于100
+                if (num > Date.now()) {
+                    return formattedTime + '(已激活)';
+                } else {
+                    return formattedTime + '(已过期)';
+                }
+            }
+            return '未激活';
+        }
+
+        //处理群二维码有效时长
+        function handleQrExpire(str) {
+            // 验证字符串是否为数字
+            if (str && /^\d+$/.test(str)) {
+                // 将字符串转换为数字
+                if (num == 0) {
+                    return '未上传二维码';
+                }
+                var num = parseInt(str) * 1000;
+                var date = new Date(num)
+                var year = date.getFullYear();
+                var month = String(date.getMonth() + 1).padStart(2, '0');
+                var day = String(date.getDate()).padStart(2, '0');
+                var hours = String(date.getHours()).padStart(2, '0');
+                var minutes = String(date.getMinutes()).padStart(2, '0');
+                var seconds = String(date.getSeconds()).padStart(2, '0');
+                var formattedTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+                // 判断数字是否大于0小于100
+                if (num > Date.now()) {
+                    return formattedTime + '(生效中)';
+                } else {
+                    return formattedTime + '(已过期)';
+                }
+            }
+            return '未上传二维码';
+        }
+
+
+        //验证城市
+        function verifyCity(str) {
+            // 验证字符串是否为数字
+            if (/^\d+$/.test(str)) {
+                // 将字符串转换为数字
+                var num = parseInt(str);
+                // 判断数字是否大于0小于100
+                if (num >= 0 && num <= 22) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        //验证出租信息是否同步到转租群
+        function verifyShowType(str) {
+            // 验证字符串是否为数字
+            if (/^\d+$/.test(str)) {
+                // 将字符串转换为数字
+                var num = parseInt(str);
+                // 判断数字是否大于0小于7
+                if (num >= 0 && num <= 1) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        //验证房型
+        function verifyRoomType(str) {
+            // 验证字符串是否为数字
+            if (/^\d+$/.test(str)) {
+                // 将字符串转换为数字
+                var num = parseInt(str);
+                // 判断数字是否大于0小于7
+                if (num >= 1 && num <= 7) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        //验证页数
+        function verifyPage(str) {
+            // 验证字符串是否为数字
+            if (/^\d+$/.test(str)) {
+                // 将字符串转换为数字
+                var num = parseInt(str);
+                // 判断数字是否大于0小于100
+                if (num > 0 && num < 100) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+        function verifyPrice(str) {
+            // 验证字符串是否为数字
+            if (/^\d+$/.test(str)) {
+                // 将字符串转换为数字
+                var num = parseInt(str);
+                // 判断数字是否大于0小于100
+                if (num >= 0 && num <= 1000000) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function verifyRental(str) {
+            // 验证字符串是否为数字
+            if (/^\d+$/.test(str)) {
+                // 将字符串转换为数字
+                var num = parseInt(str);
+                // 判断数字是否大于0小于100
+                if (num == 0 || num == 1) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function verifyEndtime(str) {
+            if (/^202(\d){1}-(\d){2}-(\d){2}$/.test(str)) {
+                return true;
+            }
+            return false;
+        }
+
+        function verifyLocation() {
+            if (dataStr) {
+                return true
+            }
+            if (positionJson) {
+                return true
+            }
+            return false
+        }
+
+        function verifyParty(str) {
+            if (str.trim() === "" || str.length > 10) {
+                return false;
+            }
+            return true;
+        }
+
+        function verifyPay(str) {
+            if (str.trim() === "" || str.length > 10) {
+                return false;
+            }
+            return true;
+        }
+
+        function verifyRentDesc(str) {
+            if (str.trim() === "" || str.length > 80) {
+                return false;
+            }
+            return true;
+        }
+
+        function verifyPosition(str) {
+            if (str.trim() === "" || str.length > 10 || str.length < 2) {
+                return false;
+            }
+            return true;
+        }
+
+        function verifyTitle(str) {
+            if (str.trim() === "" || str.length > 20) {
+                return false;
+            }
+            return true;
+        }
+
+
+        function getQueryParams() {
+            var params = {};
+            var queryString = window.location.search.substring(1);
+            var pairs = queryString.split('&');
+
+            for (var i = 0; i < pairs.length; i++) {
+                var pair = pairs[i].split('=');
+                var key = decodeURIComponent(pair[0]);
+                var value = decodeURIComponent(pair[1]);
+                params[key] = value;
+            }
+            return params;
+        }
+
+
+        function iosAgent() {
+            return navigator.userAgent.match(/(iPhone|iPod|iPad);?/i);
+        }
+
+        // 复制文本函数，微信端，需要在用户触发 Click 事件里面才能执行成功
+        function copy(message) {
+            if (iosAgent()) {
+                // console.log("input 复制方式 " + message);
+                // let inputObj = document.createElement("input");
+                // inputObj.value = message;
+                // document.body.appendChild(inputObj);
+                // inputObj.select();
+                // inputObj.setSelectionRange(0, inputObj.value.length);
+                // _execCommand('Copy');
+                // document.body.removeChild(inputObj);
+                copyContent(message)
+            } else {
+                console.log("document 复制方式 " + message);
+                let domObj = document.createElement("span");
+                domObj.innerHTML = message;
+                document.body.appendChild(domObj);
+                let selection = window.getSelection();
+                let range = document.createRange();
+                range.selectNodeContents(domObj);
+                selection.removeAllRanges();
+                selection.addRange(range);
+                _execCommand('Copy');
+                document.body.removeChild(domObj);
+            }
+        }
+
+        // 执行浏览器命令 Copy 顺便输出一下日志，如果在移动端 推荐写个方法展示日志
+        function _execCommand(action) {
+            let is = document.execCommand(action);
+            if (is) {
+                showTipPopup("温馨提示", "内容已复制到剪贴板,快去群里粘贴发送吧~")
+            } else {
+                showTipPopup("温馨提示", "复制失败")
+            }
+        }
+
+
+        function copyContent(content) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(content).then(function () {
+                    showTipPopup("温馨提示", '内容已复制到剪贴板,快去群里粘贴发送吧~');
+                }).catch(function (error) {
+                    showTipPopup("温馨提示", '复制内容失败,\n请手动复制链接地址');
+                });
+            } else {
+                showTipPopup("温馨提示", '该浏览器不支持复制到剪贴板,请手动复制链接地址');
+            }
+        }
+
+        function nextPageVerify() {
+
+            var titleInput = document.getElementById("title").value;
+            if (!titleInput || !verifyTitle(titleInput)) {
+                showTipPopup("温馨提示", "转租标题必填,且内容长度不得大于20")
+                return false
+            }
+            var citySelect = document.getElementById("city").value;
+            if (!citySelect || !verifyCity(citySelect)) {
+                showTipPopup("温馨提示", "暂不支持您所选择的城市,请在城市下拉框中的23个城市中选择!")
+                return false
+            }
+            var roomTypeSelect = document.getElementById("room-type").value;
+            if (!roomTypeSelect || !verifyRoomType(roomTypeSelect)) {
+                showTipPopup("温馨提示", "暂不支持您所选择的房型,请在房型下拉框中选择!")
+                return false
+            }
+            var rental = document.getElementById("rental").value;
+            if (!verifyRental(rental)) {
+                showTipPopup("温馨提示", "能否短租选项,只能选择能与不能!")
+                return false
+            }
+            // var endtime = document.getElementById("endtime").value;
+            // if (!verifyEndtime(endtime)) {
+            //     showTipPopup("温馨提示", "只能选择2030年之前哦!")
+            //     return false
+            // }
+            var priceInput = document.getElementById("price").value;
+            if (!priceInput || !verifyPrice(priceInput)) {
+                showTipPopup("温馨提示", "价格不得小于0,且不得大于100万!")
+                return false
+            }
+            var position1 = document.getElementById("position1").value;
+            if (!position1 || !verifyPosition(position1)) {
+                showTipPopup("温馨提示", "房源位置必须填写,内容长度不得小于2或大于10")
+                return false
+            }
+            var party = document.getElementById("party").value;
+            if (!verifyParty(party)) {
+                showTipPopup("温馨提示", "甲方只能在10字以内")
+                return false
+            }
+            var pay = document.getElementById("pay").value;
+            if (!verifyPay(pay)) {
+                showTipPopup("温馨提示", "支付方式只能在10字以内")
+                return false
+            }
+            var rentDesc = document.getElementById("rentDesc").value;
+            if (!verifyRentDesc(rentDesc)) {
+                showTipPopup("温馨提示", "转租描述只能80字以内")
+                return false
+            }
+            if (!verifyLocation()) {
+                showTipPopup("温馨提示", "请选择地图定位!")
+                return false
+            }
+
+            return true
+        }
+
+
+        function submitForm() {
+            // 获取表单元素
+            // 获取表单元素
+            var citySelect = document.getElementById("city").value;
+            var roomTypeSelect = document.getElementById("room-type").value;
+            var priceInput = document.getElementById("price").value;
+            var titleInput = document.getElementById("title").value;
+            var position1 = document.getElementById("position1").value;
+            var position2 = document.getElementById("position2").value;
+            var position3 = document.getElementById("position3").value;
+            var position4 = document.getElementById("position4").value;
+            var position5 = document.getElementById("position5").value;
+            var qrcode = document.getElementById("qrUrl").textContent;
+            var note = document.getElementById("note").value;
+
+            var rental = document.getElementById("rental").value;
+            // var endtime = document.getElementById("endtime").value;
+            var party = document.getElementById("party").value;
+            var pay = document.getElementById("pay").value;
+            var rentDesc = document.getElementById("rentDesc").value;
+            if (!verifyLocation()) {
+                showTipPopup("温馨提示", "请选择地图定位!")
+                return
+            }
+
+            if (!verifyRental(rental)) {
+                showTipPopup("温馨提示", "请选择能否短租")
+                return
+            }
+            // if (!verifyEndtime(endtime)) {
+            //     showTipPopup("温馨提示", "截至租期只能选择2030年之前哦!")
+            //     return
+            // }
+            if (!verifyParty(party)) {
+                showTipPopup("温馨提示", "甲方只能在10字以内")
+                return
+            }
+            if (!verifyPay(pay)) {
+                showTipPopup("温馨提示", "支付方式只能在10字以内")
+                return
+            }
+            if (!verifyRentDesc(rentDesc)) {
+                showTipPopup("温馨提示", "转租描述只能80字以内")
+                return
+            }
+            if (!citySelect || !verifyCity(citySelect)) {
+                showTipPopup("温馨提示", "暂不支持您所选择的城市,请在城市下拉框中的23个城市中选择!")
+                return
+            }
+            if (!roomTypeSelect || !verifyRoomType(roomTypeSelect)) {
+                showTipPopup("温馨提示", "暂不支持您所选择的房型,请在房型下拉框中选择!")
+                return
+            }
+            if (!priceInput || !verifyPrice(priceInput)) {
+                showTipPopup("温馨提示", "价格不得小于0,且不得大于100万!")
+                return
+            }
+            if (!titleInput || !verifyTitle(titleInput)) {
+                showTipPopup("温馨提示", "转租标题必填,且内容长度不得大于20")
+                return
+            }
+
+            if (!position1 || !verifyPosition(position1)) {
+                showTipPopup("温馨提示", "房源小区必须填写,内容长度不得小于2或大于10")
+                return
+            }
+            if (position2.length > 0 && !verifyPosition(position2)) {
+                showTipPopup("温馨提示", "地铁交通非必填,若填写，则内容长度不得小于2或大于10")
+                return
+            }
+            if (position3.length > 0 && !verifyPosition(position3)) {
+                showTipPopup("温馨提示", "附近地标非必填。若填写，则内容长度不得小于2或大于10")
+                return
+            }
+            if (position4.length > 0 && !verifyPosition(position4)) {
+                showTipPopup("温馨提示", "附近道路非必填。若填写，则内容长度不得小于2或大于10")
+                return
+            }
+            if (position5.length > 0 && !verifyPosition(position5)) {
+                showTipPopup("温馨提示", "其它选项非必填。若填写，则内容长度不得小于2或大于10")
+                return
+            }
+
+            var positions = [position1];
+            if (position2.length > 0 && verifyPosition(position2)) {
+                positions.push(position2)
+            }
+            if (position3.length > 0 && verifyPosition(position3)) {
+                positions.push(position3)
+            }
+            if (position4.length > 0 && verifyPosition(position4)) {
+                positions.push(position4)
+            }
+            if (position5.length > 0 && verifyPosition(position5)) {
+                positions.push(position5)
+            }
+            if (qrcode === "" || qrcode.length > 120) {
+                showTipPopup("温馨提示", "请上传黑白样式的微信二维码!")
+                return
+            }
+            //匹配小红书url
+            var noteUrlReg = /http(s)?:\/\/xhslink.com\/[\w-]{6}/;
+            var urls = note.match(noteUrlReg)
+            if (!urls) {
+                var douyinUrlReg = /https:\/\/v.douyin.com\/[\w-]{6}/;
+                urls = note.match(douyinUrlReg)
+                if (!urls) {
+                    showTipPopup("温馨提示", "请输入正确的抖音或小红书链接地址")
+                    return
+                }
+            }
+            // var date = new Date(endtime); // 创建 Date 对象
+            // var seconds = date.getTime() / 1000; // 获取时间戳并转换为秒数
+
+            // 将表单元素值存储到对象中
+            var formData = {
+                type: 3,
+                price: parseInt(priceInput),
+                city: parseInt(citySelect),
+                roomType: parseInt(roomTypeSelect),
+                title: titleInput,
+                positions: positions,
+                qrcode: qrcode,
+                note_url: urls[0],
+                // endtime: seconds,
+                rental: parseInt(rental),
+                party: party,
+                pay: pay,
+                rent_desc: rentDesc
+            };
+            if (positionJson) {
+                formData['lat'] = positionJson['latlng']['lat']
+                formData['lng'] = positionJson['latlng']['lng']
+                formData['poiaddress'] = positionJson['poiaddress']
+                formData['poiname'] = positionJson['poiname']
+                formData['cityname'] = positionJson['cityname']
+            }
+            if (rentalId){
+                formData['id']=rentalId
+            }
+            // 将对象转换为JSON字符串
+            copy(JSON.stringify(formData))
+        }
+
+        // 示例：获取参数并进行处理
+        window.onload = function () {
+            init()
+            var queryParams = getQueryParams();
+            // 在控制台输出参数
+            // 示例：获取名为 "name" 的参数并显示在页面上
+            dataStr = queryParams['data'];
+            if (dataStr) {
+                showPage(0)
+                var homePageButton = document.getElementById("backHome");
+                homePageButton.style.display = "block";
+                let data = JSON.parse(dataStr);
+                var city = data['city'];
+                var roomType = data['roomType'];
+                var price = data['price'];
+                var title = data['title'];
+                var qrcode = data['qrcode']
+                var nick = data['name'];
+                var expired = data['expired_time'];
+                var active = data['is_active'];
+                var qrExpired = data['url_expired_time'];
+                var noteUrl = data['note_url']
+
+                var rental = data['rental']
+                // var endtime = data['endtime']
+                var party = data['party']
+                var pay = data['pay']
+                var rentDesc = data['rent_desc']
+                var poiname = data['poiname']
+                var showType = data['show_type']
+                rentalId=data['id']
+                var position1
+                var position2
+                var position3
+                var position4
+                var position5
+                if (data['positions']) {
+                    let positions = data['positions']
+                    let length = positions.length;
+                    if (length > 0) {
+                        position1 = positions[0];
+                    }
+                    if (length > 1) {
+                        position2 = positions[1];
+                    }
+                    if (length > 2) {
+                        position3 = positions[2];
+                    }
+                    if (length > 3) {
+                        position4 = positions[3];
+                    }
+                    if (length > 4) {
+                        position5 = positions[4];
+                    }
+
+                }
+                var showTypeSelectElement = document.getElementById("showType");
+                var citySelectElement = document.getElementById("city");
+                var roomTypeSelectElement = document.getElementById("room-type");
+                var priceElement = document.getElementById("price");
+                var titleElement = document.getElementById("title");
+                var position1Element = document.getElementById("position1");
+                var position2Element = document.getElementById("position2");
+                var position3Element = document.getElementById("position3");
+                var position4Element = document.getElementById("position4");
+                var position5Element = document.getElementById("position5");
+
+                var nickElement = document.getElementById("nick");
+                var infoElement = document.getElementById("sublet-info");
+                var serverElement = document.getElementById("sublet-server");
+                var qrExpireElement = document.getElementById("sublet-qr");
+                var noteElement = document.getElementById("note");
+
+                var rentalElement = document.getElementById("rental");
+                // var endtimeElement = document.getElementById("endtime");
+                var partyElement = document.getElementById("party");
+                var payElement = document.getElementById("pay");
+                var rentDescElement = document.getElementById("rentDesc");
+                var poinameElement = document.getElementById("poiname");
+
+                //昵称为空的话,隐藏
+                if (!nick || nick.trim() === "") {
+                    document.getElementById("nick-con").style.display = "none";
+                } else {
+                    nickElement.textContent = nick
+                }
+                //订阅信息默认生效中,判断是否失效
+                if (active && /^\d+$/.test(active)) {
+                    let activeStatus = parseInt(active);
+                    if (activeStatus == 1) {
+                        infoElement.textContent = '已失效'
+                    }
+                }
+                //订阅服务默认未激活,判断是否为数字
+                serverElement.textContent = handleExpire(expired)
+                //微信群二维码默认未上传
+                qrExpireElement.textContent = handleQrExpire(qrExpired)
+
+                if (city && verifyCity(city)) {
+                    citySelectElement.value = parseInt(city)
+                }
+                if (roomType && verifyRoomType(roomType)) {
+                    roomTypeSelectElement.value = parseInt(roomType)
+                    if (roomTypeSelectElement.value==0){
+                        //删除了下拉框中value为0的选项,现将为0的数据回显时置为1
+                        roomTypeSelectElement.value=1
+                    }
+                }
+                if (showType && verifyShowType(showType)) {
+                    showTypeSelectElement.value = parseInt(showType)
+                }
+                if (price && verifyPrice(price)) {
+                    priceElement.value = parseInt(price)
+                }
+                if (title && verifyTitle(title)) {
+                    titleElement.value = title
+                }
+                if (position1 && verifyPosition(position1)) {
+                    position1Element.value = position1
+                }
+                if (position2 && verifyPosition(position2)) {
+                    position2Element.value = position2
+                }
+                if (position3 && verifyPosition(position3)) {
+                    position3Element.value = position3
+                }
+                if (position4 && verifyPosition(position4)) {
+                    position4Element.value = position4
+                }
+                if (position5 && verifyPosition(position5)) {
+                    position5Element.value = position5
+                }
+                if (qrcode && qrcode.length > 0 && qrcode.length < 120) {
+                    var contentElement = document.getElementById('qrcode-content');
+                    var qrUrlElement = document.getElementById('qrUrl');
+                    qrUrlElement.innerHTML = qrcode;
+                    contentElement.style.display = 'flex';
+                }
+                if (noteUrl) {
+                    noteElement.value = noteUrl
+                }
+
+                if (rental) {
+                    rentalElement.value = rental
+                }
+                // var date
+                // if (endtime && endtime > 0) {
+                //     date = new Date(endtime * 1000); // 将秒数转换为毫秒数，并创建 Date 对象   
+                // } else {
+                //     date = new Date()
+                // }
+                // var dateString = dateFormat(date.toLocaleDateString())
+                // endtimeElement.value = dateString
+                if (party) {
+                    partyElement.value = party
+                }
+                if (pay) {
+                    payElement.value = pay
+                }
+                if (rentDesc) {
+                    rentDescElement.value = rentDesc
+                }
+                if (poiname) {
+                    poinameElement.value = poiname
+                }
+
+            } else {
+                showPage(1)
+                // var date = new Date()
+                // var endtimeElement = document.getElementById("endtime");
+                // var dateString = dateFormat(new Date().toLocaleDateString())
+                // endtimeElement.value = dateString
+                document.getElementById("nick-con").style.display = "none";
+                document.getElementById("info-con").style.display = "none";
+                document.getElementById("server-con").style.display = "none";
+                document.getElementById("qr-con").style.display = "none";
+            }
+        };
+
+        function dateFormat(str) {
+            var dateArray = str.split("/")
+            if (dateArray[1].length == 1) {
+                dateArray[1] = "0" + dateArray[1]
+            }
+            if (dateArray[2].length == 1) {
+                dateArray[2] = "0" + dateArray[2]
+            }
+            return dateArray[0] + "-" + dateArray[1] + "-" + dateArray[2]
+
+        }
+
+        function showInfoPopup(field) {
+            var popup = document.getElementById('info-popup');
+            var title = document.getElementById('popup-title');
+            var description = document.getElementById('popup-description');
+            if (field === 'price') {
+                title.textContent = '转租价格';
+                description.innerHTML = '<div style="padding-top: 10px; padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">转租价格必须大于等于0,小于等于100万</li> </ul></div>';
+            } else if (field === 'title') {
+                title.textContent = '转租标题';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">转租标题将展示在租客搜索列表中,是租客是否进群咨询的决定因素之一</li> <li class="tab-item">转租标题字数必须大于等于2,小于等于20</li> </ul></div>';
+            } else if (field === 'key1') {
+                title.textContent = '关键词1说明';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">关键词1是必填项，长度必须大于等于2，小于等于10</li> <li class="tab-item">关键词越详细，被搜索到的几率越高</li><li>关键词请填写小区名、道路名、地铁名等位置信息</li> </ul></div>';
+            } else if (field === 'key2') {
+                title.textContent = '关键词2说明';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">关键词2是选填项，长度必须大于等于2，小于等于10</li> <li class="tab-item">关键词越详细，被搜索到的几率越高</li><li>关键词请填写小区名、道路名、地铁名等位置信息</li> </ul></div>';
+            } else if (field === 'key3') {
+                title.textContent = '关键词3说明';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">关键词3是选填项，长度必须大于等于2，小于等于10</li> <li class="tab-item">关键词越详细，被搜索到的几率越高</li><li>关键词请填写小区名、道路名、地铁名等位置信息</li> </ul></div>';
+            } else if (field === 'key4') {
+                title.textContent = '关键词4说明';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">关键词4是选填项，长度必须大于等于2，小于等于10</li> <li class="tab-item">关键词越详细，被搜索到的几率越高</li><li>关键词请填写小区名、道路名、地铁名等位置信息</li> </ul></div>';
+            } else if (field === 'key5') {
+                title.textContent = '关键词5说明';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">关键词5是选填项，长度必须大于等于2，小于等于10</li> <li class="tab-item">关键词越详细，被搜索到的几率越高</li><li>关键词请填写小区名、道路名、地铁名等位置信息</li> </ul></div>';
+            } else if (field === 'sublet-info') {
+                title.textContent = '转租信息';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">填写页面信息并发送到微信群,转租信息将自动生效</li> <li class="tab-item">在微信群发送"停止转租",转租信息将切换为失效状态</li></ul></div>';
+            } else if (field === 'sublet-server') {
+                title.textContent = '转租服务';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation">  <li class="tab-item active">每次更新转租信息后,转租服务到期时间都会变成7天后</li><li class="tab-item">转租信息生效,以及接待群二维码生效的情况下,转租信息可被搜索</li><li  class="tab-item">租客可通过查询结果中的群二维码,直接进入转租接待群</li> </ul></div>';
+            } else if (field === 'sublet-qr') {
+                title.textContent = '微信名片';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">微信名片默认有效时长30天,一旦失效,租客将无法搜索到您的转租信息</li> <li class="tab-item">请及时更新微信名片哦~</li></ul></div>';
+            } else if (field === 'qrcode-file') {
+                title.textContent = '微信二维码';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">租客将通过微信二维码联系您</li><li class="tab-item">系统默认微信二维码有效期30天,记得及时更新哦~</li></ul></div>';
+            } else if (field === 'note') {
+                title.textContent = '小红书笔记';
+                description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"><br/> <li class="tab-item active">租客将通过小红书笔记链接,查看房源详情</li> <br/> <li class="tab-item">①打开小红书转租笔记</li><li class="tab-item">②点击屏幕右上角的"•••"</li><li class="tab-item">③选择屏幕最下面一行的"复制链接"图标</li> <br/><li class="tab-item">①打开抖音转租视频(暂不支持抖音)</li><li class="tab-item">②点击屏幕右右下角的"•••"</li><li class="tab-item">③选择屏幕倒数第二行的"复制链接"图标</li></ul></div>';
+            }
+            popup.style.display = 'flex';
+        }
+
+        function showTipPopup(slogan, msg) {
+            var popup = document.getElementById('info-popup');
+            var title = document.getElementById('popup-title');
+            var description = document.getElementById('popup-description');
+
+            title.textContent = slogan;
+            description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">' + msg + '</li> </ul></div>';
+            popup.style.display = 'flex';
+        }
+
+        function hideInfoPopup() {
+            var popup = document.getElementById('info-popup');
+            popup.style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>
