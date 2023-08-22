@@ -74,12 +74,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding-top: 2%;
+            padding-top: 5%;
+            padding-bottom: 5%;
             /* height: 8%; */
             /* padding-right: 24px;
             padding-left: 24px;
             padding-top: 6px;
-            padding-bottom: 6px;
             position: relative; */
         }
 
@@ -216,6 +216,55 @@
             background-color: #ffffff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
+        
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            /* transform: translateX(25%); */
+        }
+
+        .popup-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            /* height: 175px; */
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .popup h3 {
+            margin-top: 0;
+        }
+
+        .popup p {
+            margin-bottom: 10px;
+        }
+
+        .popup button {
+            background-color: #007bff;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .popup button:hover {
+            background-color: #0056b3;
+        }
     </style>
 
 </head>
@@ -268,7 +317,7 @@
             <p><span>剩余租期</span><span id="endtime"></span></p>
             <p><span>能否短租</span><span id="rental"></span></p>
             <p><span>付款方式</span><span id="pay"></span></p>
-            <p><span>附近交通</span><span id="position2"></span></p>
+            <p id="subway"><span>附近交通</span><span id="position2"></span></p>
         </div>
         <div class="module">
             <h2>描述</h2>
@@ -282,7 +331,17 @@
             <div class="qrcode" id="qrcode2"></div>
 
             <div id="qrcode" style="display: none;"></div>
-
+            <div class="container" id="shareModule" style="display: none;" >
+                <button type="button" id="share-button" shareInfo="" class="copy-button" onclick="share()">分 享</button>
+            </div>
+        </div>
+    </div>
+    <!-- 弹窗 -->
+    <div id="info-popup" class="popup">
+        <div class="popup-content">
+            <h3 id="popup-title"></h3>
+            <p id="popup-description" style="text-align: left;"></p>
+            <button onclick="hideInfoPopup()">关闭</button>
         </div>
     </div>
     <script src="/qrcode.min.js"></script>
@@ -343,6 +402,69 @@
 
         }
 
+        function iosAgent() {
+            return navigator.userAgent.match(/(iPhone|iPod|iPad);?/i);
+        }
+
+        // 复制文本函数，微信端，需要在用户触发 Click 事件里面才能执行成功
+        function share() {
+            var message=document.getElementById('share-button').getAttribute('shareInfo')
+            if (iosAgent()) {
+                copyContent(message)
+            } else {
+                console.log("document 复制方式 " + message);
+                let domObj = document.createElement("span");
+                domObj.innerHTML = message;
+                document.body.appendChild(domObj);
+                let selection = window.getSelection();
+                let range = document.createRange();
+                range.selectNodeContents(domObj);
+                selection.removeAllRanges();
+                selection.addRange(range);
+                _execCommand('Copy');
+                document.body.removeChild(domObj);
+            }
+        }
+
+        // 执行浏览器命令 Copy 顺便输出一下日志，如果在移动端 推荐写个方法展示日志
+        function _execCommand(action) {
+            let is = document.execCommand(action);
+            if (is) {
+                showTipPopup("温馨提示", "信息已复制到剪贴板,快去分享吧~")
+            } else {
+                showTipPopup("温馨提示", "复制失败")
+            }
+        }
+
+
+        function copyContent(content) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(content).then(function () {
+                    showTipPopup("温馨提示", '信息已复制到剪贴板,快去分享吧~');
+                }).catch(function (error) {
+                    showTipPopup("温馨提示", '复制内容失败,\n请手动复制链接地址');
+                });
+            } else {
+                showTipPopup("温馨提示", '该浏览器不支持复制到剪贴板,请手动复制链接地址');
+            }
+        }
+
+
+        function showTipPopup(slogan, msg) {
+            var popup = document.getElementById('info-popup');
+            var title = document.getElementById('popup-title');
+            var description = document.getElementById('popup-description');
+
+            title.textContent = slogan;
+            description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">' + msg + '</li> </ul></div>';
+            popup.style.display = 'flex';
+        }
+
+        function hideInfoPopup() {
+            var popup = document.getElementById('info-popup');
+            popup.style.display = 'none';
+        }
+
         // 示例：获取参数并进行处理
         window.onload = function () {
             var queryParams = getQueryParams();
@@ -390,10 +512,15 @@
                 }
                 if (position2) {
                     document.getElementById("position2").innerHTML = position2
+                }else{
+                    document.getElementById("subway").style.display="none"
                 }
 
                 var name = data['name'];
-                if (name) {
+                var title=data['title']
+                if (title) {
+                    document.title = title;
+                }else if(name){
                     document.title = name + "的转租信息";
                 }
                 var mediaType = data['media_type']
@@ -527,7 +654,29 @@
                 if (poiaddress) {
                     document.getElementById("poiaddress").innerHTML = poiaddress
                 }
-
+                //是否显示分享按钮
+                var qrShortUrl = data['qr_short_url'];
+                if(qrShortUrl){
+                    var shareModule = document.getElementById('shareModule')
+                    // 设置 display 属性以展示 div
+                    shareModule.style.display = "flex";
+                    //设置分享按钮属性,以存储分享信息
+                    var shareBtn = document.getElementById('share-button');
+                    var shareInfo=""
+                    if (title){
+                        shareInfo=title+"\n"
+                    }
+                    shareInfo=shareInfo+"【图片】:"+qrShortUrl
+                    shareInfo=shareInfo+"\n【房源类型】:"+document.getElementById("roomType").innerHTML
+                    shareInfo=shareInfo+"\n【房源位置】:"+document.getElementById("position1").innerHTML
+                    shareInfo=shareInfo+"\n【房源价格】:"+document.getElementById("price").innerHTML
+                    shareInfo=shareInfo+"\n【合同甲方】:"+document.getElementById("party").innerHTML 
+                    shareInfo=shareInfo+"\n【剩余租期】:"+document.getElementById("endtime").innerHTML 
+                    shareInfo=shareInfo+"\n【能否短租】:"+document.getElementById("rental").innerHTML 
+                    shareInfo=shareInfo+"\n【付款方式】:"+document.getElementById("pay").innerHTML
+                    shareInfo=shareInfo+"\n【备注】:"+document.getElementById("rentDesc").innerHTML 
+                    shareBtn.setAttribute('shareInfo', shareInfo);
+                }
 
             } else {
                 // document.getElementById("topic1").innerHTML = "1.长按二维码"

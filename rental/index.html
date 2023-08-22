@@ -283,10 +283,10 @@
 <body>
     <div class="page form">
         <div class="container" id="nick-con">
-            <label for="nick">微信昵称:</label>
+            <label for="nick">群昵称:</label>
             <span id="nick" name="nick" class="user-info">minry</span>
         </div>
-        <div class="container" id="info-con">
+        <!-- <div class="container" id="info-con">
             <label for="sublet-info">转租信息:</label>
             <span id="sublet-info" name="sublet-info" class="user-info">生效中</span>
             <svg t="1685358048788" onclick="showInfoPopup('sublet-info')" class="icon info-icon" viewBox="0 0 1024 1024"
@@ -295,9 +295,9 @@
                     d="M512 63.7C265.5 63.7 63.7 265.5 63.7 512S265.5 960.3 512 960.3 960.3 758.5 960.3 512 758.5 63.7 512 63.7m0 768.5c-35.3-0.1-64-28.7-64-64 0-35.2 28.8-64 64-64s64 28.8 64 64-28.8 64-64 64m83.3-483.5s0 3.2 0 0c0 3.2-54.5 256.1-54.5 256.1s3.2-19.2 0 0-12.8 28.8-28.8 28.8-25.6-12.8-28.8-32c-6.4-19.2-54.5-246.5-54.5-246.5 0-6.4-3.2-12.8-3.2-16 0-48 38.4-86.5 86.5-86.5s86.5 38.4 86.5 86.5c0 0-3.2 6.4-3.2 9.6"
                     fill="#00BFFF" p-id="2689"></path>
             </svg>
-        </div>
+        </div> -->
         <div class="container" id="server-con">
-            <label for="sublet-server">转租服务:</label>
+            <label for="sublet-server">出租服务:</label>
             <span id="sublet-server" name="sublet-server" class="user-info">未激活</span>
             <svg t="1685358048788" onclick="showInfoPopup('sublet-server')" class="icon info-icon"
                 viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20"
@@ -308,7 +308,7 @@
             </svg>
         </div>
         <div class="container" id="qr-con">
-            <label for="sublet-qr">微信名片:</label>
+            <label for="sublet-qr">联系方式:</label>
             <span id="sublet-qr" name="sublet-qr" class="user-info">未上传</span>
             <svg t="1685358048788" onclick="showInfoPopup('sublet-qr')" class="icon info-icon" viewBox="0 0 1024 1024"
                 version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2688" width="20" height="20">
@@ -1156,7 +1156,7 @@
 
             // 将表单元素值存储到对象中
             var formData = {
-                type: 3,
+                type: 7,
                 price: parseInt(priceInput),
                 city: parseInt(citySelect),
                 roomType: parseInt(roomTypeSelect),
@@ -1252,7 +1252,6 @@
                 var position5Element = document.getElementById("position5");
 
                 var nickElement = document.getElementById("nick");
-                var infoElement = document.getElementById("sublet-info");
                 var serverElement = document.getElementById("sublet-server");
                 var qrExpireElement = document.getElementById("sublet-qr");
                 var noteElement = document.getElementById("note");
@@ -1269,13 +1268,6 @@
                     document.getElementById("nick-con").style.display = "none";
                 } else {
                     nickElement.textContent = nick
-                }
-                //订阅信息默认生效中,判断是否失效
-                if (active && /^\d+$/.test(active)) {
-                    let activeStatus = parseInt(active);
-                    if (activeStatus == 1) {
-                        infoElement.textContent = '已失效'
-                    }
                 }
                 //订阅服务默认未激活,判断是否为数字
                 serverElement.textContent = handleExpire(expired)
