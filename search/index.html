@@ -157,15 +157,24 @@
             background-color: #f0f0f0;
         }
 
-        /* 卡片样式 */
+
         .card {
             display: flex;
+            flex-direction: column;
             align-items: center;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 8px;
             margin-bottom: 10px;
             background-color: #ffffff;
+        }
+
+        .carda {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            /* padding: 10px; */
         }
 
         .card-image {
@@ -178,8 +187,8 @@
         }
 
         .card-image img {
-            width: 160px;
-            height: 160px;
+            width: 140px;
+            height: 140px;
             object-fit: cover;
         }
 
@@ -206,9 +215,14 @@
         }
 
         .card-description {
+            width: 100%;
+            display: flex;
             font-size: 14px;
             color: #777;
             margin-bottom: 5px;
+            margin-top: 10px;
+            /* padding-left: 15px;
+            padding-right: 15px; */
         }
 
         .card-price {
@@ -397,7 +411,28 @@
                     rentalStatus = "可短租"
                 }
                 var endTime = formatTimestamp(item['endtime'])
-                return '<div class="card" onclick=showDetail("' + item['key'] + '")> <div class="card-image"> <img src="' + imgUrl + '" > </div> <div class="card-content"> <div class="card-title">' + item['title'] + '</div> <div class="card-attribute">' + item['pay'] + '&nbsp;|&nbsp;' + item['party'] + '&nbsp;|&nbsp;' + rentalStatus + '</div> <div class="card-description">合同到期:' + endTime + '</div><div class="card-location"><svg t="1688543325641" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3576" width="14" height="14" style="transform: translateY(2px);"><path d="M895.616384 347.812188q0 10.22977-0.511489 19.436563t-1.534466 19.436563q-9.206793 84.907093-37.338661 163.164835t-71.096903 150.377622-99.228771 138.613387-121.734266 127.872128q-9.206793 11.252747-23.528472 11.252747-15.344655 0-24.551449-11.252747-65.470529-61.378621-122.245754-128.895105t-100.251748-141.170829-71.608392-152.935065-36.315684-165.210789q0-8.183816-0.511489-15.344655t-0.511489-15.344655q0-71.608392 28.131868-135.032967t76.211788-110.481518 113.038961-74.677323 138.613387-27.62038 138.101898 27.62038 112.527473 74.677323 76.211788 110.481518 28.131868 135.032967zM540.643357 507.396603q33.758242 0 63.424575-12.787213t51.66034-34.26973 34.781219-50.637363 12.787213-61.89011-12.787213-61.89011-34.781219-50.637363-51.66034-34.26973-63.424575-12.787213-63.424575 12.787213-52.171828 34.26973-35.292707 50.637363-12.787213 61.89011 12.787213 61.89011 35.292707 50.637363 52.171828 34.26973 63.424575 12.787213z" p-id="3577" fill="#707070"></path></svg>&nbsp;<span style="padding-bottom:2px;">' + item['address'] + '</div>  <div class="card-price"><span style="color:red;">￥' + item['price'] + '/月</span></div> </div> </div>';
+                var moduleHtml=''
+                +'<div class="card" onclick=showDetail("' + item['key'] + '")>'
+                    +'<div class="carda" onclick=showDetail("' + item['info_key'] + '")>'
+                        +'<div class="card-image">'
+                            +'<img src="' + imgUrl + '" >'
+                        +'</div>'
+                        +'<div class="card-content">'
+                            +'<div class="card-title">' + item['title'] + '</div>'
+                            +'<div class="card-attribute">' + item['pay'] + '&nbsp;|&nbsp;' + item['party'] + '&nbsp;|&nbsp;' + rentalStatus + '</div>'
+                            +'<div class="card-attribute">合同到期:' + endTime + '</div>'
+                            +'<div class="card-location">'
+                                +'<svg t="1688543325641" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3576" width="14" height="14" style="transform: translateY(2px);"><path d="M895.616384 347.812188q0 10.22977-0.511489 19.436563t-1.534466 19.436563q-9.206793 84.907093-37.338661 163.164835t-71.096903 150.377622-99.228771 138.613387-121.734266 127.872128q-9.206793 11.252747-23.528472 11.252747-15.344655 0-24.551449-11.252747-65.470529-61.378621-122.245754-128.895105t-100.251748-141.170829-71.608392-152.935065-36.315684-165.210789q0-8.183816-0.511489-15.344655t-0.511489-15.344655q0-71.608392 28.131868-135.032967t76.211788-110.481518 113.038961-74.677323 138.613387-27.62038 138.101898 27.62038 112.527473 74.677323 76.211788 110.481518 28.131868 135.032967zM540.643357 507.396603q33.758242 0 63.424575-12.787213t51.66034-34.26973 34.781219-50.637363 12.787213-61.89011-12.787213-61.89011-34.781219-50.637363-51.66034-34.26973-63.424575-12.787213-63.424575 12.787213-52.171828 34.26973-35.292707 50.637363-12.787213 61.89011 12.787213 61.89011 35.292707 50.637363 52.171828 34.26973 63.424575 12.787213z" p-id="3577" fill="#707070"></path></svg>&nbsp;'
+                                +'<span style="padding-bottom:2px;">' + item['address'] + '</span>'
+                            +'</div>'
+                            +'<div class="card-price">'
+                                +'<span style="color:red;">￥' + item['price'] + '/月</span>'
+                            +'</div>'
+                        +'</div>'
+                    +'</div>'
+                    +'<div class="card-description"><p style="text-indent: 2em;">' +item['rent_desc']  + '</p></div> '
+                +'</div>';
+                return moduleHtml;
             }).join('');
         }
 
