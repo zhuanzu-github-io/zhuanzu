@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-W5V9DL3');</script>
+    <!-- End Google Tag Manager -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>群转租查询</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f0f0f0;
+            font-size: 14px;
+            padding-left: 3%;
+            padding-right: 3%;
+        }
+
+        .div1 {
+            padding-top: 10px;
+            height: 210px;
+            width: 94%;
+            background: #a3d8f9;
+            position: fixed;
+            top: 0;
+            z-index: 1;
+            /* 背景色根据需求调整 */
+        }
+
+        .div2 {
+            width: 100%;
+            height: calc(100vh - 210px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #e0e0e0;
+            margin-top: 200px;
+            /* 背景色根据需求调整 */
+        }
+
+        .center-text {
+            font-size: 20px;
+            /* 字体大小根据需求调整 */
+            color: #333;
+            /* 字体颜色根据需求调整 */
+        }
+
+        .scroll {
+            width: 100%;
+            padding-top: 210px;
+            /* background: #333; */
+            overflow-y: hidden;
+            padding-right: 0px;
+            margin: 0px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-right: 24px;
+            padding-left: 24px;
+            padding-top: 6px;
+            padding-bottom: 6px;
+            position: relative;
+        }
+
+        .container button {
+            position: absolute;
+            padding: 4px 20px;
+            font-size: 14px;
+            border: none;
+            background-color: #7594fb;
+            color: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .left-button {
+            left: 0px;
+        }
+
+        .right-button {
+            right: 0;
+        }
+
+        label {
+            display: inline-block;
+            width: 100px;
+            /* margin-bottom: 5px; */
+            font-weight: bold;
+        }
+
+        input[type="number"] {
+            width: 160px;
+            padding: 5px 5px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            width: 160px;
+            padding: 5px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            text-align: center;
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            /* margin-top: 3px; */
+            /* padding-bottom: 5px; */
+            /* margin-left: 2px; */
+            margin-right: 6px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            text-align: center;
+
+        }
+
+        select {
+            width: 80px;
+            /* margin-right: 8px; */
+            padding: 3px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            text-align: center;
+        }
+
+
+        .split-div {
+            font-size: 8px;
+            height: 10px;
+            position: absolute;
+            bottom: 0px;
+            width: 100%;
+            background-color: #f0f0f0;
+        }
+
+        /* 卡片样式 */
+        .card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background-color: #ffffff;
+        }
+
+        .carda {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            /* padding: 10px; */
+        }
+
+
+        .card-image {
+            flex: 0 0 140px;
+            width: 140px;
+            height: 140px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-right: 10px;
+        }
+
+        .card-image img {
+            width: 160px;
+            height: 160px;
+            object-fit: cover; 
+        }
+
+        .card-content {
+            flex: 1;
+            height: 100%;
+            min-height: 140px;
+        }
+
+        .card-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .card-attribute {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .card-location {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .card-number {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .card-description {
+            width: 100%;
+            display: flex;
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 5px;
+            margin-top: 10px;
+            /* padding-left: 15px;
+            padding-right: 15px; */
+        }
+
+        .card-price {
+            font-size: 16px;
+            color: #333;
+        }
+
+        .card-buttons {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center; 
+
+        }
+        .card-buttons button {
+            display: inline-block;
+            padding: 8px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 80px;
+            margin: 10px 10px;
+        }
+
+        .card-buttons select {
+            padding: 8px 10px;
+            height: 36px;
+            margin: 10px 10px;
+            font-size: 16px;
+            width: 80px;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        img {
+            -webkit-touch-callout: none;
+
+        }
+
+        #closeBtn {
+            position: absolute;
+            top: 60%;
+            /* 下移 */
+            right: 5%;
+            /* 右移 */
+            cursor: pointer;
+            z-index: 10;
+            font-size: 30px;
+            /* 增大图标尺寸 */
+            /* background: #0047AB; */
+            /* background: #FF0000; */
+            /* background: #228B22; */
+            /* background: #EE82EE; */
+            /* background: #FF4500; */
+            /* background: #4169E1; */
+            /* background: #FFD700; */
+            /* background: #008000; */
+            /* background: #B22222; */
+            /* background: #20B2AA; */
+            border-radius: 50%;
+            padding: 10px;
+            /* 增大按钮尺寸 */
+            line-height: 1;
+            text-align: center;
+        }
+
+        .float-button {
+            position: fixed;
+            bottom: 50%;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #ff0000;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .float-button:hover {
+            background-color: #cc0000;
+        }
+
+        
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            /* transform: translateX(25%); */
+        }
+
+        .popup-content {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            width: 300px;
+            /* height: 175px; */
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .popup h3 {
+            margin-top: 0;
+        }
+
+        .popup p {
+            margin-bottom: 10px;
+        }
+
+        .popup button {
+            background-color: #007bff;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .popup button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W5V9DL3"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <img id="qrcode-img" draggable="false"
+        style="height:170px;width: 170px;position: fixed;opacity: 0;z-index: -1;display: none;" />
+    <div id="tencentMap" style="width: 94vw;height: 100vh;display: none;position: relative;padding-top:10px;"></div>
+    <div class="div1" id="div1">
+        <div class="container">
+            <button id="leftButton" class="left-button" >地 图</button>
+            <!-- <button id="rightButton" class="right-button" >列 表</button> -->
+            <!-- <button class="right-button">右侧按钮</button> -->
+            <!-- <label for="room-type">租期:</label> -->
+            <select id="rental" name="rental">
+                <!-- <option value="0">全部</option> -->
+                <option value="0" selected>长租</option>
+                <option value="1">可短租</option>
+            </select>
+        </div>
+        <div class="container">
+            <input type="text" id="keyword" placeholder="搜索">
+        </div>
+
+
+
+        <div class="container">
+            <label style="width: 35px;">单间:</label>
+            <input type="checkbox" value="1" checked>
+            <label style="width: 35px;">次卧:</label>
+            <input type="checkbox" value="2" checked>
+            <label style="width: 35px;">主卧:</label>
+            <input type="checkbox" value="3" checked>
+
+        </div>
+        <div class="container">
+            <label style="width: 50px;">一居室:</label>
+            <input type="checkbox" value="4" checked>
+            <label style="width: 50px;">二居室:</label>
+            <input type="checkbox" value="5" checked>
+            <label style="width: 50px;">三居室:</label>
+            <input type="checkbox" value="6" checked>
+            <label style="width: 50px;">四居室:</label>
+            <input type="checkbox" value="7" checked>
+
+        </div>
+        <div class="container">
+            <input type="number" id="lowest" min="0" max="1000000" placeholder="最低价">
+            <span>&nbsp;&nbsp;至&nbsp;&nbsp;</span>
+            <input type="number" id="highest" min="0" max="1000000" placeholder="最高价">
+        </div>
+        <div class="split-div"></div>
+    </div>
+    <div id="no-data" class="div2" style="display: none;background-color: #ffffff;flex-direction: column; align-items: center; justify-content: center; ">
+        <svg t="1688591385295" class="icon" viewBox="0 0 1567 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="29397" width="128" height="128"><path d="M156.662278 699.758173h21.097186A10.444152 10.444152 0 0 1 187.994733 710.202325c0 5.765172-4.490985 10.444152-10.235269 10.444152H156.662278v21.097186A10.444152 10.444152 0 0 1 146.218126 751.978932a10.277045 10.277045 0 0 1-10.444152-10.235269V720.646477H114.676787A10.444152 10.444152 0 0 1 104.441518 710.202325c0-5.765172 4.490985-10.444152 10.235269-10.444152H135.773974v-21.097187A10.444152 10.444152 0 0 1 146.218126 668.425717c5.765172 0 10.444152 4.490985 10.444152 10.235269v21.097187z m1378.628042-83.553215v-21.097186A10.277045 10.277045 0 0 0 1524.846168 584.872503a10.444152 10.444152 0 0 0-10.444152 10.235269v21.097186h-21.097186a10.277045 10.277045 0 0 0-10.235269 10.444152c0 5.598065 4.595427 10.444152 10.235269 10.444152h21.097186v21.097187c0 5.744284 4.67898 10.235269 10.444152 10.235268a10.444152 10.444152 0 0 0 10.444152-10.235268V637.093262h21.097187c5.744284 0 10.235269-4.67898 10.235268-10.444152a10.444152 10.444152 0 0 0-10.235268-10.444152H1535.29032zM776.460024 960.861969H250.596979A20.80475 20.80475 0 0 1 229.77134 939.973665c0-11.530344 9.462402-20.888304 20.825639-20.888303h94.728457A83.010119 83.010119 0 0 1 334.212859 877.413196v-605.96969A83.49055 83.49055 0 0 1 417.849627 187.994733H480.430984V167.001988A83.49055 83.49055 0 0 1 564.067752 83.553215h501.152182A83.448773 83.448773 0 0 1 1148.856702 167.001988v605.969689c0 15.185797-4.052331 29.410732-11.133466 41.672166h115.554096c11.551232 0 20.909192 9.274407 20.909192 20.888304 0 11.530344-9.295295 20.888304-20.888304 20.888304H1002.638576v20.992745c0 15.185797-4.052331 29.410732-11.133466 41.672166h11.196131c11.488567 0 20.825639 9.274407 20.825639 20.888303 0 11.530344-9.462402 20.888304-20.825639 20.888304h-109.893365c9.545955 16.000441 7.478013 36.972297-6.41271 50.863019a41.672166 41.672166 0 0 1-59.072122 0L776.460024 960.861969z m76.367638-41.776607h66.424806c22.977134 0 41.609501-18.59059 41.609501-41.881049V270.461756c0-22.559368-18.047494-40.690416-40.314426-40.690416H416.303892c-22.266932 0-40.314426 18.214601-40.314426 40.690416v606.742557c0 23.123352 18.799473 41.881049 41.588613 41.881049h317.084449l-10.736588-10.757477a41.693054 41.693054 0 0 1-10.861918-40.377091l-19.718558-19.739447A146.259902 146.259902 0 0 1 502.363703 627.693525a146.218126 146.218126 0 0 1 220.517822 190.981761l19.739447 19.739447a41.630389 41.630389 0 0 1 40.377091 10.841029L852.827662 919.085362zM1002.638576 814.643843h62.852906A41.797496 41.797496 0 0 0 1107.080095 772.867236V167.106429c0-23.14424-18.632367-41.776607-41.588613-41.776607H563.775316A41.797496 41.797496 0 0 0 522.207592 167.106429v20.888304h396.794216A83.448773 83.448773 0 0 1 1002.638576 271.443506V814.643843zM266.325872 46.998683h31.123572c8.773088 0 15.875111 6.955805 15.875111 15.666228 0 8.647758-7.102023 15.666228-15.875111 15.666228h-31.123572v31.123572c0 8.773088-6.955805 15.875111-15.666228 15.875111a15.770669 15.770669 0 0 1-15.666228-15.875111V78.331139H203.869844A15.728893 15.728893 0 0 1 187.994733 62.664911c0-8.647758 7.102023-15.666228 15.875111-15.666228h31.123572V15.875111c0-8.773088 6.955805-15.875111 15.666228-15.875111 8.647758 0 15.666228 7.102023 15.666228 15.875111v31.123572zM20.888304 939.973665c0-11.530344 9.462402-20.888304 20.825638-20.888303h125.455152c11.488567 0 20.825639 9.274407 20.825639 20.888303 0 11.530344-9.462402 20.888304-20.825639 20.888304H41.713942A20.80475 20.80475 0 0 1 20.888304 939.973665z m658.733544-135.021995a104.441518 104.441518 0 1 0-147.722083-147.722083 104.441518 104.441518 0 0 0 147.722083 147.722083zM459.542681 313.324555a20.888304 20.888304 0 0 1 20.867415-20.888304H710.202325a20.888304 20.888304 0 1 1 0 41.776608H480.430984A20.825639 20.825639 0 0 1 459.542681 313.324555z m0 104.441518c0-11.530344 9.295295-20.888304 20.742085-20.888303h334.505295c11.44679 0 20.742086 9.274407 20.742086 20.888303 0 11.530344-9.295295 20.888304-20.742086 20.888304H480.284766A20.762974 20.762974 0 0 1 459.542681 417.766073z m0 104.441519c0-11.530344 9.316183-20.888304 20.846527-20.888304h146.301679c11.509455 0 20.846527 9.274407 20.846527 20.888304 0 11.530344-9.316183 20.888304-20.846527 20.888303h-146.301679A20.80475 20.80475 0 0 1 459.542681 522.207592zM62.664911 396.87777a62.664911 62.664911 0 1 1 0-125.329822 62.664911 62.664911 0 0 1 0 125.329822z m0-31.332456a31.332456 31.332456 0 1 0 0-62.664911 31.332456 31.332456 0 0 0 0 62.664911zM1357.739739 271.547948a62.664911 62.664911 0 1 1 0-125.329822 62.664911 62.664911 0 0 1 0 125.329822z m0-31.332456a31.332456 31.332456 0 1 0 0-62.664911 31.332456 31.332456 0 0 0 0 62.664911z" fill="#8A96A3" p-id="29398"></path></svg>
+        <span style=" display: block; padding-bottom: 150px; color: #838181;font-size: 16px;font-weight: bold;">没有数据哦~</span>
+    </div>
+    <div id="div3" class="scrollload-container scroll" style="display: none;scrollbar-width: none;">
+        <ul class="scrollload-content">
+            <!-- <li></li> -->
+        </ul>
+    </div>
+    
+    <!-- 弹窗 -->
+    <div id="info-popup" class="popup">
+        <div class="popup-content">
+            <h3 id="popup-title"></h3>
+            <p id="popup-description" style="text-align: left;"></p>
+            <button onclick="hideInfoPopup()">关闭</button>
+        </div>
+    </div>
+
+    <script src="/search/Scrollload.js"></script>
+    <script>
+
+        function redirectToLink(url) {
+            window.location.href = url;
+        }
+
+         // JavaScript代码，用于获取和处理URL参数
+         function getQueryParams() {
+            var params = {};
+            var queryString = window.location.search.substring(1);
+            var pairs = queryString.split('&');
+
+            for (var i = 0; i < pairs.length; i++) {
+                var pair = pairs[i].split('=',2);
+                var key = decodeURIComponent(pair[0]);
+                var value = decodeURIComponent(pair[1]);
+                params[key] = value;
+            }
+            return params;
+        }
+
+        var locationData = [];
+        var originMap=new Map();
+        var editMap =new Map();
+
+        (async function () {
+            try {
+                var queryParams = getQueryParams();
+                var roomId = queryParams['id'];
+                if(roomId){
+                    const response = await fetch('/rentalfile/'+roomId+'.json');
+                    const data = await response.json();
+                    locationData = data
+                }else{
+                    locationData = [] 
+                }
+            } catch (error) {
+                locationData = []
+            }
+            locationData=locationData.filter(item => item.is_active==0)
+            locationData.forEach(item=>{originMap.set(item.id,item.is_active)})
+            init()
+        })()
+        var effectData = [];
+        var pageSize = 5
+        var pages;
+        let page = 1
+        var scroll;
+
+
+        // function refreshData() {
+        //     //todo 逻辑处理筛选后的数据得到最新的effectData
+        //     page = 1
+        //     let data = getData()
+        //     $(scroll.contentDom).prepend(dagetDataHtml(data))
+        //     // 处理完业务逻辑后必须要调用refreshComplete
+        //     scroll.refreshComplete()
+        // }
+
+        //根据page获取json数组
+        function getData() {
+            var startIndex = (page - 1) * pageSize; // 计算起始索引
+            var endIndex = startIndex + pageSize; // 计算结束索引
+            if (startIndex > effectData.length - 1) {
+                return [];
+            }
+            if (endIndex > effectData.length) {
+                endIndex = effectData.length
+            }
+            // 使用slice方法截取数组数据
+            var slicedData = effectData.slice(startIndex, endIndex);
+            return slicedData;
+        }
+        //获取json串,然后返回包含卡片的li标签字符串
+        function getDataHtml(dataJson) {
+            return dataJson.map(function (item) {
+                var imgUrl = 'data:image/png;base64,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'
+                if (item['img'].length > 0) {
+                    imgUrl = item['img']
+                    // imgUrl = 'https://detail.fzchats.uk/?proxyUrl=' + item['img']
+                }
+                var rentalStatus = "不短租"
+                if (item['rental'] == 1) {
+                    rentalStatus = "可短租"
+                }
+                var endTime = formatTimestamp(item['endtime'])
+                var editUrl='https://fzchats.uk/'+item['edit_key']
+                var selectedOption=item['is_active']
+                if(editMap.get(item['id'])){
+                    selectedOption=editMap.get(item['id'])
+                }
+                var select1=selectedOption==0?"selected":""
+                var select2=selectedOption==1?"selected":""
+                var select3=selectedOption==-1?"selected":""
+                var moduleHtml=''
+                +'<div class="card" > '
+                    +'<div class="carda" onclick=showDetail("' + item['info_key'] + '")>'
+                        +'<div class="card-image"> '
+                            +'<img src="' + imgUrl + '" > '
+                        +'</div>'
+                        +'<div class="card-content">'
+                            +'<div class="card-title">' + item['title'] + '</div> '
+                            +'<div class="card-number"><span style="color:blue;">类别编号:' + item['category'] + '-' + item['number'] + '</span></div> '
+                            +'<div class="card-attribute">' + item['pay'] + '&nbsp;|&nbsp;' + item['party'] + '&nbsp;|&nbsp;' + rentalStatus + '</div>'
+                            +'<div class="card-location"> <svg t="1688543325641" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3576" width="14" height="14" style="transform: translateY(2px);"> <path d="M895.616384 347.812188q0 10.22977-0.511489 19.436563t-1.534466 19.436563q-9.206793 84.907093-37.338661 163.164835t-71.096903 150.377622-99.228771 138.613387-121.734266 127.872128q-9.206793 11.252747-23.528472 11.252747-15.344655 0-24.551449-11.252747-65.470529-61.378621-122.245754-128.895105t-100.251748-141.170829-71.608392-152.935065-36.315684-165.210789q0-8.183816-0.511489-15.344655t-0.511489-15.344655q0-71.608392 28.131868-135.032967t76.211788-110.481518 113.038961-74.677323 138.613387-27.62038 138.101898 27.62038 112.527473 74.677323 76.211788 110.481518 28.131868 135.032967zM540.643357 507.396603q33.758242 0 63.424575-12.787213t51.66034-34.26973 34.781219-50.637363 12.787213-61.89011-12.787213-61.89011-34.781219-50.637363-51.66034-34.26973-63.424575-12.787213-63.424575 12.787213-52.171828 34.26973-35.292707 50.637363-12.787213 61.89011 12.787213 61.89011 35.292707 50.637363 52.171828 34.26973 63.424575 12.787213z" p-id="3577" fill="#707070"></path> </svg> <span style="padding-bottom:2px;">' + item['address'] + '</span> </div> '
+                            +'<div class="card-price"> <span style="color:red;">￥' + item['price'] + '/月</span> </div> '
+                        +'</div>'
+                    +'</div>'
+                    +'<div class="card-description"><p style="text-indent: 2em;">' +item['rent_desc']  + '</p></div> '
+                +'</div>'
+                return moduleHtml;
+            }).join('');
+        }
+
+
+        function iosAgent() {
+            return navigator.userAgent.match(/(iPhone|iPod|iPad);?/i);
+        }
+        //查看详情
+        function showDetail(key) {
+            scroll.lock()
+            document.getElementById("div1").style.display = "none"
+            document.querySelector('.scrollload-container').style.display = "none";
+            // document.body.style.overflow = 'hidden';
+            var url = 'https://fzchats.uk/' + key
+            var mapElement = document.getElementById('tencentMap');
+            // mapElement.style.zIndex=2;
+            mapElement.innerHTML = '<embed id="mapPage" src=' + url + ' type="text/html"  width="100%" height="100%" > ' +
+                // '<img onclick="closeMap()"  id="closeBtn" src="data:image/png;base64,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" alt="">'
+                '<div class="float-button" onclick="closeMap()">关闭</div>'
+            mapElement.style.display = "block"
+        }
+        //关闭详情弹窗
+        function closeMap() {
+            var mapElement = document.getElementById('tencentMap');
+            mapElement.style.display = "none";
+            document.getElementById("div1").style.display = "block"
+            document.querySelector('.scrollload-container').style.display = "block";
+            scroll.unLock()
+        }
+
+        function init() {
+            //解决ios中embed标签内无法识别二维码
+            if (iosAgent()) {
+                window.addEventListener("message", function (e) {
+                    // var data = {}
+                    var data = JSON.parse(JSON.stringify(e.data))
+                    if (typeof data == "string") {
+                        data = JSON.parse(data)
+                    }
+                    if (data.status === 1) {
+                        // console.log(data)
+                        var img = document.getElementById("qrcode-img")
+                        // img:show时将图片置于顶层, 并设置src为含有二维码的图片地址
+                        // var img = document.getElementById("qrcode-img")
+                        img.setAttribute('src', data.url);
+                        img.style = `display: block;position: fixed;width:100%;height:100%;opacity: 0;z-index: 10001;`
+                        setTimeout(function () {
+                            // console.log("3333333333")
+                            var img = document.getElementById("qrcode-img")
+                            img.removeAttribute('src');
+                            img.style = 'position: fixed;opacity: 0;z-index: -1;display: none;'
+                        }, 1500);
+
+                    }
+                    if (data.status === 2) {
+                        // console.log(data)
+                        // img:hide时将，将图片置于底层
+                        var img = document.getElementById("qrcode-img")
+                        img.removeAttribute('src');
+                        img.style = 'position: fixed;opacity: 0;z-index: -1;display: none;'
+                    }
+                }
+                )
+            }
+
+
+            var lowest = document.getElementById('lowest');
+            //转换为整数
+            var highest = document.getElementById('highest');
+            var rental = document.getElementById('rental');
+            var roomTypeCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+            var keywordInput = document.getElementById('keyword');
+            // 为价格区间输入框添加事件监听
+            lowest.addEventListener('change', handleInputChange);
+            highest.addEventListener('change', handleInputChange);
+            rental.addEventListener('change', handleInputChange);
+            // 为房型复选框添加事件监听
+            roomTypeCheckboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('change', handleInputChange);
+            });
+            // 为关键词输入框添加事件监听
+            keywordInput.addEventListener('change', handleInputChange);
+
+            effectData = locationData
+            // effectData = []
+            pages = Math.ceil(effectData.length / pageSize)
+            scroll = new Scrollload({
+                // container 和 content 两个配置的默认取的scrollload-container和scrollload-content类的dom。只要你按照以上的dom结构写，这两个配置是可以省略的
+                container: document.querySelector('.scrollload-container'),
+                content: document.querySelector('.scrollload-content'),
+                loadMore: function (sl) {
+                    if (!whetherHasData()) {
+                        return
+                    }
+                    document.getElementById("no-data").style.display = "none";
+                    sl.container.style.display = "block";
+                    if (page >= pages + 1) {
+                        // 没有数据的时候需要调用noMoreData
+                        sl.noMoreData()
+                        return
+                    }
+                    // console.log("开始休眠")
+                    setTimeout(() => {
+                        // console.log("执行休眠后代码")
+                        // 我这里用jquery的不是因为需要jquery，只是jquery的语法看起来比较简单。大家都认识。
+                        // 如果你不是用jquery，可以看看原生的insertAdjacentHTML方法来替代append
+                        let data = getData()
+                        page++
+                        sl.contentDom.insertAdjacentHTML('beforeend', getDataHtml(data));
+                        sl.unLock()
+                    }, 350);
+                },
+                // 你也可以关闭下拉刷新
+                enablePullRefresh: false,
+                pullRefresh: function (sl) {
+                    if (!whetherHasData()) {
+                        return
+                    }
+                    //todo 逻辑处理筛选后的数据得到最新的effectData
+                    document.getElementById("no-data").style.display = "none";
+                    this.container.style.display = "block";
+                    this.refreshData()
+                    this.contentDom.innerHTML = "";
+
+                    page = 1
+                    let data = getData()
+
+                    this.contentDom.innerHTML = getDataHtml(data)
+
+                    page++
+                    // this.contentDom.insertAdjacentHTML('afterbegin', getDataHtml(data));
+                    // 处理完业务逻辑后必须要调用refreshComplete
+
+                    this.refreshData()
+                    this.refreshComplete()
+                }
+            })
+            // scroll.refreshData()
+        }
+        //没有数据的情况下展示友情提示
+        function whetherHasData() {
+            if (effectData.length == 0) {
+                //隐藏上划加载模块
+                document.querySelector('.scrollload-container').style.display = "none";
+                document.getElementById("no-data").style.display = "flex";
+                return false
+            }
+            return true
+        }
+
+
+        function handleInputChange() {
+            var lowest = document.getElementById('lowest').value;
+            lowest = lowest.replace(/\s/g, "");
+            var lowestNum = parseInt(lowest);
+            if (isNaN(lowestNum)) {
+                lowestNum = 0
+            }
+            var highest = document.getElementById('highest').value;
+            highest = highest.replace(/\s/g, "");
+            var highestNum = parseInt(highest);
+            if (isNaN(highestNum)) {
+                highestNum = 1000000
+            }
+            var rental = document.getElementById('rental').value;
+            var roomTypeCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+            var selectedRoomTypes = [];
+            roomTypeCheckboxes.forEach(function (checkbox) {
+                if (checkbox.checked) {
+                    selectedRoomTypes.push(checkbox.value);
+                }
+            });
+            // if (selectedRoomTypes.length == 0) {
+            //     selectedRoomTypes = ["1", "2", "3", "4", "5", "6", "7"]
+            // }
+            var roomTypesStr = selectedRoomTypes.join("")
+            var keywordInput = document.getElementById('keyword').value;
+            keywordInput = keywordInput.replace(/\s/g, "");
+            effectData = locationData.filter(obj => {
+                if (rental == 1) {
+                    //如果要求仅短租,就过滤一次
+                    if (obj['rental'] == 0) {
+                        return false
+                    }
+                }
+                //过滤掉不符合关键词项目
+                if (keywordInput.length > 0) {
+                    //如果要求仅短租,就过滤一次
+                    if (!(obj['info'].includes(keywordInput))) {
+                        return false
+                    }
+                }
+                //过滤掉不合格房型
+                if (!(roomTypesStr.includes(obj['room_type']))) {
+                    return false
+                }
+                //小于最低价,过滤掉
+                if (obj['price'] < lowestNum) {
+                    return false
+                }
+                //小于最低价,过滤掉
+                if (obj['price'] > highestNum) {
+                    return false
+                }
+                return true
+            });
+            //使用map筛选符合条件的转租
+            //keyword 如果为空,则不筛选关键词
+            pages = Math.ceil(effectData.length / pageSize)
+            scroll.contentDom.innerHTML = ''
+            page = 1
+            scroll.refreshData()
+        }
+
+        function formatTimestamp(timestamp) {
+            var date = new Date(timestamp * 1000);
+            var year = date.getFullYear();
+            var month = String(date.getMonth() + 1).padStart(2, '0');
+            var day = String(date.getDate()).padStart(2, '0');
+            var formattedDate = year + '-' + month + '-' + day;
+            return formattedDate;
+        }
+
+        //上架,下架或删除
+        function editRental(event){
+            var rentalId = Number(event.target.getAttribute('rental-id'));
+            var status=Number(event.target.value)
+            //原始 originMap.get(rentalId)
+            //修改后  editMap.get(rentalId) 
+            if (status==originMap.get(rentalId)){
+                //删除editMap中对应的key
+                editMap.delete(rentalId)
+            }else{
+                editMap.set(rentalId,status)
+            }
+            var jsonStr=JSON.stringify([...editMap].map(([id, status]) => ({ id, status })))
+            //复制
+            copy(jsonStr)
+        }
+
+        function iosAgent() {
+            return navigator.userAgent.match(/(iPhone|iPod|iPad);?/i);
+        }
+
+        // 复制文本函数，微信端，需要在用户触发 Click 事件里面才能执行成功
+        function copy(message) {
+            if (iosAgent()) {
+                copyContent(message)
+            } else {
+                console.log("document 复制方式 " + message);
+                let domObj = document.createElement("span");
+                domObj.innerHTML = message;
+                document.body.appendChild(domObj);
+                let selection = window.getSelection();
+                let range = document.createRange();
+                range.selectNodeContents(domObj);
+                selection.removeAllRanges();
+                selection.addRange(range);
+                _execCommand('Copy');
+                document.body.removeChild(domObj);
+            }
+        }
+
+        // 执行浏览器命令 Copy 顺便输出一下日志，如果在移动端 推荐写个方法展示日志
+        function _execCommand(action) {
+            let is = document.execCommand(action);
+            if (is) {
+                showTipPopup("温馨提示", "共 "+editMap.size+" 条修改被复制到剪贴板,快去出租群粘贴吧~")
+            } else {
+                showTipPopup("温馨提示", "复制失败,请再次尝试")
+            }
+        }
+
+
+        function copyContent(content) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(content).then(function () {
+                    showTipPopup("温馨提示", '"共 "+editMap.size+" 条修改被复制到剪贴板,快去出租群粘贴吧~"');
+                }).catch(function (error) {
+                    showTipPopup("温馨提示", '复制内容失败,\n请再次尝试');
+                });
+            } else {
+                showTipPopup("温馨提示", '该浏览器不支持复制到剪贴板,请手动复制链接地址');
+            }
+        }
+
+
+        function showTipPopup(slogan, msg) {
+            var popup = document.getElementById('info-popup');
+            var title = document.getElementById('popup-title');
+            var description = document.getElementById('popup-description');
+
+            title.textContent = slogan;
+            description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">' + msg + '</li> </ul></div>';
+            popup.style.display = 'flex';
+        }
+
+        function hideInfoPopup() {
+            var popup = document.getElementById('info-popup');
+            popup.style.display = 'none';
+        }
+
+        window.onload =function(){
+            var queryParams = getQueryParams();
+            var roomId = queryParams['id'];
+            document.getElementById('leftButton').onclick =function(){redirectToLink("https://zu.fzchats.uk/rentalmap/?id="+roomId)}
+            // document.getElementById('rightButton').onclick =function(){redirectToLink("https://zu.fzchats.uk/rentallist/?id="+roomId)}
+        }
+
+    </script>
+</body>
+
+</html>
