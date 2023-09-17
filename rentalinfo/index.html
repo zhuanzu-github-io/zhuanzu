@@ -311,6 +311,7 @@
         </div>
         <div class="module">
             <h2>概况</h2>
+            <p><span>转租标题</span><span id="rentalTitle"></span></p>
             <p><span>房源类型</span><span id="roomType"></span></p>
             <p><span>房源位置</span><span id="position1"></span></p>
             <p><span>房源价格</span><span id="price"></span></p>
@@ -523,6 +524,7 @@
                 var title=data['title']
                 if (title) {
                     document.title = title;
+                    document.getElementById("rentalTitle").innerHTML = title
                 }else if(name){
                     document.title = name + "的转租信息";
                 }
@@ -665,6 +667,7 @@
                         shareInfo=title+"\n\n"
                     }
                     shareInfo=shareInfo+"【图片】:"+qrShortUrl
+                    shareInfo=shareInfo+"\n【转租标题】:"+document.getElementById("rentalTitle").innerHTML
                     shareInfo=shareInfo+"\n【房源类型】:"+document.getElementById("roomType").innerHTML
                     shareInfo=shareInfo+"\n【房源位置】:"+document.getElementById("position1").innerHTML
                     shareInfo=shareInfo+"\n【房源价格】:"+document.getElementById("price").innerHTML
