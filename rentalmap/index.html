@@ -188,7 +188,7 @@
                 var queryParams = getQueryParams();
                 var roomId = queryParams['id'];
                 if(roomId){
-                    const response = await fetch('/rentalfile/'+roomId+'.json');
+                    const response = await fetch('../rentalfile/'+roomId+'.json');
                     const data = await response.json();
                     locationData = data
                 }else{

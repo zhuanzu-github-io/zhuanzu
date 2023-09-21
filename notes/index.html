@@ -357,7 +357,7 @@
             <!-- <li></li> -->
         </ul>
     </div>
-    <script src="/search/Scrollload.js"></script>
+    <script src="../search/Scrollload.js"></script>
     <script>
         var effectData = [];
         var pageSize = 5
@@ -374,29 +374,29 @@
         }
 
 
-        fetch('/notes/1.json')
+        fetch('../notes/1.json')
             .then((response) => response.json())
             .then((json) => locationData = locationData.concat(json));
 
 
-        fetch('/notes/2.json')
+        fetch('../notes/2.json')
             .then((response) => response.json())
             .then((json) => locationData = locationData.concat(json));
 
-        fetch('/notes/3.json')
+        fetch('../notes/3.json')
             .then((response) => response.json())
             .then((json) => locationData = locationData.concat(json));
 
-        fetch('/notes/4.json')
+        fetch('../notes/4.json')
             .then((response) => response.json())
             .then((json) => locationData = locationData.concat(json));
 
 
-        fetch('/notes/5.json')
+        fetch('../notes/5.json')
             .then((response) => response.json())
             .then((json) => locationData = locationData.concat(json));
 
-        fetch('/notes/6.json')
+        fetch('../notes/6.json')
             .then((response) => response.json())
             .then((json) => locationData = locationData.concat(json));
 
