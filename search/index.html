@@ -350,7 +350,7 @@
     
 
 
-    <script src="./search/Scrollload.js"></script>
+    <script src="../search/Scrollload.js"></script>
     <script>
 
         function redirectToLink(url) {
@@ -360,7 +360,7 @@
         var locationData = [];
         (async function () {
             try {
-                const response = await fetch('./search/sublet.json');
+                const response = await fetch('../search/sublet.json');
                 const data = await response.json();
                 locationData = data
             } catch (error) {
