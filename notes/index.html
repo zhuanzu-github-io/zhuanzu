@@ -374,29 +374,29 @@
         }
 
 
-        fetch('../notes/1.json')
+        fetch('../notes/1.json?' + new Date().getTime())
             .then((response) => response.json())
             .then((json) => locationData = locationData.concat(json));
 
 
-        fetch('../notes/2.json')
+        fetch('../notes/2.json?' + new Date().getTime())
             .then((response) => response.json())
             .then((json) => locationData = locationData.concat(json));
 
-        fetch('../notes/3.json')
+        fetch('../notes/3.json?' + new Date().getTime())
             .then((response) => response.json())
             .then((json) => locationData = locationData.concat(json));
 
-        fetch('../notes/4.json')
+        fetch('../notes/4.json?' + new Date().getTime())
             .then((response) => response.json())
             .then((json) => locationData = locationData.concat(json));
 
 
-        fetch('../notes/5.json')
+        fetch('../notes/5.json?' + new Date().getTime())
             .then((response) => response.json())
             .then((json) => locationData = locationData.concat(json));
 
-        fetch('../notes/6.json')
+        fetch('../notes/6.json?' + new Date().getTime())
             .then((response) => response.json())
             .then((json) => locationData = locationData.concat(json));
 

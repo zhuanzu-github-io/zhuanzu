@@ -171,7 +171,7 @@
         var locationData;
         (async function () {
             try {
-                const response = await fetch('../map/locations.json');
+                const response = await fetch('../map/locations.json?' + new Date().getTime());
                 const data = await response.json();
                 locationData = data
                 init()
