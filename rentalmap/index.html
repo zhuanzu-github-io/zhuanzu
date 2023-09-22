@@ -183,6 +183,31 @@
             }
             return params;
         }
+
+        //生成经纬度对应的字符串
+        function latLngString(num){
+            let [intPart1, decPart1 = "0000000"] = num.toString().split('.');
+            decPart1 = decPart1.padEnd(7, "0");
+            return intPart1+"."+decPart1
+        }
+
+        //小数自增0.0001度(大概10米误差)
+        function increase(lngNum){
+            let [intPart1, decPart1 = "0000000"] = lngNum.toString().split('.');
+            let intSum = parseInt(intPart1,10)
+            decPart1 = decPart1.padEnd(7, "0");
+            decPart1 = parseInt(decPart1,10) + 8000;
+            let decSum =decPart1.toString();
+            if (decSum.length > 7) {
+                intSum=intSum+parseInt(decSum.slice(0,-7),10)
+                decSum = decSum.slice(-7); // Only keep the last 7 digits
+            } else {
+                decSum = decSum.padStart(7, "0"); // Pad with 0s at the beginning if less than 7 digits
+            }
+            let result = parseFloat(`${intSum}.${decSum}`);
+            return result;
+        }
+
         (async function () {
             try {
                 var queryParams = getQueryParams();
@@ -198,7 +223,12 @@
                 locationData = []
             }
             locationData=locationData.filter(item => item.is_active==0)
+            let latlngArray =[]
             locationData=locationData.map(item=>{
+                while(latlngArray.includes(latLngString(item.lat)+"_"+latLngString(item.lng))){
+                    item.lng=increase(item.lng)
+                }
+                latlngArray.push(latLngString(item.lat)+"_"+latLngString(item.lng));
                 return{
                     key:item.info_key,
                     lat:item.lat,
@@ -284,7 +314,7 @@
             center = infos[0].position
             var drawContainer = document.getElementById('mapContainer');
             map = new TMap.Map('mapContainer', {
-                zoom: 10,
+                zoom: 15,
                 minZoom: 10,             //此处设置地图的缩放级别  最小值
                 maxZoom: 17,           //此处设置地图的缩放级别  最大值
                 pitch: 0,
