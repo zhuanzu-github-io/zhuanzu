@@ -312,7 +312,8 @@
         </div>
         <div class="module">
             <h2>概况</h2>
-            <p><span id="rentalTitle"></span></p>
+            <p  style="text-align: center;color: #007bff;font-weight: bold;margin-bottom: 20px;"><span id="rentalTitle" style="margin: 0;padding:5px 10px; background-color: #f0f0f0;"></span></p>
+            <p><span>房源编号</span><span id="roomNumber"></span></p>
             <p><span>房源类型</span><span id="roomType"></span></p>
             <p><span>房源位置</span><span id="position1"></span></p>
             <p><span>房源价格</span><span id="price"></span></p>
@@ -327,7 +328,7 @@
                 这种类型的房间有一张单间床，例如可以转换成床的沙发。部分一室公寓配有额外的床铺。其他房间空间更大：工作室房间可以像家具齐全的公寓，这意味着它将有一个小厨房。请与酒店联系以了解有关其单间客房的更多信息。</p>
         </div>
         <div class="module">
-            <h2>联系方式<span style="font-size: 12px; color: red;">(长按识别)</span></h2>
+            <h2>联系方式<span style="font-size: 12px;font-weight: bold; color:darkgrey;">(长按识别)</span></h2>
             <!-- <div style="  background-color: #f0f0f0;"> -->
 
             <div class="qrcode" id="qrcode2"></div>
@@ -481,6 +482,9 @@
                 document.getElementById("price").innerHTML = 0 + ' RMB/月'
                 if (price) {
                     document.getElementById("price").innerHTML = price + ' RMB/月'
+                }
+                if(data['category']&&data['number']){
+                    document.getElementById("roomNumber").innerHTML = data['category']+"-"+data['number']
                 }
                 var roomType = data['roomType'];
                 document.getElementById("roomType").innerHTML = houseTypes[0]
@@ -668,12 +672,13 @@
                         shareInfo=title+"\n\n"
                     }
                     shareInfo=shareInfo+"【图片】:"+qrShortUrl
-                    shareInfo=shareInfo+"\n【房源类型】:"+document.getElementById("roomType").innerHTML
-                    shareInfo=shareInfo+"\n【房源位置】:"+document.getElementById("position1").innerHTML
-                    shareInfo=shareInfo+"\n【房源价格】:"+document.getElementById("price").innerHTML
-                    shareInfo=shareInfo+"\n【合同甲方】:"+document.getElementById("party").innerHTML 
-                    shareInfo=shareInfo+"\n【能否短租】:"+document.getElementById("rental").innerHTML 
-                    shareInfo=shareInfo+"\n【付款方式】:"+document.getElementById("pay").innerHTML
+                    shareInfo=shareInfo+"\n【编号】:"+document.getElementById("roomNumber").innerHTML
+                    shareInfo=shareInfo+"\n【类型】:"+document.getElementById("roomType").innerHTML
+                    shareInfo=shareInfo+"\n【位置】:"+document.getElementById("position1").innerHTML
+                    shareInfo=shareInfo+"\n【价格】:"+document.getElementById("price").innerHTML
+                    shareInfo=shareInfo+"\n【合同】:"+document.getElementById("party").innerHTML 
+                    shareInfo=shareInfo+"\n【短租】:"+document.getElementById("rental").innerHTML 
+                    shareInfo=shareInfo+"\n【付款】:"+document.getElementById("pay").innerHTML
                     shareInfo=shareInfo+"\n【备注】:"+document.getElementById("rentDesc").innerHTML 
                     shareBtn.setAttribute('shareInfo', shareInfo);
                 }
