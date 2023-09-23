@@ -450,6 +450,9 @@
                 console.log(error)
             }
             locationData = locationData.concat(array1,array2,array3,array4,array5,array6);
+            locationData = locationData.sort((a, b) => {
+                return b['last_update_time'] - a['last_update_time']; // 由大到小排序
+            });
             init()
         })()
 
