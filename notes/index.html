@@ -314,24 +314,24 @@
 
         <div class="container">
             <label style="width: 35px;">未知:</label>
-            <input type="checkbox" value="0">
+            <input type="checkbox" value="0" checked>
             <label style="width: 35px;">单间:</label>
-            <input type="checkbox" value="1">
+            <input type="checkbox" value="1" checked>
             <label style="width: 35px;">次卧:</label>
-            <input type="checkbox" value="2">
+            <input type="checkbox" value="2" checked>
             <label style="width: 35px;">主卧:</label>
-            <input type="checkbox" value="3">
+            <input type="checkbox" value="3" checked>
 
         </div>
         <div class="container">
             <label style="width: 50px;">一居室:</label>
-            <input type="checkbox" value="4">
+            <input type="checkbox" value="4" checked>
             <label style="width: 50px;">二居室:</label>
-            <input type="checkbox" value="5">
+            <input type="checkbox" value="5" checked>
             <label style="width: 50px;">三居室:</label>
-            <input type="checkbox" value="6">
+            <input type="checkbox" value="6" checked>
             <label style="width: 50px;">四居室:</label>
-            <input type="checkbox" value="7">
+            <input type="checkbox" value="7" checked>
 
         </div>
         <div class="container">
@@ -374,33 +374,82 @@
         }
 
 
-        fetch('../notes/1.json?' + new Date().getTime())
-            .then((response) => response.json())
-            .then((json) => locationData = locationData.concat(json));
+        // fetch('../notes/1.json?' + new Date().getTime())
+        //     .then((response) => response.json())
+        //     .then((json) => locationData = locationData.concat(json));
 
 
-        fetch('../notes/2.json?' + new Date().getTime())
-            .then((response) => response.json())
-            .then((json) => locationData = locationData.concat(json));
+        // fetch('../notes/2.json?' + new Date().getTime())
+        //     .then((response) => response.json())
+        //     .then((json) => locationData = locationData.concat(json));
 
-        fetch('../notes/3.json?' + new Date().getTime())
-            .then((response) => response.json())
-            .then((json) => locationData = locationData.concat(json));
+        // fetch('../notes/3.json?' + new Date().getTime())
+        //     .then((response) => response.json())
+        //     .then((json) => locationData = locationData.concat(json));
 
-        fetch('../notes/4.json?' + new Date().getTime())
-            .then((response) => response.json())
-            .then((json) => locationData = locationData.concat(json));
+        // fetch('../notes/4.json?' + new Date().getTime())
+        //     .then((response) => response.json())
+        //     .then((json) => locationData = locationData.concat(json));
 
 
-        fetch('../notes/5.json?' + new Date().getTime())
-            .then((response) => response.json())
-            .then((json) => locationData = locationData.concat(json));
+        // fetch('../notes/5.json?' + new Date().getTime())
+        //     .then((response) => response.json())
+        //     .then((json) => locationData = locationData.concat(json));
 
-        fetch('../notes/6.json?' + new Date().getTime())
-            .then((response) => response.json())
-            .then((json) => locationData = locationData.concat(json));
+        // fetch('../notes/6.json?' + new Date().getTime())
+        //     .then((response) => response.json())
+        //     .then((json) => locationData = locationData.concat(json));
 
         (async function () {
+            let array1 = [];
+            let array2 = [];
+            let array3 = [];
+            let array4 = [];
+            let array5 = [];
+            let array6 = [];
+            try {
+                const response = await fetch('../notes/1.json?' + new Date().getTime());
+                const data = await response.json();
+                array1 = data
+            } catch (error) {
+                console.log(error)
+            }
+            try {
+                const response = await fetch('../notes/2.json?' + new Date().getTime());
+                const data = await response.json();
+                array2 = data
+            } catch (error) {
+                console.log(error)
+            }
+            try {
+                const response = await fetch('../notes/3.json?' + new Date().getTime());
+                const data = await response.json();
+                array3 = data
+            } catch (error) {
+                console.log(error)
+            }
+            try {
+                const response = await fetch('../notes/4.json?' + new Date().getTime());
+                const data = await response.json();
+                array4 = data
+            } catch (error) {
+                console.log(error)
+            }
+            try {
+                const response = await fetch('../notes/5.json?' + new Date().getTime());
+                const data = await response.json();
+                array5 = data
+            } catch (error) {
+                console.log(error)
+            }
+            try {
+                const response = await fetch('../notes/6.json?' + new Date().getTime());
+                const data = await response.json();
+                array6 = data
+            } catch (error) {
+                console.log(error)
+            }
+            locationData = locationData.concat(array1,array2,array3,array4,array5,array6);
             init()
         })()
 
