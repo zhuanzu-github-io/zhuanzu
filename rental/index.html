@@ -1199,10 +1199,10 @@
                 return
             }
             //匹配小红书url
-            var noteUrlReg = /http(s)?:\/\/xhslink.com\/[\w-]{6}/;
+            var noteUrlReg = /http(s)?:\/\/xhslink.com\/[\w-]+/;
             var urls = note.match(noteUrlReg)
             if (!urls) {
-                var douyinUrlReg = /https:\/\/v.douyin.com\/[\w-]{6}/;
+                var douyinUrlReg = /http(s)?:\/\/v.douyin.com\/[\w-]+/;
                 urls = note.match(douyinUrlReg)
                 if (!urls) {
                     showTipPopup("温馨提示", "请输入正确的抖音或小红书链接地址")

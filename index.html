@@ -559,8 +559,11 @@
                     var wid=vidElement.offsetWidth
                     let options = { width: wid, height: 264 ,loop:true }
                     if (media.length > 1){
-                        options.poster="https://sns-img-hw.xhscdn.com"+new URL(media[1]).pathname+"?imageView2/2/w/540/format/jpg"
-                        // options.poster=imgArr[1]
+                        if (new URL(media[1]).hostname.includes("douyinpic")){
+                            options.poster=media[1]
+                        }else{
+                            options.poster="https://sns-img-hw.xhscdn.com"+new URL(media[1]).pathname+"?imageView2/2/w/540/format/jpg"
+                        }
                     }
                     videojs('my-player', options, function () {
                         videojs.log('播放器准备好了!');
