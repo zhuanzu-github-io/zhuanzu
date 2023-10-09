@@ -176,7 +176,8 @@
             var pairs = queryString.split('&');
 
             for (var i = 0; i < pairs.length; i++) {
-                var pair = pairs[i].split('=',2);
+                let index = pairs[i].indexOf('=');
+                var pair = [pairs[i].slice(0, index), pairs[i].slice(index + 1)];
                 var key = decodeURIComponent(pair[0]);
                 var value = decodeURIComponent(pair[1]);
                 params[key] = value;
