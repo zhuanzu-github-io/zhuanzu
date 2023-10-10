@@ -11,6 +11,7 @@
     <!-- End Google Tag Manager -->
     <title>出租信息</title>
     <meta charset="UTF-8">
+    <meta name="referrer" content="no-referrer" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <!-- <link href="/test/video-js.css" rel="stylesheet" /> -->
     <link href="https://cdn.staticfile.org/video.js/8.5.0/video-js.min.css" rel="stylesheet" />
@@ -542,7 +543,8 @@
                     let imgArr = media.map((imgPath) => {
                         return {
                             url: '#',
-                            imgPath:  "https://sns-img-hw.xhscdn.com"+new URL(imgPath).pathname+"?imageView2/2/w/540/format/jpg"
+                            imgPath:  imgPath
+                            // imgPath:  "https://sns-img-hw.xhscdn.com"+new URL(imgPath).pathname+"?imageView2/2/w/540/format/jpg"
                             // imgPath:  imgPath+"?imageView2/2/w/540/format/jpg"
                             
                         };
@@ -559,7 +561,8 @@
                     //    return "https://detail.fzchats.uk/?proxyUrl=" + imgPath
                     // });
                     // var vedioUrl="http://sns-video-qc.xhscdn.com"+new URL(media[0]).pathname
-                    var vedioUrl="https://detail.fzchats.uk/?proxyUrl=" +media[0];
+                    // var vedioUrl="https://detail.fzchats.uk/?proxyUrl=" +media[0];
+                    var vedioUrl=media[0];
                     //展示视频
                     var vidElement = document.getElementById("vid")
                     vidElement.style.display = "block"
@@ -567,11 +570,12 @@
                     var wid=vidElement.offsetWidth
                     let options = { width: wid, height: 264 ,loop:true }
                     if (media.length > 1){
-                        if (new URL(media[1]).hostname.includes("douyinpic")){
-                            options.poster=media[1]
-                        }else{
-                            options.poster="https://sns-img-hw.xhscdn.com"+new URL(media[1]).pathname+"?imageView2/2/w/540/format/jpg"
-                        }
+                        options.poster=media[1]
+                        // if (new URL(media[1]).hostname.includes("douyinpic")){
+                        //     options.poster=media[1]
+                        // }else{
+                        //     options.poster="https://sns-img-hw.xhscdn.com"+new URL(media[1]).pathname+"?imageView2/2/w/540/format/jpg"
+                        // }
                         // options.poster=imgArr[1]
                     }
                     videojs('my-player', options, function () {
