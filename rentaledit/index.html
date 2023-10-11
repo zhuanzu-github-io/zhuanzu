@@ -575,7 +575,9 @@
             return navigator.userAgent.match(/(iPhone|iPod|iPad);?/i);
         }
         //查看详情
+        var scrollDistance=0
         function showDetail(key) {
+            scrollDistance= window.scrollY 
             scroll.lock()
             document.getElementById("div1").style.display = "none"
             document.querySelector('.scrollload-container').style.display = "none";
@@ -595,6 +597,9 @@
             document.getElementById("div1").style.display = "block"
             document.querySelector('.scrollload-container').style.display = "block";
             scroll.unLock()
+            if(iosAgent){
+                window.scrollTo(window.scrollX,scrollDistance)
+            }
         }
 
         function init() {

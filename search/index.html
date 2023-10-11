@@ -418,7 +418,7 @@
                 var endTime = formatTimestamp(item['endtime'])
                 var moduleHtml=''
                 +'<div class="card" onclick=showDetail("' + item['key'] + '")>'
-                    +'<div class="carda" onclick=showDetail("' + item['info_key'] + '")>'
+                    +'<div class="carda" >'
                         +'<div class="card-image">'
                             +'<img src="' + imgUrl + '" >'
                         +'</div>'
@@ -445,8 +445,9 @@
         function iosAgent() {
             return navigator.userAgent.match(/(iPhone|iPod|iPad);?/i);
         }
-
+        var scrollDistance=0
         function showDetail(key) {
+            scrollDistance= window.scrollY 
             scroll.lock()
             document.getElementById("div1").style.display = "none"
             document.querySelector('.scrollload-container').style.display = "none";
@@ -466,6 +467,9 @@
             document.getElementById("div1").style.display = "block"
             document.querySelector('.scrollload-container').style.display = "block";
             scroll.unLock()
+            if(iosAgent){
+                window.scrollTo(window.scrollX,scrollDistance)
+            }
         }
 
         function init() {

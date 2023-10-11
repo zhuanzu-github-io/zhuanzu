@@ -688,7 +688,7 @@
                     shareInfo=shareInfo+"\n【合同】:"+document.getElementById("party").innerHTML 
                     shareInfo=shareInfo+"\n【短租】:"+document.getElementById("rental").innerHTML 
                     shareInfo=shareInfo+"\n【付款】:"+document.getElementById("pay").innerHTML
-                    shareInfo=shareInfo+"\n【备注】:"+document.getElementById("rentDesc").innerHTML 
+                    shareInfo=shareInfo+"\n【备注】:"+document.getElementById("rentDesc").innerHTML.replace(/\n/g, ';') 
                     shareBtn.setAttribute('shareInfo', shareInfo);
                 }
 
