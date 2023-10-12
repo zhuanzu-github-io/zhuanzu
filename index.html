@@ -668,6 +668,8 @@
                 //是否显示分享按钮
                 var qrShortUrl = data['qr_short_url'];
                 if(qrShortUrl){
+                    let parsedUrl = new URL(url);
+                    qrShortUrl=parsedUrl.host + parsedUrl.pathname + parsedUrl.search + parsedUrl.hash;
                     var shareModule = document.getElementById('shareModule')
                     // 设置 display 属性以展示 div
                     shareModule.style.display = "flex";
@@ -677,7 +679,7 @@
                     if (title){
                         shareInfo=title+"\n\n"
                     }
-                    shareInfo=shareInfo+"【图片】:"+qrShortUrl
+                    shareInfo=shareInfo+"【图文】:"+qrShortUrl
                     shareInfo=shareInfo+"\n【类型】:"+document.getElementById("roomType").innerHTML
                     shareInfo=shareInfo+"\n【位置】:"+document.getElementById("position1").innerHTML
                     shareInfo=shareInfo+"\n【价格】:"+document.getElementById("price").innerHTML
