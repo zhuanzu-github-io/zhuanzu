@@ -671,7 +671,7 @@
                 //是否显示分享按钮
                 var qrShortUrl = data['qr_short_url'];
                 if(qrShortUrl){
-                    let parsedUrl = new URL(url);
+                    let parsedUrl = new URL(qrShortUrl);
                     qrShortUrl=parsedUrl.host + parsedUrl.pathname + parsedUrl.search + parsedUrl.hash;
                     var shareModule = document.getElementById('shareModule')
                     // 设置 display 属性以展示 div
