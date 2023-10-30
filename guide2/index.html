@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>转租群引导</title>
+  <meta charset="UTF-8">
+  <meta name="referrer" content="no-referrer" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <!-- <link href="/test/video-js.css" rel="stylesheet" /> -->
+  <link href="https://cdn.staticfile.org/video.js/8.5.0/video-js.min.css" rel="stylesheet" />
+  <style>
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+
+    button {
+      background-size: cover;
+      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAvVJREFUeF7tmkur00AUx880XUj0olvFqyiC4AMVXYmvrhQUHwvd+LyC2ViSM0np2ruW0gnuRFBw5zfQjf0A6k6RC7rwM7hryZGBBII2bZrmMWOnkFXncf6/OefMmWEYrPiPrbh+MACMB6w4ARMCK+4A+ZIg5/wQEe3VCRZj7NdwOPw5z+a5IYCI7wDg9ryBFP3/g2VZfDAYfMuybyYARPwEAKcVFZfXrK+WZd3JgpAJgHN+kIh+5J1F8XZPhBCvptmYCQARLwHAR8WF5TVvUwjxzACYQsB4QJYPmRAwOcAkQbMLLLkNbgLACAAkyAAAduTdsypoV/s2uCWEOJwI4ZwfJ6IeADyoQFyeIWsHMBJCdP62jHN+g4ikN5zPY3WJbdQAkAhCRIzDoq4TploAJAjXdfdZlhUQkVviSmcNpR6AVH64CAA9IrpWIQh1ASSiXdfdaLVaMj8crQCE+gCkaMdxdtq2LSHIzy4RhB4AUknyJGNM5od7JUHQC0AqP9yKoqjHGDu7JAg9ASSiPc8LpEcAwO6CIPQGIEV3u90D7XZbQnhaAIL+AFL5QZbUzxeE8F8BeAQAr1cSgO/7p6IoelugVtDbAxBxl0yC8Y6wbcHVl831BYCIj+Oa4EgB4UkX/QC4rtuJS+OrSwjXD0AQBPsnk4ksfrolCNcLAOecx3G+p0Tx6ucARLwZH4DOlSxcbQ/wff9EFEWyurtfkXA1AfT7/bXxeCwvQaT47RWLVysEOOcP4xviYzUIb8wDPgshzqQFep53IT7RXa9ReGMA5MQdIcTI9/31OM69BoQ3CuA3ACRPbNYaFN9IDmhY7z/T114KGwCKETAeYB5JmVdiCz6Ti6+fvigWy4XMIaJ+GIZTL1Izn8k5jmPbtv0dANYLzapQJyK6Eobh+2kmzXwr7HlelzH2QiEtRUzZEEK8yeqY57X4XQC4rKEnbAGAPJO8nEVtLoAiyHXqYwDotFpV2Go8oAqqOo1pPECn1arCVuMBVVDVacw/WJezULvt2FoAAAAASUVORK5CYII=');
+      width: 100px;
+      height: 100px;
+      /* border-radius: 50%; */
+      border: none;
+      outline: none;
+      cursor: pointer;
+      opacity: 0.5;
+    }
+
+    .centered {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <img
+      src="https://p9-pc-sign.douyinpic.com/tos-cn-p-0015/oc6AWJ8KfInayDBAICKgbEDGlSQf9DYANgPVpB~tplv-dy-resize-origshort-autoq-75:330.jpeg?x-expires=2012565600&x-signature=WL%2F8sm5bfa7t0HArPgwBiKin0Yk%3D&from=3213915784&s=PackSourceEnum_AWEME_DETAIL&se=false&sc=cover&biz_tag=pcweb_cover&l=202310132227104783875D5917612891EB"
+      alt="Image">
+    <button class="centered" onclick="redirect()"></button>
+  </div>
+
+  <script>
+    function redirect() {
+      window.location.href = "https://www.douyin.com/aweme/v1/play/?video_id=v0d00fg10000ckkl4cjc77u0oo8obfgg";
+    }
+  </script>
+</body>
+
+</html>
