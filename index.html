@@ -3,14 +3,17 @@
 
 <head>
     <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-W5V9DL3');</script>
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-W5V9DL3');</script>
     <!-- End Google Tag Manager -->
     <title>转租信息</title>
-    <meta charset="UTF-8"> 
+    <meta charset="UTF-8">
     <meta name="referrer" content="no-referrer" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <!-- <link href="/test/video-js.css" rel="stylesheet" /> -->
@@ -219,7 +222,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        
+
         .popup {
             display: none;
             position: fixed;
@@ -273,8 +276,8 @@
 
 <body>
     <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W5V9DL3"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W5V9DL3" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
     <div id="content">
@@ -312,7 +315,8 @@
         </div>
         <div class="module">
             <h2>概况</h2>
-            <p  style="text-align: center;color: #007bff;font-weight: bold;margin-bottom: 20px;"><span id="subletTitle" style="margin: 0;padding:5px 10px; background-color: #f0f0f0;"></span></p>
+            <p style="text-align: center;color: #007bff;font-weight: bold;margin-bottom: 20px;"><span id="subletTitle"
+                    style="margin: 0;padding:5px 10px; background-color: #f0f0f0;"></span></p>
             <p><span>房源类型</span><span id="roomType"></span></p>
             <p><span>房源位置</span><span id="position1"></span></p>
             <p><span>房源价格</span><span id="price"></span></p>
@@ -334,7 +338,7 @@
             <div class="qrcode" id="qrcode2"></div>
 
             <div id="qrcode" style="display: none;"></div>
-            <div class="container" id="shareModule" style="display: none;" >
+            <div class="container" id="shareModule" style="display: none;">
                 <button type="button" id="share-button" shareInfo="" class="copy-button" onclick="share()">分 享</button>
             </div>
         </div>
@@ -360,6 +364,27 @@
         }
         function isInEmbed() {
             return window !== window.parent;
+        }
+
+        function isConnectedWithWiFi() {
+            let ua = window.navigator.userAgent
+            // 如果是微信
+            if (/MicroMessenger/.test(ua)) {
+                if (ua.indexOf('WIFI') >= 0) {
+                    return true;
+                }
+            }
+            return false
+        }
+        
+
+        function switchDyVideoUrl(videoUrl){
+            if (videoUrl.indexOf('douyin.com')>=0){
+                if (!isConnectedWithWiFi()){
+                    return 'https://dy.fzchats.uk?proxyurl='+videoUrl
+                }
+            }
+            return videoUrl;
         }
 
 
@@ -412,7 +437,7 @@
 
         // 复制文本函数，微信端，需要在用户触发 Click 事件里面才能执行成功
         function share() {
-            var message=document.getElementById('share-button').getAttribute('shareInfo')
+            var message = document.getElementById('share-button').getAttribute('shareInfo')
             if (iosAgent()) {
                 copyContent(message)
             } else {
@@ -516,16 +541,16 @@
                 }
                 if (position2) {
                     document.getElementById("position2").innerHTML = position2
-                }else{
-                    document.getElementById("subway").style.display="none"
+                } else {
+                    document.getElementById("subway").style.display = "none"
                 }
 
                 var name = data['name'];
-                var title=data['title']
+                var title = data['title']
                 if (title) {
                     document.title = title;
                     document.getElementById("subletTitle").innerHTML = title
-                }else if(name){
+                } else if (name) {
                     document.title = name + "的转租信息";
                 }
                 var mediaType = data['media_type']
@@ -536,10 +561,10 @@
                     let imgArr = media.map((imgPath) => {
                         return {
                             url: '#',
-                            imgPath:  imgPath
+                            imgPath: imgPath
                             // imgPath:  "https://sns-img-hw.xhscdn.com"+new URL(imgPath).pathname+"?imageView2/2/w/540/format/jpg"
                             // imgPath:  imgPath+"?imageView2/2/w/540/format/jpg"
-                            
+
                         };
                     });
                     new Swiper({
@@ -555,15 +580,15 @@
                     // });
                     // var vedioUrl="http://sns-video-qc.xhscdn.com"+new URL(media[0]).pathname
                     // var vedioUrl="https://detail.fzchats.uk/?proxyUrl=" +media[0];
-                    var vedioUrl=media[0]
+                    var vedioUrl = switchDyVideoUrl(media[0]);
                     //展示视频
                     var vidElement = document.getElementById("vid")
                     vidElement.style.display = "block"
-                    vidElement.innerHTML = '<video id="my-player" class="video-js" controls preload="auto"  > <source src="' +vedioUrl + '" type="video/mp4"/> </video>'
-                    var wid=vidElement.offsetWidth
-                    let options = { width: wid, height: 264 ,loop:true }
-                    if (media.length > 1){
-                        options.poster=media[1]
+                    vidElement.innerHTML = '<video id="my-player" class="video-js" controls preload="auto"  > <source src="' + vedioUrl + '" type="video/mp4"/> </video>'
+                    var wid = vidElement.offsetWidth
+                    let options = { width: wid, height: 264, loop: true }
+                    if (media.length > 1) {
+                        options.poster = media[1]
                         // if (new URL(media[1]).hostname.includes("douyinpic")){
                         //     options.poster=media[1]
                         // }else{
@@ -610,7 +635,7 @@
                 var cityname = data['cityname'];
                 var qrcodeUrl = data['qrcode']
                 if (qrcodeUrl) {
-                    if (!qrcodeUrl.startsWith("http")){
+                    if (!qrcodeUrl.startsWith("http")) {
                         qrcodeUrl = "https://weixin.qq.com/g/" + qrcodeUrl
                     }
                     // document.getElementById('qrcode').style.display = 'none';
@@ -667,27 +692,27 @@
                 }
                 //是否显示分享按钮
                 var qrShortUrl = data['qr_short_url'];
-                if(qrShortUrl){
+                if (qrShortUrl) {
                     let parsedUrl = new URL(qrShortUrl);
-                    qrShortUrl=parsedUrl.host + parsedUrl.pathname + parsedUrl.search + parsedUrl.hash;
+                    qrShortUrl = parsedUrl.host + parsedUrl.pathname + parsedUrl.search + parsedUrl.hash;
                     var shareModule = document.getElementById('shareModule')
                     // 设置 display 属性以展示 div
                     shareModule.style.display = "flex";
                     //设置分享按钮属性,以存储分享信息
                     var shareBtn = document.getElementById('share-button');
-                    var shareInfo=""
-                    if (title){
-                        shareInfo=title+"\n\n"
+                    var shareInfo = ""
+                    if (title) {
+                        shareInfo = title + "\n\n"
                     }
-                    shareInfo=shareInfo+"【图文】:"+qrShortUrl
-                    shareInfo=shareInfo+"\n【类型】:"+document.getElementById("roomType").innerHTML
-                    shareInfo=shareInfo+"\n【位置】:"+document.getElementById("position1").innerHTML
-                    shareInfo=shareInfo+"\n【价格】:"+document.getElementById("price").innerHTML
-                    shareInfo=shareInfo+"\n【合同】:"+document.getElementById("party").innerHTML 
-                    shareInfo=shareInfo+"\n【余期】:"+document.getElementById("endtime").innerHTML 
-                    shareInfo=shareInfo+"\n【短租】:"+document.getElementById("rental").innerHTML 
-                    shareInfo=shareInfo+"\n【付款】:"+document.getElementById("pay").innerHTML
-                    shareInfo=shareInfo+"\n【备注】:"+document.getElementById("rentDesc").innerHTML.replace(/\n/g, ';') 
+                    shareInfo = shareInfo + "【图文】:" + qrShortUrl
+                    shareInfo = shareInfo + "\n【类型】:" + document.getElementById("roomType").innerHTML
+                    shareInfo = shareInfo + "\n【位置】:" + document.getElementById("position1").innerHTML
+                    shareInfo = shareInfo + "\n【价格】:" + document.getElementById("price").innerHTML
+                    shareInfo = shareInfo + "\n【合同】:" + document.getElementById("party").innerHTML
+                    shareInfo = shareInfo + "\n【余期】:" + document.getElementById("endtime").innerHTML
+                    shareInfo = shareInfo + "\n【短租】:" + document.getElementById("rental").innerHTML
+                    shareInfo = shareInfo + "\n【付款】:" + document.getElementById("pay").innerHTML
+                    shareInfo = shareInfo + "\n【备注】:" + document.getElementById("rentDesc").innerHTML
                     shareBtn.setAttribute('shareInfo', shareInfo);
                 }
 

@@ -20,20 +20,40 @@
       background: black;
     }
   </style>
+  <script src="https://cdn.staticfile.org/video.js/8.5.0/video.min.js"></script>
 </head>
 
 <body>
-  <script src="https://cdn.staticfile.org/video.js/8.5.0/video.min.js"></script>
-  <video id="my-video" class="video-js"
-    poster="https://p9-pc-sign.douyinpic.com/tos-cn-p-0015/oc6AWJ8KfInayDBAICKgbEDGlSQf9DYANgPVpB~tplv-dy-resize-origshort-autoq-75:330.jpeg?x-expires=2012565600&x-signature=WL%2F8sm5bfa7t0HArPgwBiKin0Yk%3D&from=3213915784&s=PackSourceEnum_AWEME_DETAIL&se=false&sc=cover&biz_tag=pcweb_cover&l=202310132227104783875D5917612891EB"
-    data-setup='{"controls": true, "autoplay": true, "preload": "auto","aspectRatio":"9:16","width":"100%","height":"100%"}'>
-    <source src="https://www.douyin.com/aweme/v1/play/?video_id=v0d00fg10000ckkl4cjc77u0oo8obfgg" type="video/mp4" />
-    <p class="vjs-no-js">
-      To view this video please enable JavaScript, and consider upgrading to a
-      web browser that
-      <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-    </p>
-  </video>
+
+  <script>
+
+    function isConnectedWithWiFi() {
+      let ua = window.navigator.userAgent
+      // 如果是微信
+      if (/MicroMessenger/.test(ua)) {
+        if (ua.indexOf('WIFI') >= 0) {
+          return true;
+        }
+      }
+      return false
+    }
+
+    function switchDyVideoUrl(videoUrl) {
+      if (videoUrl.indexOf('douyin.com') >= 0) {
+        if (!isConnectedWithWiFi()) {
+          return 'https://dy.fzchats.uk?proxyurl=' + videoUrl
+        }
+      }
+      return videoUrl;
+    }
+    window.onload = function () {
+      var videoHtml = '<video id="my-video" class="video-js" poster="https://p9-pc-sign.douyinpic.com/tos-cn-p-0015/oc6AWJ8KfInayDBAICKgbEDGlSQf9DYANgPVpB~tplv-dy-resize-origshort-autoq-75:330.jpeg?x-expires=2012565600&x-signature=WL%2F8sm5bfa7t0HArPgwBiKin0Yk%3D&from=3213915784&s=PackSourceEnum_AWEME_DETAIL&se=false&sc=cover&biz_tag=pcweb_cover&l=202310132227104783875D5917612891EB"'
+      videoHtml = videoHtml + 'data-setup=\'{"controls": true, "autoplay": true, "preload": "auto","aspectRatio":"9:16","width":"100%","height":"100%"}\'>'
+      videoHtml = videoHtml + '<source src="' + switchDyVideoUrl("https://www.douyin.com/aweme/v1/play/?video_id=v0d00fg10000ckkl4cjc77u0oo8obfgg") + '" type="video/mp4" /></video>'
+      document.body.innerHTML = videoHtml
+      // document.body.innerHTML = '<p style="background:white">' + window.navigator.userAgent + '</p>'
+    }
+  </script>
 </body>
 
 </html>

@@ -364,6 +364,26 @@
             return window !== window.parent;
         }
 
+        function isConnectedWithWiFi() {
+            let ua = window.navigator.userAgent
+            // 如果是微信
+            if (/MicroMessenger/.test(ua)) {
+                if (ua.indexOf('WIFI') >= 0) {
+                    return true;
+                }
+            }
+            return false
+        }
+        
+
+        function switchDyVideoUrl(videoUrl){
+            if (videoUrl.indexOf('douyin.com')>=0){
+                if (!isConnectedWithWiFi()){
+                    return 'https://dy.fzchats.uk?proxyurl='+videoUrl
+                }
+            }
+            return videoUrl;
+        }
 
 
         function mapDetail() {
@@ -562,7 +582,7 @@
                     // });
                     // var vedioUrl="http://sns-video-qc.xhscdn.com"+new URL(media[0]).pathname
                     // var vedioUrl="https://detail.fzchats.uk/?proxyUrl=" +media[0];
-                    var vedioUrl=media[0];
+                    var vedioUrl=switchDyVideoUrl(media[0]);
                     //展示视频
                     var vidElement = document.getElementById("vid")
                     vidElement.style.display = "block"
@@ -690,7 +710,7 @@
                     shareInfo=shareInfo+"\n【合同】:"+document.getElementById("party").innerHTML 
                     shareInfo=shareInfo+"\n【短租】:"+document.getElementById("rental").innerHTML 
                     shareInfo=shareInfo+"\n【付款】:"+document.getElementById("pay").innerHTML
-                    shareInfo=shareInfo+"\n【备注】:"+document.getElementById("rentDesc").innerHTML.replace(/\n/g, ';') 
+                    shareInfo=shareInfo+"\n【备注】:"+document.getElementById("rentDesc").innerHTML
                     shareBtn.setAttribute('shareInfo', shareInfo);
                 }
 
