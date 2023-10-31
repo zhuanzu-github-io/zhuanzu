@@ -366,26 +366,25 @@
             return window !== window.parent;
         }
 
-        function isConnectedWithWiFi() {
+        function wechatNotWifi() {
             let ua = window.navigator.userAgent
-            // 如果是微信
+            // 如果是微信非WiFi
             if (/MicroMessenger/.test(ua)) {
-                if (ua.indexOf('WIFI') >= 0) {
+                if (ua.indexOf('WIFI') == -1) {
                     return true;
                 }
             }
             return false
         }
-        
 
-        function switchDyVideoUrl(videoUrl){
-            if (videoUrl.indexOf('douyin.com')>=0){
-                if (!isConnectedWithWiFi()){
-                    return 'https://dy.fzchats.uk?proxyurl='+videoUrl
-                }
+    function switchDyVideoUrl(videoUrl) {
+        if (videoUrl.indexOf('douyin.com') >= 0) {
+            if (wechatNotWifi()) {
+                return 'https://dy.fzchats.uk?proxyurl=' + videoUrl
             }
-            return videoUrl;
         }
+        return videoUrl;
+    }
 
 
 
