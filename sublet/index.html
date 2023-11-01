@@ -958,7 +958,14 @@
                     showTipPopup("温馨提示", '复制内容失败,\n请手动复制链接地址');
                 });
             } else {
-                showTipPopup("温馨提示", '该浏览器不支持复制到剪贴板,请手动复制链接地址');
+                //如果苹果不支持clipboard.writeText，使用下面的方法
+                let inputObj = document.createElement("input");
+                inputObj.value = content;
+                document.body.appendChild(inputObj);
+                inputObj.select();
+                inputObj.setSelectionRange(0, inputObj.value.length);
+                _execCommand('Copy');
+                document.body.removeChild(inputObj);
             }
         }
 
