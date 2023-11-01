@@ -707,7 +707,7 @@
                     shareInfo = shareInfo + "\n【余期】:" + document.getElementById("endtime").innerHTML
                     shareInfo = shareInfo + "\n【短租】:" + document.getElementById("rental").innerHTML
                     shareInfo = shareInfo + "\n【付款】:" + document.getElementById("pay").innerHTML
-                    shareInfo = shareInfo + "\n【备注】:" + document.getElementById("rentDesc").innerHTML
+                    shareInfo = shareInfo + "\n【备注】:" + document.getElementById("rentDesc").innerHTML.trim().replace(/\n/g, ' ')
                     shareBtn.setAttribute('shareInfo', shareInfo);
                 }
 
