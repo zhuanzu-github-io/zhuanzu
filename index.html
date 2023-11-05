@@ -699,15 +699,21 @@
                     if (title) {
                         shareInfo = title + "\n\n"
                     }
+                    var sharePoiaddress=document.getElementById("poiaddress").innerHTML.replace("湖北省武汉市", "")
+                    if (sharePoiaddress!=sharePoiaddress.substring(0, 10)) {
+                        sharePoiaddress=sharePoiaddress.substring(0, 10)+"…"
+                    }
                     shareInfo = shareInfo + "【图文】:" + qrShortUrl
-                    shareInfo = shareInfo + "\n【类型】:" + document.getElementById("roomType").innerHTML
-                    shareInfo = shareInfo + "\n【位置】:" + document.getElementById("position1").innerHTML
+                    shareInfo = shareInfo + "\n【房型】:" + document.getElementById("roomType").innerHTML
+                    shareInfo = shareInfo + "\n【小区】:" + document.getElementById("position1").innerHTML
+                    shareInfo = shareInfo + "\n【位置】:" + sharePoiaddress
                     shareInfo = shareInfo + "\n【价格】:" + document.getElementById("price").innerHTML
                     shareInfo = shareInfo + "\n【合同】:" + document.getElementById("party").innerHTML
                     shareInfo = shareInfo + "\n【余期】:" + document.getElementById("endtime").innerHTML
                     shareInfo = shareInfo + "\n【短租】:" + document.getElementById("rental").innerHTML
                     shareInfo = shareInfo + "\n【付款】:" + document.getElementById("pay").innerHTML
                     shareInfo = shareInfo + "\n【备注】:" + document.getElementById("rentDesc").innerHTML.trim().replace(/\n/g, ' ')
+                    shareInfo = shareInfo + "\n\n更多转租:fzchats.uk/gde1"
                     shareBtn.setAttribute('shareInfo', shareInfo);
                 }
 
