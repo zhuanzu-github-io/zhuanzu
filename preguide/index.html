@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>移动端页面</title>
+    <title>转租群引导页</title>
     <style>
         body, html {
             height: 100%;
+            width: 100%;
             margin: 0;
             padding: 0;
             display: flex;
@@ -49,9 +50,12 @@
             .btn {
                 width: 100%;
                 padding: 15px 20px;
+                margin: 15px 0px;
             }
             .button-container {
-                width: 100%;
+                width: 40%;
+                min-width: 150px;
+                transform: translateY(-30%);
             }
         }
     </style>
@@ -59,8 +63,8 @@
 <body>
 
     <div class="button-container">
-        <button class="btn" onclick="location.href='https://zhuanzu.gitee.io/zhuanzu.github.io/guide'">转租群发布引导</button>
-        <button class="btn" onclick="location.href='https://zhuanzu.gitee.io/zhuanzu.github.io/guide?type=2'">转租群租房引导</button>
+        <button class="btn" onclick="location.href='https://zhuanzu.gitee.io/zhuanzu.github.io/guide'">我要转租</button>
+        <button class="btn" onclick="location.href='https://zhuanzu.gitee.io/zhuanzu.github.io/guide?type=2'">我要租房</button>
     </div>
 
 </body>
