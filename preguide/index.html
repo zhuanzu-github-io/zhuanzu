@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>移动端页面</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #1a1a1d; /* 起始颜色：深灰色 */
+            background: linear-gradient(145deg, #1a1a1d, #4e4e50); /* 渐变效果 */
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px;
+            text-align: center;
+        }
+        .btn {
+            background-color: #ffffff;
+            color: #1a1a1d;
+            border: 2px solid #ffffff; /* 增加边框以提升对比度和层次感 */
+            border-radius: 25px;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* 更强的阴影效果 */
+        }
+        .btn:hover {
+            background-color: #4e4e50; /* 悬浮时的背景色 */
+            color: #ffffff;
+            border-color: #4e4e50;
+        }
+        .btn:active {
+            transform: translateY(2px); /* 点击时向下微移，增加点击效果的反馈 */
+        }
+        @media (max-width: 600px) {
+            .btn {
+                width: 100%;
+                padding: 15px 20px;
+            }
+            .button-container {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="button-container">
+        <button class="btn" onclick="location.href='https://zhuanzu.gitee.io/zhuanzu.github.io/guide'">转租群发布引导</button>
+        <button class="btn" onclick="location.href='https://zhuanzu.gitee.io/zhuanzu.github.io/guide?type=2'">转租群租房引导</button>
+    </div>
+
+</body>
+</html>
