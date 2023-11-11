@@ -625,22 +625,31 @@
                         // 最新的浏览器一般禁止video自动播放，直接调用play()会报错。只有用户在页面上操作后或者在video标签上添加muted（静音）属性，才能调用play函数。
                         // this.play();
                     });
-                    videojs.hook('beforeerror', (player, err) => {
-                        console.log('hook - beforeerror', player.src(), err)
-                        // Video.js 在切换/指定 source 后立即会触发一个 err=null 的错误，这里过滤一下
-                        if (err !== null) {
-                            player.src(sources[1])
-                        }
-                        // 清除错误，避免 error 事件在控制台抛出错误
-                        return null
+                    //10秒后没有获取到视频自动切换
+                    player.ready(function(){
+                        // setInterval(function() {console.log(player.readyState(),player.src())}, 3000);
+                        setTimeout(function(){
+                            if(player.readyState()==0){
+                                player.src(sources[1])
+                            }
+                        },10000)
                     })
-                    player.ready(() => {
-                        // 丢失 source 事件处理
-                        player.tech().on('retryplaylist', function () {
-                            console.log('event - retryplaylist')
-                            player.src(sources[1])
-                        })
-                    })
+                    // videojs.hook('beforeerror', (player, err) => {
+                    //     console.log('hook - beforeerror', player.src(), err)
+                    //     // Video.js 在切换/指定 source 后立即会触发一个 err=null 的错误，这里过滤一下
+                    //     if (err !== null) {
+                    //         player.src(sources[1])
+                    //     }
+                    //     // 清除错误，避免 error 事件在控制台抛出错误
+                    //     return null
+                    // })
+                    // player.ready(() => {
+                    //     // 丢失 source 事件处理
+                    //     player.tech().on('retryplaylist', function () {
+                    //         console.log('event - retryplaylist')
+                    //         player.src(sources[1])
+                    //     })
+                    // })
 
                 }
                 var endtime = data['endtime']
