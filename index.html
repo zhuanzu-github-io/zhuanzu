@@ -383,6 +383,17 @@
         return videoUrl;
     }
 
+    //不做环境判断,返回包装后的url
+    function packVideoUrl(videoUrl) {
+        if (videoUrl.indexOf('douyin.com') >= 0) {
+            return 'https://dy.fzchats.uk?proxyurl=' + videoUrl
+        }
+        // if (videoUrl.indexOf('xhscdn.com') >= 0) {
+        //     return 'https://detail.fzchats.uk/?proxyUrl=' + videoUrl
+        // }
+        return videoUrl;
+    }
+
 
 
         function mapDetail() {
@@ -575,13 +586,31 @@
                     // });
                     // var vedioUrl="http://sns-video-qc.xhscdn.com"+new URL(media[0]).pathname
                     // var vedioUrl="https://detail.fzchats.uk/?proxyUrl=" +media[0];
-                    var vedioUrl = switchDyVideoUrl(media[0]);
+                    var vedioUrl = packVideoUrl(media[0]);
                     //展示视频
                     var vidElement = document.getElementById("vid")
                     vidElement.style.display = "block"
-                    vidElement.innerHTML = '<video id="my-player" class="video-js" controls preload="auto"  > <source src="' + vedioUrl + '" type="video/mp4"/> </video>'
+                    vidElement.innerHTML = '<video id="my-player" class="video-js"> </video>'
+                    const sources = [
+                        {
+                        src: media[0],
+                        type: 'video/mp4'
+                        },
+                        {
+                        src: vedioUrl,
+                        type: 'video/mp4'
+                        }
+                    ]
                     var wid = vidElement.offsetWidth
-                    let options = { width: wid, height: 264, loop: true }
+                    let options = { 
+                        width: wid, 
+                        height: 264, 
+                        loop: true,
+                        controls: true,
+                        preload: "auto",
+                        // autoplay: 'muted',
+                        sources: sources[0] 
+                    }
                     if (media.length > 1) {
                         options.poster = media[1]
                         // if (new URL(media[1]).hostname.includes("douyinpic")){
@@ -590,11 +619,28 @@
                         //     options.poster="https://sns-img-hw.xhscdn.com"+new URL(media[1]).pathname+"?imageView2/2/w/540/format/jpg"
                         // }
                     }
-                    videojs('my-player', options, function () {
+                    
+                    var player = videojs('my-player', options, function () {
                         videojs.log('播放器准备好了!');
                         // 最新的浏览器一般禁止video自动播放，直接调用play()会报错。只有用户在页面上操作后或者在video标签上添加muted（静音）属性，才能调用play函数。
                         // this.play();
                     });
+                    videojs.hook('beforeerror', (player, err) => {
+                        console.log('hook - beforeerror', player.src(), err)
+                        // Video.js 在切换/指定 source 后立即会触发一个 err=null 的错误，这里过滤一下
+                        if (err !== null) {
+                            player.src(sources[1])
+                        }
+                        // 清除错误，避免 error 事件在控制台抛出错误
+                        return null
+                    })
+                    player.ready(() => {
+                        // 丢失 source 事件处理
+                        player.tech().on('retryplaylist', function () {
+                            console.log('event - retryplaylist')
+                            player.src(sources[1])
+                        })
+                    })
 
                 }
                 var endtime = data['endtime']

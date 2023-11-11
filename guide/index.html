@@ -62,19 +62,73 @@
     window.onload = function () {
       var queryParams = getQueryParams();
       var type = queryParams['type'];
-      var videoHtml = '<video id="my-video" class="video-js" poster="https://p9-pc-sign.douyinpic.com/tos-cn-p-0015/oc6AWJ8KfInayDBAICKgbEDGlSQf9DYANgPVpB~tplv-dy-resize-origshort-autoq-75:330.jpeg?x-expires=2012565600&x-signature=WL%2F8sm5bfa7t0HArPgwBiKin0Yk%3D&from=3213915784&s=PackSourceEnum_AWEME_DETAIL&se=false&sc=cover&biz_tag=pcweb_cover&l=202310132227104783875D5917612891EB"'
-       + 'data-setup=\'{"controls": true, "autoplay": true, "preload": "auto","height":"100%","loop": true,"fill":true}\'>'
-      + '<source src="' + switchDyVideoUrl("https://www.douyin.com/aweme/v1/play/?video_id=v0d00fg10000ckkl4cjc77u0oo8obfgg") + '" type="video/mp4" /></video>'
+      const sources = [
+        {
+          src: "https://www.douyin.com/aweme/v1/play/?video_id=v0d00fg10000ckkl4cjc77u0oo8obfgg",
+          type: 'video/mp4'
+        },
+        {
+          src: "https://dy.fzchats.uk?proxyurl=https://www.douyin.com/aweme/v1/play/?video_id=v0d00fg10000ckkl4cjc77u0oo8obfgg",
+          type: 'video/mp4'
+        },
+        {
+          src: "https://www.douyin.com/aweme/v1/play/?video_id=v0d00fg10000cl4m4vbc77u84891t4o0",
+          type: 'video/mp4'
+        },
+        {
+          src: "https://dy.fzchats.uk?proxyurl=https://www.douyin.com/aweme/v1/play/?video_id=v0d00fg10000cl4m4vbc77u84891t4o0",
+          type: 'video/mp4'
+        }
+      ]
+      let index = 0 
+      let poster="https://p9-pc-sign.douyinpic.com/tos-cn-p-0015/oc6AWJ8KfInayDBAICKgbEDGlSQf9DYANgPVpB~tplv-dy-resize-origshort-autoq-75:330.jpeg?x-expires=2012565600&x-signature=WL%2F8sm5bfa7t0HArPgwBiKin0Yk%3D&from=3213915784&s=PackSourceEnum_AWEME_DETAIL&se=false&sc=cover&biz_tag=pcweb_cover&l=202310132227104783875D5917612891EB"
       if(type&&type==2){
         document.title = "转租查找教程";
-        videoHtml = '<video id="my-video" class="video-js" poster="https://p9-pc-sign.douyinpic.com/tos-cn-p-0015/bc79d85d7228438b9ab4aa1de59739d1_1699308357~tplv-dy-resize-origshort-autoq-75:330.jpeg?x-expires=2014732800&x-signature=t2tBuT6AWZcuAVEar%2FRu%2F5Kb1C8%3D&from=3213915784&s=PackSourceEnum_AWEME_DETAIL&se=false&sc=cover&biz_tag=pcweb_cover&l=202311080013459C2AE83F687BD133E800"'
-        + 'data-setup=\'{"controls": true, "autoplay": true, "preload": "auto","height":"100%","loop": true,"fill":true}\'>'
-       + '<source src="' + switchDyVideoUrl("https://www.douyin.com/aweme/v1/play/?video_id=v0d00fg10000cl4m4vbc77u84891t4o0") + '" type="video/mp4" /></video>'
+        index = 2
+        poster="https://p9-pc-sign.douyinpic.com/tos-cn-p-0015/bc79d85d7228438b9ab4aa1de59739d1_1699308357~tplv-dy-resize-origshort-autoq-75:330.jpeg?x-expires=2014732800&x-signature=t2tBuT6AWZcuAVEar%2FRu%2F5Kb1C8%3D&from=3213915784&s=PackSourceEnum_AWEME_DETAIL&se=false&sc=cover&biz_tag=pcweb_cover&l=202311080013459C2AE83F687BD133E800"
       }else{
         document.title = "转租发布教程";
       }
-      document.body.innerHTML = videoHtml
-      // document.body.innerHTML = '<p style="background:white">' + window.navigator.userAgent + '</p>'
+      document.body.innerHTML = '<video id="my-player" class="video-js" > </video>'
+      var player = videojs('my-player', {
+        controls: true, 
+        // autoplay: true, 
+        preload: "auto",
+        height:"100%",
+        loop: true,
+        fill:true,
+        autoplay: 'muted', // 实现视频自动播放的关键
+        sources: sources[index],
+        poster:poster
+      })
+      videojs.hook('beforeerror', (player, err) => {
+                        console.log('hook - beforeerror', player.src(), err)
+                        // Video.js 在切换/指定 source 后立即会触发一个 err=null 的错误，这里过滤一下
+                        if (err !== null) {
+                        player.src(sources[++index])
+                        }
+                        // 清除错误，避免 error 事件在控制台抛出错误
+                        return null
+                    })
+      player.ready(() => {
+      	// 丢失 source 事件处理
+        player.tech().on('retryplaylist', function () {
+          console.log('event - retryplaylist')
+          player.src(sources[++index])
+        })
+      })
+      // var videoHtml = '<video id="my-video" class="video-js" poster="https://p9-pc-sign.douyinpic.com/tos-cn-p-0015/oc6AWJ8KfInayDBAICKgbEDGlSQf9DYANgPVpB~tplv-dy-resize-origshort-autoq-75:330.jpeg?x-expires=2012565600&x-signature=WL%2F8sm5bfa7t0HArPgwBiKin0Yk%3D&from=3213915784&s=PackSourceEnum_AWEME_DETAIL&se=false&sc=cover&biz_tag=pcweb_cover&l=202310132227104783875D5917612891EB"'
+      //  + 'data-setup=\'{"controls": true, "autoplay": true, "preload": "auto","height":"100%","loop": true,"fill":true}\'>'
+      // + '<source src="' + switchDyVideoUrl("https://www.douyin.com/aweme/v1/play/?video_id=v0d00fg10000ckkl4cjc77u0oo8obfgg") + '" type="video/mp4" /></video>'
+      // if(type&&type==2){
+      //   document.title = "转租查找教程";
+      //   videoHtml = '<video id="my-video" class="video-js" poster="https://p9-pc-sign.douyinpic.com/tos-cn-p-0015/bc79d85d7228438b9ab4aa1de59739d1_1699308357~tplv-dy-resize-origshort-autoq-75:330.jpeg?x-expires=2014732800&x-signature=t2tBuT6AWZcuAVEar%2FRu%2F5Kb1C8%3D&from=3213915784&s=PackSourceEnum_AWEME_DETAIL&se=false&sc=cover&biz_tag=pcweb_cover&l=202311080013459C2AE83F687BD133E800"'
+      //   + 'data-setup=\'{"controls": true, "autoplay": true, "preload": "auto","height":"100%","loop": true,"fill":true}\'>'
+      //  + '<source src="' + switchDyVideoUrl("https://www.douyin.com/aweme/v1/play/?video_id=v0d00fg10000cl4m4vbc77u84891t4o0") + '" type="video/mp4" /></video>'
+      // }else{
+      //   document.title = "转租发布教程";
+      // }
+      // document.body.innerHTML = videoHtml
     }
   </script>
 </body>
