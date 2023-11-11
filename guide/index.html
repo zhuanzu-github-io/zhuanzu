@@ -92,12 +92,12 @@
       document.body.innerHTML = '<video id="my-player" class="video-js" > </video>'
       var player = videojs('my-player', {
         controls: true, 
-        // autoplay: true, 
+        autoplay: true, 
         preload: "auto",
         height:"100%",
         loop: true,
         fill:true,
-        autoplay: 'muted', // 实现视频自动播放的关键
+        // autoplay: 'muted', // 实现视频自动播放的关键
         sources: sources[index],
         poster:poster
       })
