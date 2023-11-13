@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>转租群引导页</title>
     <style>
-        body, html {
+        body,
+        html {
             height: 100%;
             width: 100%;
             margin: 0;
@@ -13,11 +15,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #1a1a1d; /* 起始颜色：深灰色 */
-            background: linear-gradient(145deg, #1a1a1d, #4e4e50); /* 渐变效果 */
+            background: #1a1a1d;
+            /* 起始颜色：深灰色 */
+            background: linear-gradient(145deg, #1a1a1d, #4e4e50);
+            /* 渐变效果 */
             color: #ffffff;
             font-family: 'Arial', sans-serif;
         }
+
         .button-container {
             display: flex;
             flex-direction: column;
@@ -25,10 +30,12 @@
             padding: 20px;
             text-align: center;
         }
+
         .btn {
             background-color: #ffffff;
             color: #1a1a1d;
-            border: 2px solid #ffffff; /* 增加边框以提升对比度和层次感 */
+            border: 2px solid #ffffff;
+            /* 增加边框以提升对比度和层次感 */
             border-radius: 25px;
             padding: 15px 30px;
             font-size: 18px;
@@ -36,36 +43,85 @@
             text-decoration: none;
             display: inline-block;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* 更强的阴影效果 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            /* 更强的阴影效果 */
         }
+
         .btn:hover {
-            background-color: #4e4e50; /* 悬浮时的背景色 */
+            background-color: #4e4e50;
+            /* 悬浮时的背景色 */
             color: #ffffff;
             border-color: #4e4e50;
         }
+
         .btn:active {
-            transform: translateY(2px); /* 点击时向下微移，增加点击效果的反馈 */
+            transform: translateY(2px);
+            /* 点击时向下微移，增加点击效果的反馈 */
         }
+
         @media (max-width: 600px) {
             .btn {
                 width: 100%;
                 padding: 15px 20px;
                 margin: 15px 0px;
             }
+
             .button-container {
                 width: 40%;
-                min-width: 150px;
+                min-width: 175px;
                 transform: translateY(-30%);
             }
         }
     </style>
 </head>
+
 <body>
-
     <div class="button-container">
-        <button class="btn" onclick="location.href='https://zhuanzu.gitee.io/zhuanzu.github.io/guide'">我要转租</button>
-        <button class="btn" onclick="location.href='https://zhuanzu.gitee.io/zhuanzu.github.io/guide?type=2'">我要租房</button>
+        <button id="btn1" class="btn"
+            onclick="location.href='https://zhuanzu.gitee.io/zhuanzu.github.io/guide'">我要转租</button>
+        <button id="btn2" class="btn"
+            onclick="location.href='https://zhuanzu.gitee.io/zhuanzu.github.io/guide?type=2'">我要租房</button>
     </div>
+    <script>
+        function getQueryParams() {
+            var params = {};
+            var queryString = window.location.search.substring(1);
+            var pairs = queryString.split('&');
+            for (var i = 0; i < pairs.length; i++) {
+                let index = pairs[i].indexOf('=');
+                var pair = [pairs[i].slice(0, index), pairs[i].slice(index + 1)];
+                var key = decodeURIComponent(pair[0]);
+                var value = decodeURIComponent(pair[1]);
+                params[key] = value;
+            }
+            return params;
+        }
+        window.onload = function () {
+            var queryParams = getQueryParams();
+            var type = queryParams['type'];
+            if (type && type == 2) {
+                document.title = "抬轿子";
+                // 获取按钮元素
+                var btn1 = document.getElementById('btn1');
+                var btn2 = document.getElementById('btn2');
 
+                // 设置按钮内容
+                btn1.innerHTML = "去小红书抬轿子";
+                btn2.innerHTML = "去抖音抬轿子";
+
+                // 设置点击按钮时的行为
+                btn1.onclick = function () {
+                    location.href = 'https://www.xiaohongshu.com/user/profile/6413218b0000000012010e77';
+                };
+                btn2.onclick = function () {
+                    location.href = 'https://v.douyin.com/iRS4WDB6';
+                };
+            } else {
+                document.title = "转租群引导页";
+            }
+
+        }
+    </script>
 </body>
+
 </html>
