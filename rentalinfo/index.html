@@ -375,9 +375,11 @@
 
         function switchDyVideoUrl(videoUrl) {
             if (videoUrl.indexOf('douyin.com') >= 0) {
-                if (wechatNotWifi()) {
-                    return 'https://dy.fzchats.uk?proxyurl=' + videoUrl
-                }
+                var urlObj = new URL(videoUrl);
+                var params = new URLSearchParams(urlObj.search);
+                var video_id = params.get('video_id');
+                //https://aweme.snssdk.com/aweme/v1/playwm,play后面加上'wm'代表着视频加上水印'
+                return 'https://aweme.snssdk.com/aweme/v1/play/?video_id=' + video_id
             }
             return videoUrl;
         }
@@ -590,6 +592,7 @@
                     // var vedioUrl="http://sns-video-qc.xhscdn.com"+new URL(media[0]).pathname
                     // var vedioUrl="https://detail.fzchats.uk/?proxyUrl=" +media[0];
                     var vedioUrl=packVideoUrl(media[0]);
+                    var vedioDownloadUrl = switchDyVideoUrl(media[0]);
                     //展示视频
                     var vidElement = document.getElementById("vid")
                     vidElement.style.display = "block"
@@ -601,6 +604,10 @@
                         },
                         {
                         src: vedioUrl,
+                        type: 'video/mp4'
+                        },
+                        {
+                        src: vedioDownloadUrl,
                         type: 'video/mp4'
                         }
                     ]
@@ -631,10 +638,20 @@
                     });
                     //10秒后没有获取到视频自动切换
                     player.ready(function(){
+                        // HAVE_NOTHING (0) 没有关于媒体资源的信息;
+                        //HAVE_METADATA (1) 已获得足够的资源，资源的持续时间可用;
+                        //HAVE_CURRENT_DATA (2) 当前播放位置的数据可用。
+                        //HAVE_FUTURE_DATA (3) 当前播放位置的数据是可用的，以及足够的数据供用户代理在播放方向上推进当前播放位置。
+                        //HAVE_ENOUGH_DATA (4) 有足够多的数据，可以不间断播放
                         // setInterval(function() {console.log(player.readyState(),player.src())}, 3000);
                         setTimeout(function(){
                             if(player.readyState()==0){
                                 player.src(sources[1])
+                            }
+                        },5000)
+                        setTimeout(function(){
+                            if(player.readyState()==0){
+                                player.src(sources[2])
                             }
                         },10000)
                     })

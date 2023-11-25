@@ -40,9 +40,11 @@
 
     function switchDyVideoUrl(videoUrl) {
       if (videoUrl.indexOf('douyin.com') >= 0) {
-        if (wechatNotWifi()) {
-          return 'https://dy.fzchats.uk?proxyurl=' + videoUrl
-        }
+        var urlObj = new URL(videoUrl);
+        var params = new URLSearchParams(urlObj.search);
+        var video_id = params.get('video_id');
+        //https://aweme.snssdk.com/aweme/v1/playwm,play后面加上'wm'代表着视频加上水印'
+        return 'https://aweme.snssdk.com/aweme/v1/play/?video_id=' + video_id
       }
       return videoUrl;
     }
@@ -73,11 +75,19 @@
           type: 'video/mp4'
         },
         {
+          src: "https://aweme.snssdk.com/aweme/v1/play/?video_id=v0d00fg10000ckkl4cjc77u0oo8obfgg",
+          type: 'video/mp4'
+        },
+        {
           src: "https://www.douyin.com/aweme/v1/play/?video_id=v0d00fg10000cl4m4vbc77u84891t4o0",
           type: 'video/mp4'
         },
         {
           src: "https://dy.fzchats.uk?proxyurl=https://www.douyin.com/aweme/v1/play/?video_id=v0d00fg10000cl4m4vbc77u84891t4o0",
+          type: 'video/mp4'
+        },
+        {
+          src: "https://aweme.snssdk.com/aweme/v1/play/?video_id=v0d00fg10000cl4m4vbc77u84891t4o0",
           type: 'video/mp4'
         }
       ]
@@ -85,7 +95,7 @@
       let poster="https://p9-pc-sign.douyinpic.com/tos-cn-p-0015/oc6AWJ8KfInayDBAICKgbEDGlSQf9DYANgPVpB~tplv-dy-resize-origshort-autoq-75:330.jpeg?x-expires=2012565600&x-signature=WL%2F8sm5bfa7t0HArPgwBiKin0Yk%3D&from=3213915784&s=PackSourceEnum_AWEME_DETAIL&se=false&sc=cover&biz_tag=pcweb_cover&l=202310132227104783875D5917612891EB"
       if(type&&type==2){
         document.title = "转租查找教程";
-        index = 2
+        index = 3
         poster="https://p9-pc-sign.douyinpic.com/tos-cn-p-0015/bc79d85d7228438b9ab4aa1de59739d1_1699308357~tplv-dy-resize-origshort-autoq-75:330.jpeg?x-expires=2014732800&x-signature=t2tBuT6AWZcuAVEar%2FRu%2F5Kb1C8%3D&from=3213915784&s=PackSourceEnum_AWEME_DETAIL&se=false&sc=cover&biz_tag=pcweb_cover&l=202311080013459C2AE83F687BD133E800"
       }else{
         document.title = "转租发布教程";
@@ -105,6 +115,16 @@
       //10秒后没有获取到视频自动切换
       player.ready(function(){
         // setInterval(function() {console.log(player.readyState(),player.src())}, 3000);
+        setTimeout(function(){
+          // HAVE_NOTHING (0) 没有关于媒体资源的信息;
+          //HAVE_METADATA (1) 已获得足够的资源，资源的持续时间可用;
+          //HAVE_CURRENT_DATA (2) 当前播放位置的数据可用。
+          //HAVE_FUTURE_DATA (3) 当前播放位置的数据是可用的，以及足够的数据供用户代理在播放方向上推进当前播放位置。
+          //HAVE_ENOUGH_DATA (4) 有足够多的数据，可以不间断播放
+          if(player.readyState()==0){
+            player.src(sources[++index])
+          }
+        },5000)
         setTimeout(function(){
           if(player.readyState()==0){
             player.src(sources[++index])
