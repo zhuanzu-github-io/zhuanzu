@@ -1121,7 +1121,7 @@
             if (position5.length > 0 && verifyPosition(position5)) {
                 positions.push(position5)
             }
-            if (qrcode === "" || qrcode.length > 120 || (!qrcode.result.startsWith("https://u.wechat.com"))) {
+            if (qrcode === "" || qrcode.length > 120 || (!qrcode.startsWith("https://u.wechat.com"))) {
                 showTipPopup("温馨提示", "请上传黑白样式的微信二维码!")
                 return
             }
