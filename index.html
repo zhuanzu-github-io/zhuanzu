@@ -504,6 +504,7 @@
         }
 
         // 示例：获取参数并进行处理
+        var vSrcIndex=0
         window.onload = function () {
             var queryParams = getQueryParams();
             dataStr = queryParams['data'];
@@ -618,7 +619,7 @@
                         preload: "auto",
                         autoplay: true,
                         // autoplay: 'muted',
-                        sources: sources[0] 
+                        sources: sources[vSrcIndex] 
                     }
                     if (media.length > 1) {
                         options.poster = media[1]
@@ -643,25 +644,26 @@
                         //HAVE_ENOUGH_DATA (4) 有足够多的数据，可以不间断播放
                         // setInterval(function() {console.log(player.readyState(),player.src())}, 3000);
                         setTimeout(function(){
-                            if(player.readyState()==0){
-                                player.src(sources[1])
+                            if(player.readyState()==0 && vSrcIndex==0){
+                                player.src(sources[++vSrcIndex])
+                            }
+                        },3000)
+                        setTimeout(function(){
+                            if(player.readyState()==0 && vSrcIndex==1){
+                                player.src(sources[++vSrcIndex])
                             }
                         },5000)
-                        setTimeout(function(){
-                            if(player.readyState()==0){
-                                player.src(sources[2])
-                            }
-                        },10000)
                     })
-                    // videojs.hook('beforeerror', (player, err) => {
-                    //     console.log('hook - beforeerror', player.src(), err)
-                    //     // Video.js 在切换/指定 source 后立即会触发一个 err=null 的错误，这里过滤一下
-                    //     if (err !== null) {
-                    //         player.src(sources[1])
-                    //     }
-                    //     // 清除错误，避免 error 事件在控制台抛出错误
-                    //     return null
-                    // })
+                    videojs.hook('beforeerror', (player, err) => {
+                        console.log('hook - beforeerror', player.src(), err)
+                        // Video.js 在切换/指定 source 后立即会触发一个 err=null 的错误，这里过滤一下
+                        if (err !== null && vSrcIndex < sources.length - 1) {
+                        // player.src(sources[++vSrcIndex])
+                         // 清除错误，避免 error 事件在控制台抛出错误
+                        return null
+                        }
+                        return err
+                    })
                     // player.ready(() => {
                     //     // 丢失 source 事件处理
                     //     player.tech().on('retryplaylist', function () {
