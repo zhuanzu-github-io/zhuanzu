@@ -619,7 +619,7 @@
                         preload: "auto",
                         autoplay: true,
                         // autoplay: 'muted',
-                        sources: sources[vSrcIndex] 
+                        // sources: sources[vSrcIndex] 
                     }
                     if (media.length > 1) {
                         options.poster = media[1]
@@ -635,8 +635,19 @@
                         // 最新的浏览器一般禁止video自动播放，直接调用play()会报错。只有用户在页面上操作后或者在video标签上添加muted（静音）属性，才能调用play函数。
                         // this.play();
                     });
+                    videojs.hook('beforeerror', (player, err) => {
+                        console.log('hook - beforeerror', player.src(), err)
+                        // Video.js 在切换/指定 source 后立即会触发一个 err=null 的错误，这里过滤一下
+                        if (err !== null && vSrcIndex < sources.length - 1) {
+                        // player.src(sources[++vSrcIndex])
+                         // 清除错误，避免 error 事件在控制台抛出错误
+                        return null
+                        }
+                        return err
+                    })
                     //10秒后没有获取到视频自动切换
                     player.ready(function(){
+                        player.src(sources[vSrcIndex])
                         // HAVE_NOTHING (0) 没有关于媒体资源的信息;
                         //HAVE_METADATA (1) 已获得足够的资源，资源的持续时间可用;
                         //HAVE_CURRENT_DATA (2) 当前播放位置的数据可用。
@@ -654,16 +665,7 @@
                             }
                         },5000)
                     })
-                    videojs.hook('beforeerror', (player, err) => {
-                        console.log('hook - beforeerror', player.src(), err)
-                        // Video.js 在切换/指定 source 后立即会触发一个 err=null 的错误，这里过滤一下
-                        if (err !== null && vSrcIndex < sources.length - 1) {
-                        // player.src(sources[++vSrcIndex])
-                         // 清除错误，避免 error 事件在控制台抛出错误
-                        return null
-                        }
-                        return err
-                    })
+                    
                     // player.ready(() => {
                     //     // 丢失 source 事件处理
                     //     player.tech().on('retryplaylist', function () {
