@@ -508,6 +508,44 @@
     <script src="../rentallist/Scrollload.js"></script>
     <script>
 
+        var lastScrollTop = 0;
+        var menu = document.getElementById('div1');
+        var menuOffsetFlag = true;
+        var originalTransform = 0
+        window.addEventListener('scroll', function() {
+            if (!menuOffsetFlag){
+                menuOffsetFlag=true;
+                return
+            }
+            var noData = document.getElementById('no-data');
+            var style = window.getComputedStyle(noData);
+            var display = style.getPropertyValue('display');
+            if (display !== 'none') {
+                return
+            }
+            menu.style.transition = 'transform 0.3s ease-out';
+            var scrollTop = window.scrollY;
+            console.log(scrollTop)
+            if (scrollTop > lastScrollTop) {
+                // 用户正在上滑
+                if (scrollTop > menu.offsetHeight) {
+                    menu.style.transform = 'translateY(-100%)'; // 将菜单向上移出屏幕
+                }
+            } else {
+                // 用户正在下滑
+                console.log(scrollTop,'-------',menu.offsetHeight)
+                if (scrollTop <= menu.offsetHeight) {
+                    menu.style.transform = 'translateY(0)'; // 将菜单移回原位
+                    return
+                }
+                //下滑距离超过10才触发
+                if (scrollTop <lastScrollTop-35) {
+                    menu.style.transform = 'translateY(0)'; // 将菜单移回原位
+                }
+            }
+
+            lastScrollTop = scrollTop;
+        });
         function redirectToLink(url) {
             window.location.href = url;
         }
@@ -637,6 +675,8 @@
         //查看详情
         var scrollDistance = 0
         function showDetail(key) {
+            // 获取并记录menu当前的transform属性的值
+            originalTransform= window.getComputedStyle(menu).getPropertyValue('transform');
             scrollDistance = window.scrollY
             scroll.lock()
             document.getElementById("div1").style.display = "none"
@@ -659,6 +699,10 @@
             document.querySelector('.scrollload-container').style.display = "block";
             scroll.unLock()
             if (iosAgent) {
+                menuOffsetFlag=false
+                menu.style.transition = 'none'
+                // 恢复menu之前的transform
+                menu.style.transform = originalTransform;
                 window.scrollTo(window.scrollX, scrollDistance)
             }
         }
