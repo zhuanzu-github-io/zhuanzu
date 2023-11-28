@@ -436,8 +436,8 @@
     <div id="tencentMap" style="width: 100vw;height: 100vh;display: none;position: relative;padding-top:10px;"></div>
     <div class="div1" id="div1">
         <div class="container">
-            <button id="leftButton" class="left-button">查地图</button>
-            <button id="rightButton" class="right-button">出租页</button>
+            <button id="leftButton" class="left-button">出租页</button>
+            <button id="rightButton" class="right-button">保 存</button>
             <!-- <button class="right-button">右侧按钮</button> -->
             <!-- <label for="room-type">租期:</label> -->
             <select id="rental" name="rental">
@@ -915,9 +915,6 @@
             } else {
                 editMap.set(rentalId, status)
             }
-            var jsonStr = JSON.stringify([...editMap].map(([id, status]) => ({ id, status })))
-            //复制
-            copy(jsonStr)
         }
 
 
@@ -982,8 +979,13 @@
         window.onload = function () {
             var queryParams = getQueryParams();
             var roomId = queryParams['id'];
-            document.getElementById('leftButton').onclick = function () { redirectToLink("https://zhuanzu.gitee.io/zhuanzu.github.io/rentalmap/?id=" + roomId) }
-            document.getElementById('rightButton').onclick = function () { redirectToLink("https://zhuanzu.gitee.io/zhuanzu.github.io/rentallist/?id=" + roomId) }
+            document.getElementById('leftButton').onclick = function () { redirectToLink("https://zhuanzu.gitee.io/zhuanzu.github.io/rentallist/?id=" + roomId) }
+            document.getElementById('rightButton').onclick = function () {
+                var jsonStr = JSON.stringify([...editMap].map(([id, status]) => ({ id, status })))
+                //复制
+                copy(jsonStr)
+             }
+
         }
 
     </script>
