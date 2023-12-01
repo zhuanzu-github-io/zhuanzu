@@ -437,6 +437,7 @@
     <div class="div1" id="div1">
         <div class="container">
             <button id="leftButton" class="left-button">出租页</button>
+            <span id="text" style="display: none;width: 1px;"></span>
             <button id="rightButton" class="right-button">保 存</button>
             <!-- <button class="right-button">右侧按钮</button> -->
             <!-- <label for="room-type">租期:</label> -->
@@ -937,12 +938,38 @@
             }
         }
 
+        function copy_3(content) {
+            var s=document.getElementById('text')
+            s.style.display='block'
+            s.textContent = content
+            const range = document.createRange();
+            range.selectNode(s);
+            const selection = window.getSelection();
+            //移除之前选中内容
+            if (selection.rangeCount > 0) selection.removeAllRanges();
+            selection.addRange(range);
+            let is = document.execCommand('copy');
+            if (is) {
+                showTipPopup("温馨提示", "共 " + editMap.size + " 条修改被复制到剪贴板,快去出租群粘贴吧~")
+            } else {
+                showTipPopup("温馨提示", "复制失败")
+            }
+            selection.removeAllRanges()
+            s.style.display='none'
+        }
+
         function copyNotClipboard(content) {
             let textarea = document.createElement("textarea");
             textarea.value = content;
             document.body.appendChild(textarea);
             textarea.select();
-            _execCommand('Copy');
+            // _execCommand('Copy');
+            let is = document.execCommand('copy');
+            if (is) {
+                showTipPopup("温馨提示", "共 " + editMap.size + " 条修改被复制到剪贴板,快去出租群粘贴吧~")
+            } else {
+                copy_3(content)
+            }
             document.body.removeChild(textarea);
         }
 
@@ -952,11 +979,13 @@
                 navigator.clipboard.writeText(content).then(function () {
                     showTipPopup("温馨提示", '"共 "+editMap.size+" 条修改被复制到剪贴板,快去出租群粘贴吧~"');
                 }).catch(function (error) {
-                    showTipPopup("温馨提示", '复制内容失败,\n请再次尝试');
+                    // showTipPopup("温馨提示", '复制内容失败,\n请再次尝试');
+                    copy_3(content)
                 });
             } else {
                 //如果苹果不支持clipboard.writeText，使用下面的方法
-                copyNotClipboard(content);
+                // copyNotClipboard(content);
+                copy_3(content)
             }
         }
 
