@@ -977,7 +977,7 @@
         function copyContent(content) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(content).then(function () {
-                    showTipPopup("温馨提示", '"共 "+editMap.size+" 条修改被复制到剪贴板,快去出租群粘贴吧~"');
+                    showTipPopup("温馨提示", "共 "+editMap.size+" 条修改被复制到剪贴板,快去出租群粘贴吧~");
                 }).catch(function (error) {
                     // showTipPopup("温馨提示", '复制内容失败,\n请再次尝试');
                     copy_3(content)
