@@ -77,11 +77,17 @@
 </head>
 
 <body>
-    <div class="button-container">
+    <div id="container" class="button-container">
         <button id="btn1" class="btn"
             onclick="location.href='https://zhuanzu.gitee.io/zhuanzu.github.io/guide'">我要转租</button>
         <button id="btn2" class="btn"
             onclick="location.href='https://zhuanzu.gitee.io/zhuanzu.github.io/guide?type=2'">我要租房</button>
+        <button id="btn3" style="display: none;" class="btn" ></button>
+        <button id="btn4" style="display: none;" class="btn" ></button>
+        <button id="btn5" style="display: none;" class="btn" ></button>
+        <button id="btn6" style="display: none;" class="btn" ></button>
+        <button id="btn7" style="display: none;" class="btn" ></button>
+        <!-- <button id="btn8" style="display: none;" class="btn" ></button> -->
     </div>
     <script>
         function getQueryParams() {
@@ -103,12 +109,32 @@
             if (type && type == 2) {
                 document.title = "Avery同步转租的平台账号";
                 // 获取按钮元素
+                var container = document.getElementById('container');
+                container.style.transform = 'translate(0px, 0px)';
+                container.style.gap = '8px';
+
                 var btn1 = document.getElementById('btn1');
                 var btn2 = document.getElementById('btn2');
+                var btn3 = document.getElementById('btn3');
+                var btn4 = document.getElementById('btn4');
+                var btn5 = document.getElementById('btn5');
+                var btn6 = document.getElementById('btn6');
+                var btn7 = document.getElementById('btn7');
+
+                btn3.style.display="block";
+                btn4.style.display="block";
+                btn5.style.display="block";
+                btn6.style.display="block";
+                btn7.style.display="block";
 
                 // 设置按钮内容
                 btn1.innerHTML = "小红书主页";
                 btn2.innerHTML = "抖音主页";
+                btn3.innerHTML = "视频号主页";
+                btn4.innerHTML = "哔哩哔哩主页";
+                btn5.innerHTML = "快手主页";
+                btn6.innerHTML = "微博主页";
+                btn7.innerHTML = "豆瓣主页";
 
                 // 设置点击按钮时的行为
                 btn1.onclick = function () {
@@ -116,6 +142,21 @@
                 };
                 btn2.onclick = function () {
                     location.href = 'https://v.douyin.com/iRS4WDB6';
+                };
+                btn3.onclick = function () {
+                    location.href = 'https://zhuanzu.gitee.io/zhuanzu.github.io/recroom';
+                };
+                btn4.onclick = function () {
+                    location.href = ' https://b23.tv/vF2uwhS';
+                };
+                btn5.onclick = function () {
+                    location.href = 'https://v.kuaishou.com/m4ACDa';
+                };
+                btn6.onclick = function () {       
+                    location.href = 'https://weibo.com/u/5680317553';
+                };
+                btn7.onclick = function () {
+                    location.href = 'https://www.douban.com/people/217447471';
                 };
             } else {
                 document.title = "转租群引导页";
