@@ -1008,7 +1008,7 @@
         window.onload = function () {
             var queryParams = getQueryParams();
             var roomId = queryParams['id'];
-            document.getElementById('leftButton').onclick = function () { redirectToLink("https://zhuanzu.gitee.io/zhuanzu.github.io/rentallist/?id=" + roomId) }
+            document.getElementById('leftButton').onclick = function () { redirectToLink("https://zu.fzchats.uk/rentallist/?id=" + roomId) }
             document.getElementById('rightButton').onclick = function () {
                 var jsonStr = JSON.stringify([...editMap].map(([id, status]) => ({ id, status })))
                 //复制
