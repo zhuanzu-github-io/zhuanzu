@@ -273,15 +273,12 @@
             background-color: #0056b3;
         }
     </style>
-
 </head>
 
 <body>
     <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W5V9DL3" height="0" width="0"
-            style="display:none;visibility:hidden"></iframe></noscript>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W5V9DL3" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-
     <div id="content">
         <div id="vid" class="vid-module" style="display: none;">
             <!-- <video id="my-video" class="video-js" width="627" height="258" poster=""
@@ -296,20 +293,15 @@
                 </p>
             </video> -->
         </div>
-
         <div id="pics" class="swiper-list"></div>
         <div id="loc" class="module">
             <h2>地图</h2>
             <div class="map-address">
                 <p id="poiaddress" style="padding-bottom: 5px;">
-
                 </p>
                 <p>
-                    <svg onclick=mapDetail() t="1686494247641" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                        xmlns="http://www.w3.org/2000/svg" p-id="2378" width="24" height="24">
-                        <path
-                            d="M688.96 517.12a31.872 31.872 0 0 0-7.68-12.224L455.04 278.592a32 32 0 0 0-45.248 0l-22.592 22.656a32 32 0 0 0 0 45.248l186.752 186.816L391.04 716.16a32 32 0 0 0 0 45.248l22.656 22.656a32 32 0 0 0 45.248 0l226.24-226.304a32 32 0 0 0 3.776-40.768z"
-                            fill="#2c2c2c" p-id="2379"></path>
+                    <svg onclick=mapDetail() t="1686494247641" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2378" width="24" height="24">
+                        <path d="M688.96 517.12a31.872 31.872 0 0 0-7.68-12.224L455.04 278.592a32 32 0 0 0-45.248 0l-22.592 22.656a32 32 0 0 0 0 45.248l186.752 186.816L391.04 716.16a32 32 0 0 0 0 45.248l22.656 22.656a32 32 0 0 0 45.248 0l226.24-226.304a32 32 0 0 0 3.776-40.768z" fill="#2c2c2c" p-id="2379"></path>
                     </svg>
                 </p>
             </div>
@@ -317,8 +309,7 @@
         </div>
         <div class="module">
             <h2>概况</h2>
-            <p style="text-align: center;color: #007bff;font-weight: bold;margin-bottom: 20px;"><span id="subletTitle"
-                    style="margin: 0;padding:5px 10px; background-color: #f0f0f0;"></span></p>
+            <p style="text-align: center;color: #007bff;font-weight: bold;margin-bottom: 20px;"><span id="subletTitle" style="margin: 0;padding:5px 10px; background-color: #f0f0f0;"></span></p>
             <p><span>房源类型:</span><span id="roomType"></span></p>
             <p><span>房源位置:</span><span id="position1"></span></p>
             <p><span>房源价格:</span><span id="price"></span></p>
@@ -336,9 +327,7 @@
         <div class="module">
             <h2>联系方式<span style="font-size: 12px;font-weight: bold; color:darkgrey;">(长按识别)</span></h2>
             <!-- <div style="  background-color: #f0f0f0;"> -->
-
             <div class="qrcode" id="qrcode2"></div>
-
             <div id="qrcode" style="display: none;"></div>
             <div class="container" id="shareModule" style="display: none;">
                 <span id="text" style="display: none;width: 1px;"></span>
@@ -361,43 +350,43 @@
     <script src="video2.min.js"></script>
     <script src="https://map.qq.com/api/js?v=2.exp&key=4RWBZ-F2UWV-KATP5-UD3YA-YFYI5-FDBYJ"></script>
     <script>
-        var houseTypes = ["未提及", "单间", "次卧", "主卧", "一居室", "两居室", "三居室", "四居室"]
-        var mapUrl;
+    var houseTypes = ["未提及", "单间", "次卧", "主卧", "一居室", "两居室", "三居室", "四居室"]
+    var mapUrl;
 
-        function copy_3(content) {
-            var s=document.getElementById('text')
-            s.style.display='block'
-            s.textContent = content
-            const range = document.createRange();
-            range.selectNode(s);
-            const selection = window.getSelection();
-            //移除之前选中内容
-            if (selection.rangeCount > 0) selection.removeAllRanges();
-            selection.addRange(range);
-            let is = document.execCommand('copy');
-            if (is) {
-                showTipPopup("温馨提示", "信息已复制到剪贴板,快去分享吧~")
-            } else {
-                showTipPopup("温馨提示", "复制失败")
+    function copy_3(content) {
+        var s = document.getElementById('text')
+        s.style.display = 'block'
+        s.textContent = content
+        const range = document.createRange();
+        range.selectNode(s);
+        const selection = window.getSelection();
+        //移除之前选中内容
+        if (selection.rangeCount > 0) selection.removeAllRanges();
+        selection.addRange(range);
+        let is = document.execCommand('copy');
+        if (is) {
+            showTipPopup("温馨提示", "信息已复制到剪贴板,快去分享吧~")
+        } else {
+            showTipPopup("温馨提示", "复制失败")
+        }
+        selection.removeAllRanges()
+        s.style.display = 'none'
+    }
+
+    function isInEmbed() {
+        return window !== window.parent;
+    }
+
+    function wechatNotWifi() {
+        let ua = window.navigator.userAgent
+        // 如果是微信非WiFi
+        if (/MicroMessenger/.test(ua)) {
+            if (ua.indexOf('WIFI') == -1) {
+                return true;
             }
-            selection.removeAllRanges()
-            s.style.display='none'
         }
-
-        function isInEmbed() {
-            return window !== window.parent;
-        }
-
-        function wechatNotWifi() {
-            let ua = window.navigator.userAgent
-            // 如果是微信非WiFi
-            if (/MicroMessenger/.test(ua)) {
-                if (ua.indexOf('WIFI') == -1) {
-                    return true;
-                }
-            }
-            return false
-        }
+        return false
+    }
 
     function switchDyVideoUrl(videoUrl) {
         if (videoUrl.indexOf('douyin.com') >= 0) {
@@ -423,420 +412,419 @@
 
 
 
-        function mapDetail() {
-            window.location.href = mapUrl;
-        }
-        // function noteDetail() {
-        //     window.location.href = noteDetailUrl;
-        // }
-        // JavaScript代码，用于获取和处理URL参数
-        function getQueryParams() {
-            var params = {};
-            var queryString = window.location.search.substring(1);
-            var pairs = queryString.split('&');
+    function mapDetail() {
+        window.location.href = mapUrl;
+    }
+    // function noteDetail() {
+    //     window.location.href = noteDetailUrl;
+    // }
+    // JavaScript代码，用于获取和处理URL参数
+    function getQueryParams() {
+        var params = {};
+        var queryString = window.location.search.substring(1);
+        var pairs = queryString.split('&');
 
-            for (var i = 0; i < pairs.length; i++) {
-                let index = pairs[i].indexOf('=');
-                var pair = [pairs[i].slice(0, index), pairs[i].slice(index + 1)];
-                var key = decodeURIComponent(pair[0]);
-                var value = decodeURIComponent(pair[1]);
-                params[key] = value;
-            }
-            return params;
+        for (var i = 0; i < pairs.length; i++) {
+            let index = pairs[i].indexOf('=');
+            var pair = [pairs[i].slice(0, index), pairs[i].slice(index + 1)];
+            var key = decodeURIComponent(pair[0]);
+            var value = decodeURIComponent(pair[1]);
+            params[key] = value;
         }
-        function convertCanvasToImage(canvas) {
-            //新建Image对象
-            var image = new Image();
-            // canvas.toDataURL 返回的是一串Base64编码的URL
-            image.src = canvas.toDataURL("image/png");
-            image.id = 'qrcodeImg';
-            return image;
+        return params;
+    }
+
+    function convertCanvasToImage(canvas) {
+        //新建Image对象
+        var image = new Image();
+        // canvas.toDataURL 返回的是一串Base64编码的URL
+        image.src = canvas.toDataURL("image/png");
+        image.id = 'qrcodeImg';
+        return image;
+    }
+
+    function dateFormat(str) {
+        var dateArray = str.split("/")
+        if (dateArray[1].length == 1) {
+            dateArray[1] = "0" + dateArray[1]
         }
-
-        function dateFormat(str) {
-            var dateArray = str.split("/")
-            if (dateArray[1].length == 1) {
-                dateArray[1] = "0" + dateArray[1]
-            }
-            if (dateArray[2].length == 1) {
-                dateArray[2] = "0" + dateArray[2]
-            }
-            return dateArray[0] + "-" + dateArray[1] + "-" + dateArray[2]
-
+        if (dateArray[2].length == 1) {
+            dateArray[2] = "0" + dateArray[2]
         }
+        return dateArray[0] + "-" + dateArray[1] + "-" + dateArray[2]
 
-        function iosAgent() {
-            return navigator.userAgent.match(/(iPhone|iPod|iPad);?/i);
+    }
+
+    function iosAgent() {
+        return navigator.userAgent.match(/(iPhone|iPod|iPad);?/i);
+    }
+
+    // 复制文本函数，微信端，需要在用户触发 Click 事件里面才能执行成功
+    function share() {
+        var message = document.getElementById('share-button').getAttribute('shareInfo')
+        if (iosAgent()) {
+            copyContent(message)
+        } else {
+            copyNotClipboard(message)
         }
+    }
 
-        // 复制文本函数，微信端，需要在用户触发 Click 事件里面才能执行成功
-        function share() {
-            var message = document.getElementById('share-button').getAttribute('shareInfo')
-            if (iosAgent()) {
-                copyContent(message)
-            } else {
-                copyNotClipboard(message)
-            }
+    // 执行浏览器命令 Copy 顺便输出一下日志，如果在移动端 推荐写个方法展示日志
+    function _execCommand(action) {
+        let is = document.execCommand(action);
+        if (is) {
+            showTipPopup("温馨提示", "信息已复制到剪贴板,快去分享吧~")
+        } else {
+            showTipPopup("温馨提示", "复制失败")
         }
+    }
 
-        // 执行浏览器命令 Copy 顺便输出一下日志，如果在移动端 推荐写个方法展示日志
-        function _execCommand(action) {
-            let is = document.execCommand(action);
-            if (is) {
-                showTipPopup("温馨提示", "信息已复制到剪贴板,快去分享吧~")
-            } else {
-                showTipPopup("温馨提示", "复制失败")
-            }
+    function copyNotClipboard(content) {
+        let textarea = document.createElement("textarea");
+        textarea.value = content;
+        document.body.appendChild(textarea);
+        textarea.select();
+        // _execCommand('Copy');
+        let is = document.execCommand('copy');
+        if (is) {
+            showTipPopup("温馨提示", "信息已复制到剪贴板,快去分享吧~")
+        } else {
+            copy_3(content)
         }
+        document.body.removeChild(textarea);
+    }
 
-        function copyNotClipboard(content){
-            let textarea = document.createElement("textarea");
-            textarea.value = content;
-            document.body.appendChild(textarea);
-            textarea.select();
-            // _execCommand('Copy');
-            let is = document.execCommand('copy');
-            if (is) {
-                showTipPopup("温馨提示", "信息已复制到剪贴板,快去分享吧~")
-            } else {
+    function copyContent(content) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(content).then(function() {
+                showTipPopup("温馨提示", '信息已复制到剪贴板,快去分享吧~');
+            }).catch(function(error) {
                 copy_3(content)
-            }
-            document.body.removeChild(textarea);
+                // showTipPopup("温馨提示", '复制内容失败,\n请手动复制链接地址');
+            });
+        } else {
+            //如果苹果不支持clipboard.writeText，使用下面的方法
+            // copyNotClipboard(content);
+            copy_3(content)
         }
+    }
 
-        function copyContent(content) {
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(content).then(function () {
-                    showTipPopup("温馨提示", '信息已复制到剪贴板,快去分享吧~');
-                }).catch(function (error) {
-                    copy_3(content)
-                    // showTipPopup("温馨提示", '复制内容失败,\n请手动复制链接地址');
+
+    function showTipPopup(slogan, msg) {
+        var popup = document.getElementById('info-popup');
+        var title = document.getElementById('popup-title');
+        var description = document.getElementById('popup-description');
+
+        title.textContent = slogan;
+        description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">' + msg + '</li> </ul></div>';
+        popup.style.display = 'flex';
+    }
+
+    function hideInfoPopup() {
+        var popup = document.getElementById('info-popup');
+        popup.style.display = 'none';
+    }
+
+    // 示例：获取参数并进行处理
+    var vSrcIndex = 0
+    window.onload = function() {
+        var queryParams = getQueryParams();
+        dataStr = queryParams['data'];
+        if (dataStr) {
+            let data = JSON.parse(dataStr);
+
+            var price = data['price'];
+            document.getElementById("price").innerHTML = 0 + ' RMB/月'
+            if (price) {
+                document.getElementById("price").innerHTML = price + ' RMB/月'
+            }
+            var roomType = data['roomType'];
+            document.getElementById("roomType").innerHTML = houseTypes[0]
+            if (roomType) {
+                document.getElementById("roomType").innerHTML = houseTypes[roomType]
+            }
+            var position1
+            var position2
+            var position3
+            var position4
+            var position5
+            if (data['positions']) {
+                let positions = data['positions']
+                let length = positions.length;
+                if (length > 0) {
+                    position1 = positions[0];
+                }
+                if (length > 1) {
+                    position2 = positions[1];
+                }
+                if (length > 2) {
+                    position3 = positions[2];
+                }
+                if (length > 3) {
+                    position4 = positions[3];
+                }
+                if (length > 4) {
+                    position5 = positions[4];
+                }
+            }
+
+            if (position1) {
+                document.getElementById("position1").innerHTML = position1
+            }
+            if (position2) {
+                document.getElementById("position2").innerHTML = position2
+            } else {
+                document.getElementById("subway").style.display = "none"
+            }
+
+            var name = data['name'];
+            var title = data['title']
+            if (title) {
+                document.title = title;
+                document.getElementById("subletTitle").innerHTML = title
+            } else if (name) {
+                document.title = name + "的转租信息";
+            }
+            var mediaType = data['media_type']
+            var media = data['media']
+            if (mediaType && media && mediaType === "normal" && media.length > 0) {
+                //展示轮播
+                document.getElementById("pics").style.display = "block"
+                let imgArr = media.map((imgPath) => {
+                    return {
+                        url: '#',
+                        imgPath: imgPath
+                        // imgPath:  "https://sns-img-hw.xhscdn.com"+new URL(imgPath).pathname+"?imageView2/2/w/540/format/jpg"
+                        // imgPath:  imgPath+"?imageView2/2/w/540/format/jpg"
+
+                    };
                 });
-            } else {
-                //如果苹果不支持clipboard.writeText，使用下面的方法
-                // copyNotClipboard(content);
-                copy_3(content)
+                new Swiper({
+                    imgArr: imgArr, // 图片数组
+                    aniTIme: 1000, // 动画执行的时间
+                    intervalTime: 6000000, // 图片停留的时间
+                    autoplay: false // 是否自动播放
+                }).init();
             }
-        }
-
-
-        function showTipPopup(slogan, msg) {
-            var popup = document.getElementById('info-popup');
-            var title = document.getElementById('popup-title');
-            var description = document.getElementById('popup-description');
-
-            title.textContent = slogan;
-            description.innerHTML = '<div style="padding-left: 20px;"><ul class="tab-navigation"> <li class="tab-item active">' + msg + '</li> </ul></div>';
-            popup.style.display = 'flex';
-        }
-
-        function hideInfoPopup() {
-            var popup = document.getElementById('info-popup');
-            popup.style.display = 'none';
-        }
-
-        // 示例：获取参数并进行处理
-        var vSrcIndex=0
-        window.onload = function () {
-            var queryParams = getQueryParams();
-            dataStr = queryParams['data'];
-            if (dataStr) {
-                let data = JSON.parse(dataStr);
-
-                var price = data['price'];
-                document.getElementById("price").innerHTML = 0 + ' RMB/月'
-                if (price) {
-                    document.getElementById("price").innerHTML = price + ' RMB/月'
-                }
-                var roomType = data['roomType'];
-                document.getElementById("roomType").innerHTML = houseTypes[0]
-                if (roomType) {
-                    document.getElementById("roomType").innerHTML = houseTypes[roomType]
-                }
-                var position1
-                var position2
-                var position3
-                var position4
-                var position5
-                if (data['positions']) {
-                    let positions = data['positions']
-                    let length = positions.length;
-                    if (length > 0) {
-                        position1 = positions[0];
-                    }
-                    if (length > 1) {
-                        position2 = positions[1];
-                    }
-                    if (length > 2) {
-                        position3 = positions[2];
-                    }
-                    if (length > 3) {
-                        position4 = positions[3];
-                    }
-                    if (length > 4) {
-                        position5 = positions[4];
-                    }
-                }
-
-                if (position1) {
-                    document.getElementById("position1").innerHTML = position1
-                }
-                if (position2) {
-                    document.getElementById("position2").innerHTML = position2
-                } else {
-                    document.getElementById("subway").style.display = "none"
-                }
-
-                var name = data['name'];
-                var title = data['title']
-                if (title) {
-                    document.title = title;
-                    document.getElementById("subletTitle").innerHTML = title
-                } else if (name) {
-                    document.title = name + "的转租信息";
-                }
-                var mediaType = data['media_type']
-                var media = data['media']
-                if (mediaType && media && mediaType === "normal" && media.length > 0) {
-                    //展示轮播
-                    document.getElementById("pics").style.display = "block"
-                    let imgArr = media.map((imgPath) => {
-                        return {
-                            url: '#',
-                            imgPath: imgPath
-                            // imgPath:  "https://sns-img-hw.xhscdn.com"+new URL(imgPath).pathname+"?imageView2/2/w/540/format/jpg"
-                            // imgPath:  imgPath+"?imageView2/2/w/540/format/jpg"
-
-                        };
-                    });
-                    new Swiper({
-                        imgArr: imgArr, // 图片数组
-                        aniTIme: 1000, // 动画执行的时间
-                        intervalTime: 6000000, // 图片停留的时间
-                        autoplay: false // 是否自动播放
-                    }).init();
-                }
-                if (mediaType && media && mediaType === "video" && media.length > 0) {
-                    // let imgArr = media.map((imgPath) => {
-                    //    return "https://detail.fzchats.uk/?proxyUrl=" + imgPath
-                    // });
-                    // var vedioUrl="http://sns-video-qc.xhscdn.com"+new URL(media[0]).pathname
-                    // var vedioUrl="https://detail.fzchats.uk/?proxyUrl=" +media[0];
-                    var vedioUrl = packVideoUrl(media[0]);
-                    var vedioDownloadUrl = switchDyVideoUrl(media[0]);
-                    //展示视频
-                    var vidElement = document.getElementById("vid")
-                    vidElement.style.display = "block"
-                    vidElement.innerHTML = '<video id="my-player" class="video-js"> </video>'
-                    const sources = [
-                        {
+            if (mediaType && media && mediaType === "video" && media.length > 0) {
+                // let imgArr = media.map((imgPath) => {
+                //    return "https://detail.fzchats.uk/?proxyUrl=" + imgPath
+                // });
+                // var vedioUrl="http://sns-video-qc.xhscdn.com"+new URL(media[0]).pathname
+                // var vedioUrl="https://detail.fzchats.uk/?proxyUrl=" +media[0];
+                var vedioUrl = packVideoUrl(media[0]);
+                var vedioDownloadUrl = switchDyVideoUrl(media[0]);
+                //展示视频
+                var vidElement = document.getElementById("vid")
+                vidElement.style.display = "block"
+                vidElement.innerHTML = '<video id="my-player" class="video-js"> </video>'
+                const sources = [{
                         src: media[0],
                         type: 'video/mp4'
-                        },
-                        {
+                    },
+                    {
                         src: vedioUrl,
                         type: 'video/mp4'
-                        },
-                        {
+                    },
+                    {
                         src: vedioDownloadUrl,
                         type: 'video/mp4'
-                        }
-                    ]
-                    var wid = vidElement.offsetWidth
-                    let options = { 
-                        width: wid, 
-                        height: 264, 
-                        loop: true,
-                        controls: true,
-                        preload: "auto",
-                        autoplay: true,
-                        // autoplay: 'muted',
-                        // sources: sources[vSrcIndex] 
                     }
-                    if (media.length > 1) {
-                        options.poster = media[1]
-                        // if (new URL(media[1]).hostname.includes("douyinpic")){
-                        //     options.poster=media[1]
-                        // }else{
-                        //     options.poster="https://sns-img-hw.xhscdn.com"+new URL(media[1]).pathname+"?imageView2/2/w/540/format/jpg"
-                        // }
-                    }
-                    
-                    var player = videojs('my-player', options, function () {
-                        videojs.log('播放器准备好了!');
-                        // 最新的浏览器一般禁止video自动播放，直接调用play()会报错。只有用户在页面上操作后或者在video标签上添加muted（静音）属性，才能调用play函数。
-                        // this.play();
-                    });
-                    videojs.hook('beforeerror', (player, err) => {
-                        console.log('hook - beforeerror', player.src(), err)
-                        // Video.js 在切换/指定 source 后立即会触发一个 err=null 的错误，这里过滤一下
-                        if (err !== null && vSrcIndex < sources.length - 1) {
+                ]
+                var wid = vidElement.offsetWidth
+                let options = {
+                    width: wid,
+                    height: 264,
+                    loop: true,
+                    controls: true,
+                    preload: "auto",
+                    autoplay: true,
+                    // autoplay: 'muted',
+                    // sources: sources[vSrcIndex] 
+                }
+                if (media.length > 1) {
+                    options.poster = media[1]
+                    // if (new URL(media[1]).hostname.includes("douyinpic")){
+                    //     options.poster=media[1]
+                    // }else{
+                    //     options.poster="https://sns-img-hw.xhscdn.com"+new URL(media[1]).pathname+"?imageView2/2/w/540/format/jpg"
+                    // }
+                }
+
+                var player = videojs('my-player', options, function() {
+                    videojs.log('播放器准备好了!');
+                    // 最新的浏览器一般禁止video自动播放，直接调用play()会报错。只有用户在页面上操作后或者在video标签上添加muted（静音）属性，才能调用play函数。
+                    // this.play();
+                });
+                videojs.hook('beforeerror', (player, err) => {
+                    console.log('hook - beforeerror', player.src(), err)
+                    // Video.js 在切换/指定 source 后立即会触发一个 err=null 的错误，这里过滤一下
+                    if (err !== null && vSrcIndex < sources.length - 1) {
                         // player.src(sources[++vSrcIndex])
-                         // 清除错误，避免 error 事件在控制台抛出错误
+                        // 清除错误，避免 error 事件在控制台抛出错误
                         return null
+                    }
+                    return err
+                })
+                //10秒后没有获取到视频自动切换
+                player.ready(function() {
+                    player.src(sources[vSrcIndex])
+                    // HAVE_NOTHING (0) 没有关于媒体资源的信息;
+                    //HAVE_METADATA (1) 已获得足够的资源，资源的持续时间可用;
+                    //HAVE_CURRENT_DATA (2) 当前播放位置的数据可用。
+                    //HAVE_FUTURE_DATA (3) 当前播放位置的数据是可用的，以及足够的数据供用户代理在播放方向上推进当前播放位置。
+                    //HAVE_ENOUGH_DATA (4) 有足够多的数据，可以不间断播放
+                    // setInterval(function() {console.log(player.readyState(),player.src())}, 3000);
+                    setTimeout(function() {
+                        if (player.readyState() == 0 && vSrcIndex == 0) {
+                            player.src(sources[++vSrcIndex])
                         }
-                        return err
-                    })
-                    //10秒后没有获取到视频自动切换
-                    player.ready(function(){
-                        player.src(sources[vSrcIndex])
-                        // HAVE_NOTHING (0) 没有关于媒体资源的信息;
-                        //HAVE_METADATA (1) 已获得足够的资源，资源的持续时间可用;
-                        //HAVE_CURRENT_DATA (2) 当前播放位置的数据可用。
-                        //HAVE_FUTURE_DATA (3) 当前播放位置的数据是可用的，以及足够的数据供用户代理在播放方向上推进当前播放位置。
-                        //HAVE_ENOUGH_DATA (4) 有足够多的数据，可以不间断播放
-                        // setInterval(function() {console.log(player.readyState(),player.src())}, 3000);
-                        setTimeout(function(){
-                            if(player.readyState()==0 && vSrcIndex==0){
-                                player.src(sources[++vSrcIndex])
-                            }
-                        },3000)
-                        setTimeout(function(){
-                            if(player.readyState()==0 && vSrcIndex==1){
-                                player.src(sources[++vSrcIndex])
-                            }
-                        },5000)
-                    })
-                    
-                    // player.ready(() => {
-                    //     // 丢失 source 事件处理
-                    //     player.tech().on('retryplaylist', function () {
-                    //         console.log('event - retryplaylist')
-                    //         player.src(sources[1])
-                    //     })
-                    // })
+                    }, 3000)
+                    setTimeout(function() {
+                        if (player.readyState() == 0 && vSrcIndex == 1) {
+                            player.src(sources[++vSrcIndex])
+                        }
+                    }, 5000)
+                })
 
-                }
-                var endtime = data['endtime']
-                document.getElementById("endtime").innerHTML = dateFormat(new Date().toLocaleDateString()) + '到期'
-                if (endtime) {
-                    document.getElementById("endtime").innerHTML = dateFormat(new Date(endtime * 1000).toLocaleDateString()) + '到期'
-                }
-                var rental = data['rental']
-                document.getElementById("rental").innerHTML = '不能'
-                if (rental) {
-                    if (rental == 1) {
-                        document.getElementById("rental").innerHTML = '能'
-                    }
-                }
-                var party = data['party']
-                if (party) {
-                    document.getElementById("party").innerHTML = party
+                // player.ready(() => {
+                //     // 丢失 source 事件处理
+                //     player.tech().on('retryplaylist', function () {
+                //         console.log('event - retryplaylist')
+                //         player.src(sources[1])
+                //     })
+                // })
 
+            }
+            var endtime = data['endtime']
+            document.getElementById("endtime").innerHTML = dateFormat(new Date().toLocaleDateString()) + '到期'
+            if (endtime) {
+                document.getElementById("endtime").innerHTML = dateFormat(new Date(endtime * 1000).toLocaleDateString()) + '到期'
+            }
+            var rental = data['rental']
+            document.getElementById("rental").innerHTML = '不能'
+            if (rental) {
+                if (rental == 1) {
+                    document.getElementById("rental").innerHTML = '能'
                 }
-                var pay = data['pay']
-                if (pay) {
-                    document.getElementById("pay").innerHTML = pay
+            }
+            var party = data['party']
+            if (party) {
+                document.getElementById("party").innerHTML = party
 
-                }
-                var rentDesc = data['rent_desc']
-                if (rentDesc) {
-                    document.getElementById("rentDesc").innerHTML = rentDesc
-                }
-                var lat = data['lat']
-                var lng = data['lng']
-                var poiaddress = data['poiaddress']
-                var poiname = data['poiname']
-                var cityname = data['cityname'];
-                var qrcodeUrl = data['qrcode']
-                if (qrcodeUrl) {
-                    if (!qrcodeUrl.startsWith("http")) {
-                        qrcodeUrl = "https://weixin.qq.com/g/" + qrcodeUrl
-                    }
-                    // document.getElementById('qrcode').style.display = 'none';
-                    var qrcode = new QRCode("qrcode", {
-                        text: 'your content',
-                        width: 256,
-                        height: 256,
-                        colorDark: '#0c6eb7',
-                        colorLight: '#ffffff',
-                        correctLevel: QRCode.CorrectLevel.H
-                    });
-                    qrcode.makeCode(qrcodeUrl);
-                    var canvas = document.getElementsByTagName('canvas')[0];
-                    var img = this.convertCanvasToImage(canvas);
-                    img.style.padding = "20px";
-                    img.style.width = "175px";
-                    img.style.height = "175px";
-                    var element = document.getElementById("qrcode2");
-                    element.append(img);
-                    element.style.display = "flex";
-                    element.style.flexDirection = "column";
-                    element.style.alignItems = "center";
-                    if (iosAgent() && isInEmbed()) {
-                        //被嵌入时,ios端传递数据到父页面
-                        img.addEventListener('touchstart', function (e) {
-                            // console.log("111111111111111111")
-                            // 执行 touchstart 事件的处理逻辑
-                            window.parent.postMessage(JSON.stringify({ status: 1, url: img.src }), '*')
-                        }, false);
+            }
+            var pay = data['pay']
+            if (pay) {
+                document.getElementById("pay").innerHTML = pay
 
-                        img.addEventListener('touchend', function (e) {
-                            // console.log("22222")
-                            // 执行 touchend 事件的处理逻辑
-                            window.parent.postMessage(JSON.stringify({ status: 2 }), '*')
-                        }, false);
-                    }
+            }
+            var rentDesc = data['rent_desc']
+            if (rentDesc) {
+                document.getElementById("rentDesc").innerHTML = rentDesc
+            }
+            var lat = data['lat']
+            var lng = data['lng']
+            var poiaddress = data['poiaddress']
+            var poiname = data['poiname']
+            var cityname = data['cityname'];
+            var qrcodeUrl = data['qrcode']
+            if (qrcodeUrl) {
+                if (!qrcodeUrl.startsWith("http")) {
+                    qrcodeUrl = "https://weixin.qq.com/g/" + qrcodeUrl
                 }
-                if (lat && lng) {
-                    var map = new qq.maps.Map(document.getElementById('map'), {
-                        center: new qq.maps.LatLng(lat, lng), // 设置地图的中心点为上海
-                        zoom: 13, // 设置地图的缩放级别
-                        disableDefaultUI: true
-                    });
-                    // 创建一个标记并添加到地图上
-                    var marker = new qq.maps.Marker({
-                        position: new qq.maps.LatLng(lat, lng), // 标记的位置
-                        map: map // 将标记添加到之前创建的map对象上
-                    });
-                    mapUrl = 'http://apis.map.qq.com/tools/poimarker?type=0&marker=coord:' + lat + ',' + lng + ';title:' + poiname + ';addr:' + poiaddress + '&key=UXFBZ-XLWCZ-4SBXH-7WULJ-W45P5-2IBFF&referer=myapp'
-                }
-                //继续赋值
-                if (poiaddress) {
-                    document.getElementById("poiaddress").innerHTML = poiaddress
-                }
-                //是否显示分享按钮
-                var qrShortUrl = data['qr_short_url'];
-                if (qrShortUrl) {
-                    let parsedUrl = new URL(qrShortUrl);
-                    qrShortUrl = parsedUrl.host + parsedUrl.pathname + parsedUrl.search + parsedUrl.hash;
-                    var shareModule = document.getElementById('shareModule')
-                    // 设置 display 属性以展示 div
-                    shareModule.style.display = "flex";
-                    //设置分享按钮属性,以存储分享信息
-                    var shareBtn = document.getElementById('share-button');
-                    var shareInfo = ""
-                    if (title) {
-                        shareInfo = title + "\n\n"
-                    }
-                    var sharePoiaddress=document.getElementById("poiaddress").innerHTML.replace("湖北省武汉市", "")
-                    if (sharePoiaddress!=sharePoiaddress.substring(0, 10)) {
-                        sharePoiaddress=sharePoiaddress.substring(0, 10)+"…"
-                    }
-                    shareInfo = shareInfo + "【图文】:" + qrShortUrl
-                    shareInfo = shareInfo + "\n【房型】:" + document.getElementById("roomType").innerHTML
-                    shareInfo = shareInfo + "\n【小区】:" + document.getElementById("position1").innerHTML
-                    shareInfo = shareInfo + "\n【位置】:" + sharePoiaddress
-                    shareInfo = shareInfo + "\n【价格】:" + document.getElementById("price").innerHTML
-                    shareInfo = shareInfo + "\n【合同】:" + document.getElementById("party").innerHTML
-                    shareInfo = shareInfo + "\n【余期】:" + document.getElementById("endtime").innerHTML
-                    shareInfo = shareInfo + "\n【短租】:" + document.getElementById("rental").innerHTML
-                    shareInfo = shareInfo + "\n【付款】:" + document.getElementById("pay").innerHTML
-                    shareInfo = shareInfo + "\n【备注】:" + document.getElementById("rentDesc").innerHTML.trim().replace(/\n/g, ' ')
-                    shareInfo = shareInfo + "\n\n更多转租:fzchats.uk/gde1"
-                    shareBtn.setAttribute('shareInfo', shareInfo);
-                }
+                // document.getElementById('qrcode').style.display = 'none';
+                var qrcode = new QRCode("qrcode", {
+                    text: 'your content',
+                    width: 256,
+                    height: 256,
+                    colorDark: '#0c6eb7',
+                    colorLight: '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+                qrcode.makeCode(qrcodeUrl);
+                var canvas = document.getElementsByTagName('canvas')[0];
+                var img = this.convertCanvasToImage(canvas);
+                img.style.padding = "20px";
+                img.style.width = "175px";
+                img.style.height = "175px";
+                var element = document.getElementById("qrcode2");
+                element.append(img);
+                element.style.display = "flex";
+                element.style.flexDirection = "column";
+                element.style.alignItems = "center";
+                if (iosAgent() && isInEmbed()) {
+                    //被嵌入时,ios端传递数据到父页面
+                    img.addEventListener('touchstart', function(e) {
+                        // console.log("111111111111111111")
+                        // 执行 touchstart 事件的处理逻辑
+                        window.parent.postMessage(JSON.stringify({ status: 1, url: img.src }), '*')
+                    }, false);
 
-            } else {
-                // document.getElementById("topic1").innerHTML = "1.长按二维码"
-                // document.getElementById("topic2").innerHTML = "2.选择打开对方名片"
-                // document.getElementById("topic3").innerHTML = "3.添加好友开始咨询"
-                location.href = "https://fzchats.uk/qrcb"
-                return
+                    img.addEventListener('touchend', function(e) {
+                        // console.log("22222")
+                        // 执行 touchend 事件的处理逻辑
+                        window.parent.postMessage(JSON.stringify({ status: 2 }), '*')
+                    }, false);
+                }
+            }
+            if (lat && lng) {
+                var map = new qq.maps.Map(document.getElementById('map'), {
+                    center: new qq.maps.LatLng(lat, lng), // 设置地图的中心点为上海
+                    zoom: 13, // 设置地图的缩放级别
+                    disableDefaultUI: true
+                });
+                // 创建一个标记并添加到地图上
+                var marker = new qq.maps.Marker({
+                    position: new qq.maps.LatLng(lat, lng), // 标记的位置
+                    map: map // 将标记添加到之前创建的map对象上
+                });
+                mapUrl = 'http://apis.map.qq.com/tools/poimarker?type=0&marker=coord:' + lat + ',' + lng + ';title:' + poiname + ';addr:' + poiaddress + '&key=UXFBZ-XLWCZ-4SBXH-7WULJ-W45P5-2IBFF&referer=myapp'
+            }
+            //继续赋值
+            if (poiaddress) {
+                document.getElementById("poiaddress").innerHTML = poiaddress
+            }
+            //是否显示分享按钮
+            var qrShortUrl = data['qr_short_url'];
+            if (qrShortUrl) {
+                let parsedUrl = new URL(qrShortUrl);
+                qrShortUrl = parsedUrl.host + parsedUrl.pathname + parsedUrl.search + parsedUrl.hash;
+                var shareModule = document.getElementById('shareModule')
+                // 设置 display 属性以展示 div
+                shareModule.style.display = "flex";
+                //设置分享按钮属性,以存储分享信息
+                var shareBtn = document.getElementById('share-button');
+                var shareInfo = ""
+                if (title) {
+                    shareInfo = title + "\n\n"
+                }
+                var sharePoiaddress = document.getElementById("poiaddress").innerHTML.replace("湖北省武汉市", "")
+                if (sharePoiaddress != sharePoiaddress.substring(0, 10)) {
+                    sharePoiaddress = sharePoiaddress.substring(0, 10) + "…"
+                }
+                shareInfo = shareInfo + "【图文】:" + qrShortUrl
+                shareInfo = shareInfo + "\n【房型】:" + document.getElementById("roomType").innerHTML
+                shareInfo = shareInfo + "\n【小区】:" + document.getElementById("position1").innerHTML
+                shareInfo = shareInfo + "\n【位置】:" + sharePoiaddress
+                shareInfo = shareInfo + "\n【价格】:" + document.getElementById("price").innerHTML
+                shareInfo = shareInfo + "\n【合同】:" + document.getElementById("party").innerHTML
+                shareInfo = shareInfo + "\n【余期】:" + document.getElementById("endtime").innerHTML
+                shareInfo = shareInfo + "\n【短租】:" + document.getElementById("rental").innerHTML
+                shareInfo = shareInfo + "\n【付款】:" + document.getElementById("pay").innerHTML
+                shareInfo = shareInfo + "\n【备注】:" + document.getElementById("rentDesc").innerHTML.trim().replace(/\n/g, ' ')
+                shareInfo = shareInfo + "\n\n更多转租:fzchats.uk/gde1"
+                shareBtn.setAttribute('shareInfo', shareInfo);
             }
 
-        };
+        } else {
+            // document.getElementById("topic1").innerHTML = "1.长按二维码"
+            // document.getElementById("topic2").innerHTML = "2.选择打开对方名片"
+            // document.getElementById("topic3").innerHTML = "3.添加好友开始咨询"
+            location.href = "https://zu.fzchats.uk/chatroom"
+            return
+        }
 
+    };
     </script>
 </body>
 
