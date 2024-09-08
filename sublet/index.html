@@ -1155,8 +1155,9 @@
                 showTipPopup("温馨提示", "请上传黑白样式的微信二维码!")
                 return
             }
-            //匹配小红书url
-            var noteUrlReg = /http(s)?:\/\/xhslink.com\/[\w-]+/;
+            //匹配小红书url,url与2024.9.7发现在短链key之前新增了一个路径(之前:/7KMWVG,如今:/B/7KMWVG)
+            // var noteUrlReg = /http(s)?:\/\/xhslink.com\/[\w-]+/;
+            var noteUrlReg = /http(s)?:\/\/xhslink.com\/([\w-]+\/)?[\w-]+/;
             var urls = note.match(noteUrlReg)
             if (!urls) {
                 var douyinUrlReg = /http(s)?:\/\/v.douyin.com\/[\w-]+/;
