@@ -81,7 +81,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding-top: 5%;
+            /* padding-top: 5%; */
             padding-bottom: 5%;
             /* height: 8%; */
             /* padding-right: 24px;
@@ -272,6 +272,629 @@
         .popup button:hover {
             background-color: #0056b3;
         }
+
+        /* 以下为footer样式 */
+        html {
+            font-size: 335%;
+        }
+
+        .painfo img {
+            overflow-clip-margin: content-box;
+            overflow: clip;
+        }
+
+        .painfo .isIPhoneX {
+            padding-bottom: constant(safe-area-inset-bottom);
+            padding-bottom: env(safe-area-inset-bottom)
+        }
+
+        .painfo .zeb_flex {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex
+        }
+
+        .painfo .zeb_flex_a {
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center
+        }
+
+        .painfo .zeb_flex_j {
+            -webkit-box-pack: justify;
+            -webkit-justify-content: space-between;
+            -ms-flex-pack: justify;
+            justify-content: space-between
+        }
+
+        .painfo .zeb_flex_no {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            -ms-flex: 1;
+            flex: 1
+        }
+
+        .painfo footer.one .agent_name p {
+            display: none
+        }
+
+        .painfo footer.one .agent_wrap,
+        .painfo footer.one .agent_wrap .product_btn {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex
+        }
+
+        .painfo footer.one .agent_wrap .product_btn {
+            width: 100%;
+            text-align: right;
+            -webkit-box-pack: end;
+            -webkit-justify-content: flex-end;
+            -ms-flex-pack: end;
+            justify-content: flex-end
+        }
+
+        .painfo footer.one .agent_wrap .product_btn .last-btn {
+            position: relative;
+            display: inline-block;
+            height: .8rem;
+            width: 100%;
+            line-height: .8rem;
+            background: #f74;
+            font-weight: 600;
+            font-size: .32rem;
+            color: #fff;
+            text-align: center;
+            border-radius: .4rem
+        }
+
+        .painfo footer.one .agent_wrap .product_btn .last-btn.gray {
+            opacity: .4
+        }
+
+        .painfo footer.one .agent_wrap .product_btn .online {
+            position: relative
+        }
+
+        .painfo footer.two .agent_wrap .agent_info {
+            display: block;
+            position: fixed;
+            right: 0;
+            top: 50%;
+            margin-top: -3.87rem;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            width: 1.2rem;
+            background-color: hsla(0, 0%, 100%, .6);
+            padding-top: .3rem;
+            border-radius: .12rem 0 0 .12rem
+        }
+
+        .painfo footer.two .agent_wrap .agent_info .agent_name {
+            padding-bottom: .36rem;
+            margin: 0;
+            text-align: center;
+            width: 100%
+        }
+
+        .painfo footer.two .agent_wrap .agent_info .agent_name img {
+            display: inline-block
+        }
+
+        .painfo footer.two .agent_wrap .agent_info .agent_name p {
+            margin-top: .1rem;
+            display: block;
+            height: .4rem;
+            line-height: .4rem;
+            font-weight: 700;
+            font-size: .28rem;
+            color: rgba(0, 0, 0, .85)
+        }
+
+        .painfo footer.two .agent_wrap .agent_info .headwear {
+            width: 1.3rem;
+            height: 1.3rem;
+            position: absolute;
+            left: 0;
+            top: .01rem
+        }
+
+        .painfo footer.two .agent_wrap .agent_info .agent-a {
+            color: rgba(0, 0, 0, .6);
+            margin-bottom: .42rem
+        }
+
+        .painfo footer.two .agent_wrap .agent_info .store {
+            margin: 0;
+            text-align: center;
+            width: 100%;
+            padding: 0 0 .42rem 0
+        }
+
+        .painfo footer.two .agent_wrap .product_btn {
+            width: 100%
+        }
+
+        .painfo footer.two .agent_wrap .product_btn .last-btn {
+            position: relative;
+            display: inline-block;
+            height: .8rem;
+            line-height: .8rem;
+            background: #f74;
+            color: #fff;
+            text-align: center;
+            border-radius: .4rem;
+            width: 3.3rem;
+            font-size: .32rem;
+            font-weight: 700
+        }
+
+        .painfo footer.two .agent_wrap .product_btn .last-btn:first-child {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            margin-right: .3rem;
+            border: 1px solid rgba(0, 0, 0, .1);
+            border-radius: .4rem;
+            color: rgba(0, 0, 0, .85);
+            background: #fff
+        }
+
+        .painfo footer.two .agent_wrap .product_btn .last-btn.gray {
+            opacity: .4
+        }
+
+        .painfo footer {
+            position: fixed;
+            bottom: 0;
+            z-index: 100;
+            width: 94%;
+            min-height: 1.12rem;
+            background-color: #fff
+        }
+
+        .painfo footer:after {
+            content: " ";
+            position: absolute;
+            pointer-events: none;
+            color: #e6e6e6;
+            border-top: 1px solid #e6e6e6;
+            height: 1px;
+            left: 0;
+            right: 0;
+            top: 0
+        }
+
+        @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+            .painfo footer:after {
+                -webkit-transform: scaleY(.5);
+                -webkit-transform-origin: 50% 0
+            }
+        }
+
+        .painfo footer .agent_wrap {
+            width: 100%;
+            padding: 0 .32rem
+        }
+
+        .painfo footer .product_btn {
+            padding: .16rem 0
+        }
+
+        .painfo footer .agent_info {
+            background-color: #fff;
+            font-size: .22rem;
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            -ms-flex: 1;
+            flex: 1
+        }
+
+        .painfo footer .agent_info .agent-a {
+            text-align: center;
+            color: rgba(0, 0, 0, .45)
+        }
+
+        .painfo footer .agent_info .agent_icon_img {
+            width: .8rem;
+            height: .8rem;
+            border-radius: 50%
+        }
+
+        .painfo footer .agent_info .headwear {
+            width: 1.3rem;
+            height: 1.3rem;
+            position: absolute;
+            left: .08rem;
+            top: -.04rem
+        }
+
+        .painfo footer .agent_info .agent_name {
+            position: relative;
+            margin-right: .04rem;
+            margin-right: .1rem;
+            width: .8rem;
+            height: .8rem
+        }
+
+        .painfo footer .agent_info .agent_name .bonus-icon {
+            position: absolute;
+            width: .64rem;
+            height: .24rem;
+            top: .6rem;
+            left: 50%;
+            margin-left: -.32rem
+        }
+
+        .painfo footer .agent_info .store {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            width: .9rem;
+            height: 100%;
+            padding: .24rem 0 .18rem 0
+        }
+
+        .painfo footer .agent_info .store img {
+            display: block;
+            margin: 0 auto;
+            width: .42rem;
+            height: .42rem
+        }
+
+        .painfo footer .agent_info .store p {
+            margin-top: .04rem;
+            height: .3rem;
+            line-height: .3rem;
+            color: rgba(0, 0, 0, .6);
+            font-family: PingFangSC-Regular;
+            font-size: .4rem;
+            font-weight: 400;
+            -webkit-transform: scale(.5);
+            transform: scale(.5);
+            -webkit-transform-origin: left, top;
+            transform-origin: left, top;
+            white-space: nowrap
+        }
+
+        .painfo footer .agent_info .store p.text {
+            position: relative;
+            left: -.17rem
+        }
+
+        .painfo .previewTime {
+            width: 100%;
+            text-align: center;
+            line-height: 1rem;
+            font-size: .3rem;
+            color: #fff;
+            background-color: #ff4550
+        }
+
+        .nui-mask {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+            background: rgba(0, 0, 0, .6)
+        }
+
+
+        .nui-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 99;
+            right: 0;
+            bottom: 0;
+            overflow: hidden
+        }
+
+        .nui-popup__box {
+            position: absolute;
+            max-height: 100%;
+            background-color: #fff;
+            -webkit-transition: -webkit-transform .3;
+            transition: -webkit-transform .3;
+            transition: transform .3;
+            transition: transform .3, -webkit-transform .3;
+            -webkit-overflow-scrolling: touch;
+            overflow: hidden
+        }
+
+        .nui-popup__box::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nui-popup__center__box {
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%)
+        }
+
+        .nui-popup__center__box--round {
+            border-radius: 12px
+        }
+
+        .nui-popup__top__box {
+            width: 100%;
+            top: 0
+        }
+
+        .nui-popup__top__box--round {
+            border-radius: 0 0 12px 12px
+        }
+
+        .nui-popup__right__box {
+            right: 0;
+            height: 100%;
+            max-height: 100%
+        }
+
+        .nui-popup__right__box--round {
+            border-radius: 12px 0 0 12px
+        }
+
+        .nui-popup__bottom__box {
+            width: 100%;
+            bottom: 0
+        }
+
+        .nui-popup__bottom__box--round {
+            border-radius: 12px 12px 0 0
+        }
+
+        .nui-popup__left__box {
+            left: 0;
+            height: 100%;
+            max-height: 100%
+        }
+
+        .nui-popup__left--round {
+            border-radius: 0 12px 12px 0
+        }
+
+        .nui-popup__static__box {
+            position: relative;
+            background-color: transparent;
+            overflow: unset
+        }
+
+        .nui-popup__box--inset-bottom {
+            padding-bottom: env(safe-area-inset-bottom);
+            padding-bottom: constant(safe-area-inset-bottom)
+        }
+
+
+        .reset[data-v-1ed67c46] .nui-popup__box {
+            width: 5.6rem;
+            -webkit-box-shadow: 0 1px 0 0 #eee;
+            box-shadow: 0 1px 0 0 #eee;
+            border-radius: 9px;
+        }
+
+        .info_card[data-v-1ed67c46] {
+            text-align: left;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            padding: .36rem
+        }
+
+        .info_card_img[data-v-1ed67c46] {
+            margin-right: .2rem;
+            font-size: 0
+        }
+
+        .info_card_img .headImg[data-v-1ed67c46] {
+            width: .84rem;
+            height: .84rem;
+            border-radius: 50%
+        }
+
+        .info_card_phone[data-v-1ed67c46] {
+            position: absolute;
+            right: .42rem;
+            top: .42rem
+        }
+
+        .info_card_phone a[data-v-1ed67c46] {
+            width: .72rem;
+            height: .72rem;
+            display: inline-block
+        }
+
+        .info_card_ecard[data-v-1ed67c46] {
+            margin-top: .1rem
+        }
+
+        .info_card_content[data-v-1ed67c46] {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            -webkit-box-pack: justify;
+            -webkit-justify-content: space-between;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            -ms-flex: 1;
+            flex: 1
+        }
+
+        .info_card_hd .name[data-v-1ed67c46] {
+            max-width: 1.5rem;
+            font-size: .32rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-weight: 700;
+            line-height: 1.4
+        }
+
+        .info_card_hd .flag[data-v-1ed67c46] {
+            margin-top: .1rem
+        }
+
+        .info_card_hd .flag[data-v-1ed67c46],
+        .info_card_text[data-v-1ed67c46] {
+            font-family: PingFangSC-Regular;
+            font-size: .24rem;
+            color: rgba(0, 0, 0, .6);
+            font-weight: 400
+        }
+
+        .info_card_text[data-v-1ed67c46] {
+            line-height: 1.43;
+            margin-top: .08rem
+        }
+
+        .info_card_tips[data-v-1ed67c46] {
+            font-family: PingFangSC-Regular;
+            font-size: .2rem;
+            color: rgba(0, 0, 0, .4);
+            font-weight: 400;
+            margin-bottom: .36rem;
+            line-height: 1.4;
+            text-align: center
+        }
+
+        .info_card_link[data-v-1ed67c46] {
+            font-family: PingFangSC-Regular;
+            font-size: .24rem;
+            color: #355cca;
+            font-weight: 400;
+            line-height: 1.4
+        }
+
+        .info_card_link i[data-v-1ed67c46] {
+            border: solid #355cca;
+            border-width: 0 1px 1px 0;
+            display: inline-block;
+            padding: 3px
+        }
+
+        .info_card_link .right[data-v-1ed67c46] {
+            transform: rotate(-45deg);
+            -webkit-transform: rotate(-45deg)
+        }
+
+        .info_wechat_container[data-v-1ed67c46] {
+            margin: 0 .36rem;
+            position: relative
+        }
+
+        .info_wechat_container[data-v-1ed67c46]:after {
+            content: " ";
+            position: absolute;
+            pointer-events: none;
+            color: #eee;
+            border-top: 1px solid #eee;
+            height: 1px;
+            left: 0;
+            right: 0;
+            top: 0
+        }
+
+        @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+            .info_wechat_container[data-v-1ed67c46]:after {
+                -webkit-transform: scaleY(.5);
+                -webkit-transform-origin: 50% 0
+            }
+        }
+
+        .info_wechat_bd[data-v-1ed67c46] {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+            -webkit-justify-content: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            padding: .36rem 0 .15rem 0;
+            text-align: center
+        }
+
+        .info_wechat_img[data-v-1ed67c46] {
+            font-size: 0
+        }
+
+        .info_wechat_img .qrcodeImg[data-v-1ed67c46] {
+            width: 3.3rem;
+            height: 3.3rem;
+            margin-top: .24rem
+        }
+
+        .info_wechat_content[data-v-1ed67c46] {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            -webkit-justify-content: space-around;
+            -ms-flex-pack: distribute;
+            justify-content: space-around;
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            -ms-flex: 1;
+            flex: 1
+        }
+
+        .info_wechat_content .title[data-v-1ed67c46] {
+            font-family: PingFangSC-Semibold;
+            font-size: .32rem;
+            color: rgba(0, 0, 0, .8);
+            font-weight: 700;
+            line-height: 1.33
+        }
+
+        .info_wechat_content .wechatName[data-v-1ed67c46] {
+            line-height: .32rem
+        }
+
+        .info_wechat_text[data-v-1ed67c46] {
+            font-size: .2rem;
+            color: rgba(0, 0, 0, .4);
+            font-weight: 400;
+            margin-top: .12rem
+        }
+
+        .info_lazy[data-v-1ed67c46] {
+            padding: .4rem 0;
+            text-align: center;
+            font-size: .26rem
+        }
+
+        .info_lazy_title[data-v-1ed67c46] {
+            padding-bottom: .1rem;
+            white-space: nowrap
+        }
+
+        .reset[data-v-1ed67c46] .nui-popup__box {
+            width: 5.6rem;
+            -webkit-box-shadow: 0 1px 0 0 #eee;
+            box-shadow: 0 1px 0 0 #eee;
+            border-radius: 9px
+        }
     </style>
 </head>
 
@@ -324,7 +947,7 @@
             <p id="rentDesc" style="white-space: pre-wrap;">
                 这种类型的房间有一张单间床，例如可以转换成床的沙发。部分一室公寓配有额外的床铺。其他房间空间更大：工作室房间可以像家具齐全的公寓，这意味着它将有一个小厨房。请与酒店联系以了解有关其单间客房的更多信息。</p>
         </div>
-        <div class="module">
+        <div class="module"  style="padding-bottom: 0.8rem;">
             <h2>联系方式<span style="font-size: 12px;font-weight: bold; color:darkgrey;">(长按识别)</span></h2>
             <!-- <div style="  background-color: #f0f0f0;"> -->
             <div class="qrcode" id="qrcode2"></div>
@@ -334,6 +957,89 @@
                 <button type="button" id="share-button" shareInfo="" class="copy-button" onclick="share()">分 享</button>
             </div>
         </div>
+    </div>
+    <div data-v-38b28184="" class="painfo">
+        <footer class="ft zeb_flex one">
+            <div class="agent_wrap">
+                <div class="agent_info zeb_flex zeb_flex_a zeb_flex_no zeb_flex_j">
+                    <div uid="ufbe709" href="javascript:;" class="agent_name agent-a">
+                        <img uid="u40674a" style="object-fit: contain;" src="https://wx.qlogo.cn/mmhead/ver_1/vZ6PcdEuQPWhFBgXcO4cvdybMWrSPIc6KRovnvhIVkJFrJ4e00dlw1icEQLwCcc5aRP1DicUxKgicME174v4q21omL0ATOScwENnBYv0E7e0jk/132"
+                            class="agent_icon_img chnageImg"><!---->
+                    </div><!---->
+                    <div uid="u8bd5e9" class="agent_store store agent-a" onclick="window.location.href='https://zeb-qt.pingan.com/as/kde-zebApp-vue/module/myMicroStore.html#/home?empno=1094008786&shareId=jDeP2m6TYQzhhXttnMNEFOKbOGwwYz8su2FOMA36r0c%3D&parentCode=bafc01fe-1496-4b5d-9f04-380ecf6d5fe6&sourceFlag=P&openID=oKy5DwHCtSrSc42eKfolGKJqv1G4';"><img
+                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAqCAMAAAD/A0kuAAAAdVBMVEVHcEz////////9WBz////////////////////////9WBz////////////////////////////////////9WBz9vqb/+/n9bjr/9PD/49n9ZC79eEj/2Mr/zrz9sJT9kmn9qYv9g1b9uJ7/6+T9XSL9n3z9w63ffpitAAAAE3RSTlMAwjGJdxM/moZT59Ht5NlrCvKlOCirtwAAAWBJREFUOMvllMt6gjAQRsdqqXjHkyYxhouCvP8jdgEaUEEX7ar/Mjkz39xF/l7R9uupttEDGm8Y1Cbus3NGNe+yMwBffz9R7QFmgf1M4HCs1HMdS0g+u0FYowblbDeQNWRqRBmsr+wHMOJYVQb4COmValRlSHEC53H4DJO2FsBpHD4BTT1i0NU4XGlo2riHVL1QCnsREVnB5RV8gUREJALcK9gAUdO+wytWVW0Tl2+ErJSHpciuD/dqWPUyXO7u+ufKomPoe57n7WTk17caewyG4d3QFnoCuiUKoGxnynlulpWH1U5EJEpA10fncg+APp+MORUWwOZNPGFZ4iRsm75fP5vWB7gNkki8un55k9ubXXEJppNdWML5BrBprpRyhdegD5mplEkbdL3tHwPlOsvibv03eXYuHs7MWPvkl+BMA+jsLbgth/19z2/EvBhmFw/wdBiePl7+6YDvxVT+jX4AWBRfIXdiFnwAAAAASUVORK5CYII="
+                            class="agent_icon_store" style="width: 0.42rem; height: 0.42rem;">
+                        <span class="text">保险小店</span>
+                    </div>
+                    <div uid="u68390f" class="agent_tel store agent-a"><a style="text-decoration: none; color: inherit;" href="tel:17602113978"
+                            style="display: inline-block;"><img
+                                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAOVBMVEVHcEwyOk0yOk0yOk0yOk1ET148QVMyOkwyOk0yOk01PVAyO000P1EzPE8yOk0yOk0zO04zO04zPE/JLPfIAAAAE3RSTlMAzut79QYN/pffJGwaQqm9W04xs9lRDAAAAT5JREFUGBndwVmS1DAURcGr4elo8rj/xSKXaYJoFyo+CTL1D6t7O5L+QloZfNNHyXHbkj7Y+FK6phpQjtoisJkmUoRYJZ0F2DURgKZLj7BqwkHRLUPRBMSsW4aiiQirbhmcJjYg6GIOVk0sEcgaOhA0ExhOSQ1YNLUCp6QCRVM1gjdpAYJmzAFNkoNYTRMZcCbtQNZMA3yVUoFYNXEwLJIykPVO6qbhiECQtAAl6cF2Bz537RHIkroHDj10x4vPDKtJ5oCsh8Xzm80krYBL+u6MgA/NcVk1ZMBXfWcF2LpkGfyuIQNx0UMANtOlLskkW4F46GmDYnoxDX1j2PVGgWz6ZfFA3PWGbeCTfkqZwS96KwCu62KtMLhT71kB/CGdoXDJSX9SPUPkVg5NdMcXH0xTKfDiWtIn1vcQjq7/ww9YNg1myEeZRAAAAABJRU5ErkJggg=="
+                                class="agent_icon_tel">
+                            <span>电话</span>
+                        </a></div>
+                    <div uid="u7d4fd4" href="javascript:;" class="agent_wechat store agent-a" onclick="showCardBtn()"><img
+                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAP1BMVEVKVWQyOk0zO04zO002P1AzO04yOk04QlUyOk0yOk00PU8yOk4yOk0yOk0zO08yO00yOk01PE8yOk0yOk0yOkyg62GbAAAAFHRSTlMB1kNWGmS6DvjiJJ3tjjdyyiyBrNV/t48AAAHFSURBVDjLtVXZtoMgDCybbLLK/3/rJQRUXO7pS32pxXEymUzTz+fXl88LWZWOmzD/4mRYy3Et9B0pzsAGfmGW2w5R+w17RMYGII5WKmnEhnjxAF0a8MTCXQPfeR0cWzmdJQ0arnoTMOSbKFKh8aG8rZ8sczygOYEI8MRPSF5JtWwydBMhemUGlk3Q0HvVow+oEuAm1ncmaLVUSXxQoPDHDp+AZJoa6WWSVtgbj6pKT8HCy/GchxWbusyZHONb9t7UHerJnIfheT3eLpTqEp1C+LBVz8j2dN0ETZ453b7phs0XpylwqrzPmTUwdl5mBaCTpFtCRXf6ZB+U15eYALZNkoKynaa/KD0qMHsc2P5SOhJRdXFdVoONuD43O/I2XKAoK6PbElqs9BL0Y5XapOIucJSa0BaLkMIxS+vRi6oMZIv4rKpr8l0vfISMTbMBlyXFAXnfg6K6Qj9Bwy095kg5jEG5sODeII8/1E5QO7XNdmnsA60BI8ZYmD8fq3ljcVKeMo0+KTHtHhgn/7ztmn0VcmpeF9jYddrmEFytDeXd2wa111/B46Y7x/kraAX3xVlIfJd6rD3KmOdYgn75dyKdlj/7r/oD+jAp3enmw9EAAAAASUVORK5CYII=">
+                        <span class="foot-text">微信</span>
+                    </div>
+                </div>
+                <div uid="uadf76f" class="product_btn" style="display: flex; justify-content: space-around;" onclick="window.location.href='https://zeb-cp.pingan.com/as/kde-elaDetail-vue/module/productDetail.html?agentNo=1094008786&productNo=2620H2&isWechatAuth=Y&prdSource=zeb&isNewWebView=Y&shareSource=zebStore&shareId=jDeP2m6TYQzhhXttnMNEFOKbOGwwYz8su2FOMA36r0c%3D';">
+                    <a uid="forc0b7af0" href="javascript:;" class="last-btn" style="width: 2.4rem;">
+                        了解详情
+                        </a>
+                </div>
+                <div data-v-1ed67c46="">
+                    <div data-v-1ed67c46="" class="info reset nui-popup nui-popup--center" uid="u41f156"
+                        style="z-index: 101; display: none;">
+                        <div uid="u451089" class="nui-mask" style="z-index: 102; display: none;" onclick="hiddenCardBtn()"></div>
+                        <div uid="uc7c0b8" class="nui-popup__box nui-popup__center__box"
+                            style="z-index: 103; display: none;">
+                            <div data-v-1ed67c46="" class="info_card">
+                                <div data-v-1ed67c46="" class="info_card_img"><img data-v-1ed67c46="" uid="u40674a"
+                                        src="https://wx.qlogo.cn/mmhead/ver_1/vZ6PcdEuQPWhFBgXcO4cvdybMWrSPIc6KRovnvhIVkJFrJ4e00dlw1icEQLwCcc5aRP1DicUxKgicME174v4q21omL0ATOScwENnBYv0E7e0jk/132"
+                                        class="headImg"></div>
+                                <div data-v-1ed67c46="" class="info_card_content">
+                                    <div data-v-1ed67c46="" class="info_card_hd">
+                                        <h2 data-v-1ed67c46="" class="name" style="margin:0px;">Avery</h2>
+                                        <div data-v-1ed67c46="" class="flag">风险分析师</div>
+                                    </div>
+                                    <!-- <div data-v-1ed67c46="" class="info_card_ecard"><a data-v-1ed67c46="" uid="u29e9be"
+                                            href="https://zeb-qt.pingan.com/as/kde-zebApp-vue/module/newEcard.html#/linkPreview?empno=1094008786&amp;shareId=jDeP2m6TYQzhhXttnMNEFOKbOGwwYz8su2FOMA36r0c%3D&amp;parentCode=bafc01fe-1496-4b5d-9f04-380ecf6d5fe6&amp;openID=oKy5DwHCtSrSc42eKfolGKJqv1G4&amp;requestId=bafc01fe-1496-4b5d-9f04-380ecf6d5fe6&amp;sessionId=191235d5-8a04-474b-8e51-5550204f1e97-1094008786"
+                                            class="info_card_link">查看名片 <i data-v-1ed67c46="" class="right"></i></a></div> -->
+                                    <div data-v-1ed67c46="" class="info_card_phone"><a data-v-1ed67c46="" uid="u359055"
+                                            href="tel:17602113978"><img style="height: inherit;"
+                                                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGwAAABsCAMAAAC4uKf/AAAARVBMVEVHcExrlv9qkf9ulv9okP9okf9okf+LpP9okf1okP9qkf9oj/9okP9okf9okf9oj/3///+vxP52mf34+v/s8f+Qrv3P3P+G4quuAAAAD3RSTlMAGkwRxq/vBI33N2jZfGrzUvLFAAADTUlEQVRo3s1a2bajIBAERRC3Rrb//9R5uHMTYxRoQGbq2ZxKQdE0UIQgQLt5HNiycCn5srBh3DpKHoCYVibhApytk6jJ1M+DBLjkAgAAOWx9JU3dcE9z4OvK9fUjh0TwsUweHSUgIEdaQAVY5NKJmUMG+JwxdxODTLAJK2uEAowocZRBERhi5joOheBdKtcIFTAmzZaowpU2cWKAShiiBaVnUA0swiYqcgEwIZqM4d+RDJENsi5ZwCVirc0VWAEdPICb1U35E2ScPm/EoyWfKlKJ0zbBY5haDeLlQM7wILZqTtTOOZwj892xG6WU3RGFhOZzqR/YXYc+ozWEOaN+YUJ0B/v32TXRqgPM/WDKvlzYbtQHvI5Ly7WituqEW21clFZ7f+ZSJlr9c7dnp77JbsdxKLSH/SZTMYvMhUvsCHv/+Vw0iuaCbI80P0JWmzGlAlVSioKN7JJMR7a1NXeRXXjRhn6wEkJYvVWmgsWfFZSPi/oRHEXgJbsL6LMfffh7WtSZnrW5WL9a1Hx8arORr+eydtGl2wMARlJ0SLIYYTCQgn5R44QBI0urGQNYCsi0x1gRAJb8NX3aYnzC6YnIOlxGJ9wPZpM5g3MHAMjcYTxx+ZTf8EyDnLisTvlRphtPzalxkEbG0pav04FWZ0/7iyypXHlzbK21z+OCIaEQ78YcJ2a3uF3sWIi3mBXshw3c1/aczAVbZPPU3hy8YHerVPLB5WLzpAiHX8AjPExJqITsKsqVrgtkuJWzESqD0SVZsEl1MV07qhKswfY7RuZwZWcKHizCZBbJJUX4yGQr2fBw9Nwy3GgcunhvsWOuvXW8xnL93oQMSGnWoaleB/hAxdKXR9kMqvfVhODp0ozPonpfugS2mZM0k6fq4zopYJGjNLtDLnifdAXo0y4Uk4URQkOl3xrri5gAJK32eIsT9tTTyGvGqGh31T7/y0eEps8jbR9+2j5pNX2sa/sM+ci0jQ+lQHBcTzyKi0bRAgDWi/8myFA1opEUCKnz6J+YL1urcCUmlETLwFDbKFTbkFfb+BohRGztgnn4dOPPCGYnHAU+TFmUFaVrs5goKgBbK9q7hfnkMFeK9r5Dy/z6LmWdRNXU8iuOvX3GsWdcHPsPxU4dLGsHLHcAAAAASUVORK5CYII="
+                                                alt=""></a></div>
+                                </div>
+                            </div>
+                            <div data-v-1ed67c46="" class="info_wechat">
+                                <div data-v-1ed67c46="" class="info_wechat_container">
+                                    <div data-v-1ed67c46="" class="info_wechat_bd">
+                                        <div data-v-1ed67c46="" class="info_wechat_content">
+                                            <h2 data-v-1ed67c46="" class="title"style="margin:0px;">微信号：
+                                                <span data-v-1ed67c46="" class="wechatName">zooz_0001</span>
+                                            </h2>
+                                            <div data-v-1ed67c46="">
+                                                <p data-v-1ed67c46="" class="info_card_text">没有安全感？不妨来次风险分析</p>
+                                            </div>
+                                            <div data-v-1ed67c46="" class="info_wechat_img" style="margin: 0 auto;"><img data-v-1ed67c46=""
+                                                    uid="u557dae"
+                                                    src="https://iobs.pingan.com.cn/download/pss-esales-cms-dmz-prd/pub-staffProfile-iobs-20240926-1727281295949-_-_-1727281296381.jpg"
+                                                    class="qrcodeImg"></div>
+                                        </div>
+                                    </div>
+                                    <div data-v-1ed67c46="" class="info_card_tips">
+                                        长按图片，识别图中二维码即可加我为好友呦~
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!---->
+                    </div>
+                </div>
+            </div>
+            <div class="previewTime" style="display: none;">
+    
+            </div>
+        </footer>
     </div>
     <!-- 弹窗 -->
     <div id="info-popup" class="popup">
@@ -352,6 +1058,23 @@
     <script>
     var houseTypes = ["未提及", "单间", "次卧", "主卧", "一居室", "两居室", "三居室", "四居室"]
     var mapUrl;
+
+    
+    // 展示Avery名片
+    function showCardBtn(){
+        // 获取拥有特定 uid 属性的 div 元素
+        document.querySelector('div[uid="u41f156"]').style.display = 'block';
+        document.querySelector('div[uid="u451089"]').style.display = 'block';
+        document.querySelector('div[uid="uc7c0b8"]').style.display = 'block';
+    }
+    //隐藏Avery名片
+    function hiddenCardBtn(){
+        // 获取拥有特定 uid 属性的 div 元素
+        document.querySelector('div[uid="u41f156"]').style.display = 'none';
+        document.querySelector('div[uid="u451089"]').style.display = 'none';
+        document.querySelector('div[uid="uc7c0b8"]').style.display = 'none';
+    }
+
 
     function copy_3(content) {
         var s = document.getElementById('text')
