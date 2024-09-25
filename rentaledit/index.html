@@ -24,6 +24,10 @@
             box-sizing: border-box;
         }
 
+        html {
+            font-size: 335%;
+        }
+
         body {
             background-color: #f0f0f0;
             font-size: 14px;
@@ -398,7 +402,7 @@
             /* 按钮的阴影效果 */
             right: 20px;
             /* 从右边界的距离 */
-            bottom: 20px;
+            bottom: 3rem;
             /* 从底部边界的距离 */
             display: flex;
             /* 用于水平垂直居中 */
@@ -502,7 +506,7 @@
         <div class="popup-content">
             <h3 id="popup-title"></h3>
             <p id="popup-description" style="text-align: left;"></p>
-            <button onclick="hideInfoPopup()">关闭</button>
+            <button onclick="hideInfoPopup()">返回</button>
         </div>
     </div>
 
