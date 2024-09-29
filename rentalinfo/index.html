@@ -1322,6 +1322,9 @@
                     //展示轮播
                     document.getElementById("pics").style.display = "block"
                     let imgArr = media.map((imgPath) => {
+                        if (new URL(imgPath).host === 'sns-img-bd.xhscdn.com') {
+                            imgPath=imgPath+"?imageView2/2/w/540/format/jpg"
+                        }
                         return {
                             url: '#',
                             imgPath:  imgPath
