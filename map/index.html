@@ -15,6 +15,9 @@
     <link rel="icon" href="../zhuan.ico" type="image/x-icon">
     <title>转租群转租地图</title>
     <style>
+        html {
+            font-size: 335%;
+        }
         html,
         body {
             margin: 0;
@@ -157,7 +160,7 @@
             /* 按钮的阴影效果 */
             right: 20px;
             /* 从右边界的距离 */
-            bottom: 20px;
+            bottom: 3rem;
             /* 从底部边界的距离 */
             display: flex;
             /* 用于水平垂直居中 */
@@ -386,7 +389,7 @@
                 mapElement.innerHTML = '<embed id="mapPage" src=' + url + ' type="text/html"  width="100%" height="100%" > ' +
                     // '<img onclick="closeMap()"  id="closeBtn" src="data:image/png;base64,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" alt="">'
                     // '<div class="float-button" onclick="closeMap()">关闭</div>'
-                    '<a  class="fab" aria-label="Close" onclick="closeMap()">关闭</a>'
+                    '<a  class="fab" aria-label="Close" onclick="closeMap()">返回</a>'
 
 
             }
