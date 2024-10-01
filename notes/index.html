@@ -448,45 +448,45 @@
             } catch (error) {
                 console.log(error)
             }
-            try {
-                const response = await fetch('../notes/2.json?' + new Date().getTime());
-                const data = await response.json();
-                array2 = data
-            } catch (error) {
-                console.log(error)
-            }
-            try {
-                const response = await fetch('../notes/3.json?' + new Date().getTime());
-                const data = await response.json();
-                array3 = data
-            } catch (error) {
-                console.log(error)
-            }
-            try {
-                const response = await fetch('../notes/4.json?' + new Date().getTime());
-                const data = await response.json();
-                array4 = data
-            } catch (error) {
-                console.log(error)
-            }
-            try {
-                const response = await fetch('../notes/5.json?' + new Date().getTime());
-                const data = await response.json();
-                array5 = data
-            } catch (error) {
-                console.log(error)
-            }
-            try {
-                const response = await fetch('../notes/6.json?' + new Date().getTime());
-                const data = await response.json();
-                array6 = data
-            } catch (error) {
-                console.log(error)
-            }
+            // try {
+            //     const response = await fetch('../notes/2.json?' + new Date().getTime());
+            //     const data = await response.json();
+            //     array2 = data
+            // } catch (error) {
+            //     console.log(error)
+            // }
+            // try {
+            //     const response = await fetch('../notes/3.json?' + new Date().getTime());
+            //     const data = await response.json();
+            //     array3 = data
+            // } catch (error) {
+            //     console.log(error)
+            // }
+            // try {
+            //     const response = await fetch('../notes/4.json?' + new Date().getTime());
+            //     const data = await response.json();
+            //     array4 = data
+            // } catch (error) {
+            //     console.log(error)
+            // }
+            // try {
+            //     const response = await fetch('../notes/5.json?' + new Date().getTime());
+            //     const data = await response.json();
+            //     array5 = data
+            // } catch (error) {
+            //     console.log(error)
+            // }
+            // try {
+            //     const response = await fetch('../notes/6.json?' + new Date().getTime());
+            //     const data = await response.json();
+            //     array6 = data
+            // } catch (error) {
+            //     console.log(error)
+            // }
             locationData = locationData.concat(array1,array2,array3,array4,array5,array6);
-            locationData = locationData.sort((a, b) => {
-                return b['last_update_time'] - a['last_update_time']; // 由大到小排序
-            });
+            // locationData = locationData.sort((a, b) => {
+// return b['last_update_time'] - a['last_update_time']; // 由大到小排序
+// });
             init()
         })()
 
