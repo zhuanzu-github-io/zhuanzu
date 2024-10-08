@@ -341,7 +341,7 @@
             <span>&nbsp;&nbsp;至&nbsp;&nbsp;</span>
             <input type="number" id="highest" min="0" max="1000000" placeholder="最高价">
         </div>
-        <div class="split-div"></div>
+        <div class="split-div"><span id="text" style="display: none;width: 1px;"></span></div>
     </div>
     <div id="no-data" class="div2"
         style="display: none;background-color: #ffffff;flex-direction: column; align-items: center; justify-content: center; ">
@@ -541,7 +541,7 @@
                     var priceStr = '不详'
                 }
                 var house = ["不详", "单间", "次卧", "主卧", "一居室", "两居室", "三居室", "四居室"][item['room_type']]
-                return '<div class="card" onclick=showDetail("' + item['note_id'] + '")> <div class="carda"> <div class="card-image"> <img src="' + imgUrl + '" > </div> <div class="card-content"> <div class="card-title">' + title + '</div> <div class="card-attribute">创建时间:' + ctime + '</div> <div class="card-attribute">更新时间:' + mtime + '</div> <div class="card-attribute">户型:' + house + '</div> <div class="card-price">价格:<span style="color:red;">' + priceStr + '</span></div> </div> </div> <div class="card-description"><p style="text-indent: 2em;">' + content + '</p></div> </div>';
+                return '<div class="card" onclick=showDetail("' + item['note_id'] + '")> <div class="carda"> <div class="card-image"> <img src="' + imgUrl + '" onclick=copy("黑名单|' + item['note_id'] + '")> </div> <div class="card-content"> <div class="card-title">' + title + '</div> <div class="card-attribute">创建时间:' + ctime + '</div> <div class="card-attribute">更新时间:' + mtime + '</div> <div class="card-attribute">户型:' + house + '</div> <div class="card-price">价格:<span style="color:red;">' + priceStr + '</span></div> </div> </div> <div class="card-description"><p style="text-indent: 2em;">' + content + '</p></div> </div>';
             }).join('');
         }
 
@@ -744,6 +744,75 @@
             return formattedDate;
         }
 
+    // 复制文本函数，微信端，需要在用户触发 Click 事件里面才能执行成功
+    function copy(message) {
+        if (iosAgent()) {
+            copyContent(message)
+        } else {
+            copyNotClipboard(message)
+        }
+    }
+
+    // 执行浏览器命令 Copy 顺便输出一下日志，如果在移动端 推荐写个方法展示日志
+    function _execCommand(action) {
+        let is = document.execCommand(action);
+        if (is) {
+            console.log("温馨提示", "信息已复制到剪贴板,快去分享吧~")
+        } else {
+            console.log("温馨提示", "复制失败")
+        }
+    }
+
+    function copyNotClipboard(content) {
+        let textarea = document.createElement("textarea");
+        textarea.value = content;
+        document.body.appendChild(textarea);
+        textarea.select();
+        // _execCommand('Copy');
+        let is = document.execCommand('copy');
+        if (is) {
+            console.log("温馨提示", "信息已复制到剪贴板,快去分享吧~")
+        } else {
+            copy_3(content)
+        }
+        document.body.removeChild(textarea);
+    }
+
+    function copyContent(content) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(content).then(function() {
+                console.log("温馨提示", '信息已复制到剪贴板,快去分享吧~');
+            }).catch(function(error) {
+                copy_3(content)
+                // showTipPopup("温馨提示", '复制内容失败,\n请手动复制链接地址');
+            });
+        } else {
+            //如果苹果不支持clipboard.writeText，使用下面的方法
+            // copyNotClipboard(content);
+            copy_3(content)
+        }
+    }
+
+    
+    function copy_3(content) {
+        var s = document.getElementById('text')
+        s.style.display = 'block'
+        s.textContent = content
+        const range = document.createRange();
+        range.selectNode(s);
+        const selection = window.getSelection();
+        //移除之前选中内容
+        if (selection.rangeCount > 0) selection.removeAllRanges();
+        selection.addRange(range);
+        let is = document.execCommand('copy');
+        if (is) {
+            console.log("温馨提示", "信息已复制到剪贴板,快去分享吧~")
+        } else {
+            console.log("温馨提示", "复制失败")
+        }
+        selection.removeAllRanges()
+        s.style.display = 'none'
+    }
     </script>
 </body>
 
