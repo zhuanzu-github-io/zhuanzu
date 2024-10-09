@@ -403,8 +403,28 @@
             window.location.href = url;
         }
 
+        function getQueryParams() {
+            var params = {};
+            var queryString = window.location.search.substring(1);
+            var pairs = queryString.split('&');
+
+            for (var i = 0; i < pairs.length; i++) {
+                let index = pairs[i].indexOf('=');
+                var pair = [pairs[i].slice(0, index), pairs[i].slice(index + 1)];
+                var key = decodeURIComponent(pair[0]);
+                var value = decodeURIComponent(pair[1]);
+                params[key] = value;
+            }
+            return params;
+        }
         function showDetail(id) {
-            window.open("https://www.xiaohongshu.com/discovery/item/" + id, "_blank");
+            var queryParams = getQueryParams();
+            flag = queryParams['test'];
+            if (flag) {
+                window.location.href="https://www.xiaohongshu.com/discovery/item/" + id;
+            }else{
+                window.open("https://www.xiaohongshu.com/discovery/item/" + id, "_blank");
+            }
         }
 
 
